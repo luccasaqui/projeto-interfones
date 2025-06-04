@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gerador de credenciais para interfones de condomínios">
+    <title>Gerador de Credenciais - Interfones</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🌿 Gerador de Credenciais</h1>
+        <form id="formCredenciais" aria-labelledby="formTitle">
+            <div class="form-group">
+                <label for="condominio">Condomínio:</label>
+                <select id="condominio" required aria-required="true">
+                    <option value="">Selecione...</option>
+                    <option value="BENDORF">BENDORF</option>
+                    <option value="BRISAS DA SERRA 1 [1-4]">BRISAS DA SERRA 1 [1-4]</option>
+                    <!-- Outros condomínios podem ser adicionados aqui -->
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="bloco">Bloco (BL):</label>
+                <input type="text" id="bloco" required placeholder="Ex: 10" pattern="[0-9]+" aria-required="true">
+            </div>
+
+            <div class="form-group">
+                <label for="ap">Apartamento (AP):</label>
+                <input type="text" id="ap" required placeholder="Ex: 101" pattern="[0-9]+" aria-required="true">
+            </div>
+
+            <fieldset class="form-group">
+                <legend>Ponto do Interfone:</legend>
+                <div class="radio-group" role="radiogroup">
+                    <div class="radio-option">
+                        <input type="radio" id="ponto1" name="ponto" value="1" checked aria-checked="true">
+                        <label for="ponto1">PRIMEIRO PONTO</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="ponto2" name="ponto" value="2" aria-checked="false">
+                        <label for="ponto2">SEGUNDO PONTO</label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <button type="submit" id="gerarBtn">🌱 GERAR CREDENCIAIS</button>
+        </form>
+
+        <div id="resultado" role="status" aria-live="polite"></div>
+    </div>
+
+    <script src="js/script.js" type="module"></script>
+</body>
+</html>
