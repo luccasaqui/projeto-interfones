@@ -4,47 +4,109 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GERADOR DE DADOS | Interfones</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <style>
         :root {
-            --primary: #2c3e50;
-            --primary-dark: #1a252f;
-            --secondary: #3498db;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gray: #95a5a6;
+            --primary-dark: #0a3d1a;
+            --primary: #128c37;
+            --primary-light: #1abc56;
+            --secondary: #2ecc71;
+            --dark: #0c1e12;
+            --light: #e8f5e9;
+            --gray: #7f8c8d;
             --light-gray: #ecf0f1;
-            --border-radius: 6px;
-            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --border-radius: 10px;
+            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         body {
-            background-color: #f5f7fa;
+            background-color: var(--dark);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            color: var(--dark);
+            color: white;
             line-height: 1.6;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration, 5s) infinite ease-in-out;
+            opacity: var(--opacity, 0.5);
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
         }
 
         .container {
-            background: white;
+            background: rgba(10, 61, 26, 0.85);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             width: 100%;
             max-width: 900px;
             padding: 30px;
             transition: var(--transition);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(18, 140, 55, 0.3);
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(8px);
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary-light), var(--secondary), var(--primary-dark));
+            z-index: -1;
+            border-radius: var(--border-radius);
+            opacity: 0.7;
+            animation: borderGlow 8s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0% { filter: blur(5px); opacity: 0.7; }
+            50% { filter: blur(8px); opacity: 0.4; }
+            100% { filter: blur(5px); opacity: 0.7; }
         }
 
         .header {
@@ -61,21 +123,29 @@
             left: 25%;
             right: 25%;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.5), transparent);
         }
 
         .header h1 {
-            color: var(--primary);
+            color: white;
             font-size: 28px;
             margin-bottom: 8px;
-            font-weight: 600;
+            font-weight: 700;
             letter-spacing: -0.5px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .header .subtitle {
             color: var(--gray);
             font-size: 14px;
             font-weight: 500;
+        }
+
+        .header .icon {
+            font-size: 40px;
+            color: var(--secondary);
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
         }
 
         .form-row {
@@ -87,31 +157,33 @@
         .form-group {
             flex: 1;
             margin-bottom: 0;
+            position: relative;
         }
 
         label {
             display: block;
             margin-bottom: 8px;
-            color: var(--dark);
+            color: var(--light);
             font-weight: 500;
             font-size: 14px;
         }
 
         select, input {
             width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #dfe6e9;
+            padding: 14px 15px;
+            border: 1px solid rgba(46, 204, 113, 0.3);
             border-radius: var(--border-radius);
             font-size: 15px;
             transition: var(--transition);
-            background-color: white;
-            color: var(--dark);
+            background-color: rgba(12, 30, 18, 0.7);
+            color: white;
         }
 
         select:focus, input:focus {
             outline: none;
             border-color: var(--secondary);
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.3);
+            background-color: rgba(12, 30, 18, 0.9);
         }
 
         .radio-group {
@@ -124,13 +196,16 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 12px;
+            padding: 10px 15px;
             border-radius: var(--border-radius);
             transition: var(--transition);
+            background-color: rgba(12, 30, 18, 0.5);
+            border: 1px solid rgba(46, 204, 113, 0.2);
         }
 
         .radio-option:hover {
-            background-color: rgba(52, 152, 219, 0.05);
+            background-color: rgba(46, 204, 113, 0.1);
+            transform: translateY(-2px);
         }
 
         .radio-option input {
@@ -146,13 +221,13 @@
 
         .btn {
             width: 100%;
-            padding: 14px;
-            background-color: var(--primary);
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
             border: none;
             border-radius: var(--border-radius);
-            font-size: 15px;
-            font-weight: 500;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
             margin-top: 25px;
@@ -161,14 +236,39 @@
             justify-content: center;
             gap: 10px;
             letter-spacing: 0.5px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn:hover {
-            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(18, 140, 55, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
         }
 
         .btn i {
-            font-size: 16px;
+            font-size: 18px;
         }
 
         .results-container {
@@ -188,12 +288,24 @@
             margin-top: 20px;
             padding: 20px;
             border-radius: var(--border-radius);
-            background-color: var(--light-gray);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            background-color: rgba(12, 30, 18, 0.7);
+            border: 1px solid rgba(46, 204, 113, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-light), var(--secondary));
         }
 
         .result-box h3 {
-            color: var(--primary);
+            color: var(--secondary);
             margin-bottom: 15px;
             display: flex;
             align-items: center;
@@ -208,64 +320,85 @@
         }
 
         .result-content {
-            background-color: white;
+            background-color: rgba(12, 30, 18, 0.9);
             padding: 15px;
-            border-radius: var(--border-radius);
-            border: 1px solid #dfe6e9;
+            border-radius: 6px;
+            border: 1px solid rgba(46, 204, 113, 0.1);
             font-family: 'Roboto Mono', monospace;
             white-space: pre-wrap;
             word-break: break-word;
             font-size: 14px;
             line-height: 1.8;
+            color: var(--light);
         }
 
         .copy-btn {
-            background-color: var(--secondary);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
             color: white;
             border: none;
             border-radius: var(--border-radius);
-            padding: 8px 15px;
-            font-size: 13px;
+            padding: 10px 16px;
+            font-size: 14px;
             cursor: pointer;
             transition: var(--transition);
             margin-top: 10px;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
             font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .copy-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .copy-btn:hover::after {
+            transform: translateX(100%);
         }
 
         .copy-btn:hover {
-            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(10, 61, 26, 0.3);
         }
 
         .copy-btn i {
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .tabs {
             display: flex;
-            border-bottom: 1px solid #dfe6e9;
+            border-bottom: 1px solid rgba(46, 204, 113, 0.2);
             margin-bottom: 20px;
         }
 
         .tab {
             padding: 12px 20px;
             cursor: pointer;
-            border-bottom: 2px solid transparent;
+            border-bottom: 3px solid transparent;
             transition: var(--transition);
             font-size: 14px;
             font-weight: 500;
             color: var(--gray);
+            position: relative;
         }
 
         .tab.active {
             border-bottom-color: var(--secondary);
-            color: var(--primary);
+            color: white;
         }
 
         .tab:hover:not(.active) {
-            color: var(--primary);
+            color: var(--light);
         }
 
         .tab-content {
@@ -274,6 +407,35 @@
 
         .tab-content.active {
             display: block;
+        }
+
+        .info-list {
+            list-style-type: none;
+            counter-reset: info-counter;
+        }
+
+        .info-list li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        .info-list li::before {
+            counter-increment: info-counter;
+            content: counter(info-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--secondary);
+            color: var(--dark);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
         }
 
         @media (max-width: 768px) {
@@ -292,7 +454,7 @@
             
             .radio-group {
                 flex-direction: column;
-                gap: 5px;
+                gap: 8px;
             }
 
             .tab {
@@ -300,27 +462,43 @@
                 font-size: 13px;
             }
         }
+
+        /* Efeitos de partículas */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(46, 204, 113, 0.5);
+            pointer-events: none;
+        }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div id="particles-js"></div>
+    <div class="stars" id="stars"></div>
+    
     <div class="container">
         <div class="header">
+            <div class="icon">
+                <i class="fas fa-key"></i>
+            </div>
             <h1>GERADOR DE DADOS</h1>
             <div class="subtitle">Sistema de Credenciais para Interfones</div>
         </div>
 
         <div class="tabs">
-            <div class="tab active" data-tab="form">Formulário</div>
-            <div class="tab" data-tab="info">Informações</div>
+            <div class="tab active" data-tab="form">
+                <i class="fas fa-keyboard"></i> Formulário
+            </div>
+            <div class="tab" data-tab="info">
+                <i class="fas fa-info-circle"></i> Informações
+            </div>
         </div>
 
         <div class="tab-content active" id="form-tab">
             <form id="credentialForm">
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="condominio1">Condomínio Principal</label>
+                        <label for="condominio1"><i class="fas fa-building"></i> Condomínio Principal</label>
                         <select id="condominio1" required>
                             <option value="">Selecione um condomínio...</option>
                             <option value="BENDORF">BENDORF</option>
@@ -371,7 +549,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="condominio2">Condomínio Secundário (opcional)</label>
+                        <label for="condominio2"><i class="fas fa-building"></i> Condomínio Secundário (opcional)</label>
                         <select id="condominio2">
                             <option value="N/A">N/A</option>
                             <option value="BOSQUE DAS ÁGUAS">BOSQUE DAS ÁGUAS</option>
@@ -399,32 +577,32 @@
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="bloco">Bloco (BL)</label>
+                        <label for="bloco"><i class="fas fa-cube"></i> Bloco (BL)</label>
                         <input type="text" id="bloco" placeholder="Ex: 10" required pattern="[0-9]+">
                     </div>
 
                     <div class="form-group">
-                        <label for="apartamento">Apartamento (AP)</label>
+                        <label for="apartamento"><i class="fas fa-home"></i> Apartamento (AP)</label>
                         <input type="text" id="apartamento" placeholder="Ex: 100" required pattern="[0-9]+">
                     </div>
 
                     <div class="form-group">
-                        <label for="ponto">Ponto do Interfone</label>
+                        <label for="ponto"><i class="fas fa-plug"></i> Ponto do Interfone</label>
                         <div class="radio-group">
                             <div class="radio-option">
                                 <input type="radio" id="ponto1" name="ponto" value="1" checked>
-                                <label for="ponto1">PRIMEIRO PONTO</label>
+                                <label for="ponto1"><i class="fas fa-circle"></i> PRIMEIRO PONTO</label>
                             </div>
                             <div class="radio-option">
                                 <input type="radio" id="ponto2" name="ponto" value="2">
-                                <label for="ponto2">SEGUNDO PONTO</label>
+                                <label for="ponto2"><i class="fas fa-circle"></i> SEGUNDO PONTO</label>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <button type="submit" class="btn">
-                    <i class="fas fa-key"></i>
+                    <i class="fas fa-magic"></i>
                     GERAR DADOS
                 </button>
             </form>
@@ -460,8 +638,8 @@
             <div class="result-box">
                 <h3><i class="fas fa-info-circle"></i> Instruções de Uso</h3>
                 <div class="result-content">
-                    <p><strong>Como utilizar o gerador:</strong></p>
-                    <ol>
+                    <p><strong><i class="fas fa-question-circle"></i> Como utilizar o gerador:</strong></p>
+                    <ol class="info-list">
                         <li>Selecione o condomínio principal na lista</li>
                         <li>Se necessário, selecione um condomínio secundário</li>
                         <li>Informe o número do bloco (apenas números)</li>
@@ -469,11 +647,11 @@
                         <li>Selecione o ponto do interfone (primeiro ou segundo ponto)</li>
                         <li>Clique em "GERAR DADOS" para criar as credenciais</li>
                     </ol>
-                    <p><strong>Dicas:</strong></p>
-                    <ul>
-                        <li>Você pode copiar cada seção individualmente usando os botões "Copiar"</li>
-                        <li>O condomínio secundário é opcional e pode ser deixado como "N/A"</li>
-                        <li>Certifique-se de inserir apenas números nos campos de bloco e apartamento</li>
+                    <p><strong><i class="fas fa-lightbulb"></i> Dicas:</strong></p>
+                    <ul style="list-style-type: none; padding-left: 0;">
+                        <li><i class="fas fa-copy" style="color: var(--secondary);"></i> Você pode copiar cada seção individualmente usando os botões "Copiar"</li>
+                        <li><i class="fas fa-asterisk" style="color: var(--secondary);"></i> O condomínio secundário é opcional e pode ser deixado como "N/A"</li>
+                        <li><i class="fas fa-exclamation-triangle" style="color: var(--secondary);"></i> Certifique-se de inserir apenas números nos campos de bloco e apartamento</li>
                     </ul>
                 </div>
             </div>
@@ -680,7 +858,7 @@
 
             // Validar campos obrigatórios
             if (!condominio1 || !bloco || !ap) {
-                alert('Por favor, preencha todos os campos obrigatórios.');
+                showAlert('Por favor, preencha todos os campos obrigatórios.');
                 return;
             }
 
@@ -716,6 +894,37 @@
 
             // Mostrar resultados com animação
             document.getElementById('results-container').classList.add('visible');
+            
+            // Criar efeito de confete
+            createConfetti();
+            
+            // Scroll suave para os resultados
+            document.getElementById('results-container').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Função para mostrar alerta estilizado
+        function showAlert(message) {
+            const alert = document.createElement('div');
+            alert.style.position = 'fixed';
+            alert.style.top = '20px';
+            alert.style.left = '50%';
+            alert.style.transform = 'translateX(-50%)';
+            alert.style.backgroundColor = '#e74c3c';
+            alert.style.color = 'white';
+            alert.style.padding = '15px 25px';
+            alert.style.borderRadius = '5px';
+            alert.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+            alert.style.zIndex = '1000';
+            alert.style.animation = 'fadeIn 0.3s, fadeOut 0.3s 2.7s';
+            alert.textContent = message;
+            
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 3000);
         }
 
         // Função para copiar para área de transferência
@@ -725,13 +934,92 @@
                 const btn = document.querySelector(`#${elementId} + .copy-btn`);
                 const originalText = btn.innerHTML;
                 btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+                btn.style.backgroundColor = '#27ae60';
+                
+                // Criar partícula de confirmação
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = '10px';
+                particle.style.height = '10px';
+                particle.style.left = (btn.getBoundingClientRect().left + btn.offsetWidth/2 - 5) + 'px';
+                particle.style.top = (btn.getBoundingClientRect().top - 10) + 'px';
+                document.body.appendChild(particle);
+                
+                // Animação da partícula
+                let pos = 0;
+                const id = setInterval(() => {
+                    pos++;
+                    particle.style.top = (btn.getBoundingClientRect().top - 10 - pos) + 'px';
+                    particle.style.opacity = (100 - pos)/100;
+                    if (pos >= 100) {
+                        clearInterval(id);
+                        particle.remove();
+                    }
+                }, 10);
+                
                 setTimeout(() => {
                     btn.innerHTML = originalText;
+                    btn.style.backgroundColor = '';
                 }, 2000);
             }).catch(err => {
                 console.error('Erro ao copiar: ', err);
-                alert('Não foi possível copiar o texto. Tente novamente.');
+                showAlert('Não foi possível copiar o texto. Tente novamente.');
             });
+        }
+
+        // Função para criar efeito de confete
+        function createConfetti() {
+            const colors = ['#2ecc71', '#1abc9c', '#3498db', '#9b59b6', '#f1c40f', '#e74c3c'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'particle';
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * window.innerWidth + 'px';
+                confetti.style.top = '-20px';
+                confetti.style.borderRadius = '50%';
+                document.body.appendChild(confetti);
+                
+                let pos = 0;
+                const speed = Math.random() * 3 + 2;
+                const angle = Math.random() * 360;
+                const x = Math.cos(angle * Math.PI/180) * 5;
+                
+                const anim = () => {
+                    pos += speed;
+                    confetti.style.top = (pos - 20) + 'px';
+                    confetti.style.left = (parseInt(confetti.style.left) + x) + 'px';
+                    confetti.style.opacity = (100 - pos/2)/100;
+                    
+                    if (pos < window.innerHeight) {
+                        requestAnimationFrame(anim);
+                    } else {
+                        confetti.remove();
+                    }
+                };
+                
+                requestAnimationFrame(anim);
+            }
+        }
+
+        // Função para criar estrelas
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 100;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.opacity = Math.random();
+                star.style.setProperty('--duration', Math.random() * 5 + 3 + 's');
+                starsContainer.appendChild(star);
+            }
         }
 
         // Tab functionality
@@ -749,21 +1037,101 @@
         document.getElementById('credentialForm').addEventListener('submit', function(e) {
             e.preventDefault();
             generateCredentials();
-            
-            // Scroll suave para os resultados
-            document.getElementById('results-container').scrollIntoView({
-                behavior: 'smooth'
-            });
         });
 
-        // Melhorar experiência nos selects
-        document.querySelectorAll('select').forEach(select => {
-            select.addEventListener('focus', () => {
-                select.style.borderColor = '#3498db';
+        // Inicializar partículas
+        document.addEventListener('DOMContentLoaded', () => {
+            particlesJS.load('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#2ecc71"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.3,
+                        "random": true,
+                        "anim": {
+                            "enable": true,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": true,
+                            "speed": 2,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#1abc56",
+                        "opacity": 0.2,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 1,
+                        "direction": "none",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": true,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 0.5
+                            }
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        }
+                    }
+                },
+                "retina_detect": true
             });
-            select.addEventListener('blur', () => {
-                select.style.borderColor = '#dfe6e9';
-            });
+            
+            // Criar estrelas
+            createStars();
         });
     </script>
 </body>
