@@ -3,54 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Gerador de credenciais para interfones de condomínios">
-    <title>Gerador de Credenciais - Interfones</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Gerador de Credenciais | Interfones</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #3f37c9;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+            --error: #ff3333;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            transition: var(--transition);
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: var(--primary);
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header .icon {
+            font-size: 40px;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: #f8f9fa;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .radio-option input {
+            width: auto;
+        }
+
+        .radio-option label {
+            margin-bottom: 0;
+            font-weight: normal;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn i {
+            font-size: 18px;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            display: none;
+        }
+
+        .success {
+            background-color: rgba(75, 181, 67, 0.1);
+            border-left: 4px solid var(--success);
+            color: var(--success);
+        }
+
+        .error {
+            background-color: rgba(255, 51, 51, 0.1);
+            border-left: 4px solid var(--error);
+            color: var(--error);
+        }
+
+        .result p {
+            margin-bottom: 8px;
+        }
+
+        .result p:last-child {
+            margin-bottom: 0;
+        }
+
+        .result strong {
+            color: var(--dark);
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .radio-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>🌿 Gerador de Credenciais</h1>
-        <form id="formCredenciais" aria-labelledby="formTitle">
+        <div class="header">
+            <div class="icon">
+                <i class="fas fa-key"></i>
+            </div>
+            <h1>Gerador de Credenciais</h1>
+        </div>
+
+        <form id="credentialForm">
             <div class="form-group">
-                <label for="condominio">Condomínio:</label>
-                <select id="condominio" required aria-required="true">
+                <label for="condominio">Condomínio</label>
+                <select id="condominio" required>
                     <option value="">Selecione...</option>
                     <option value="BENDORF">BENDORF</option>
-                    <option value="BRISAS DA SERRA 1 [1-4]">BRISAS DA SERRA 1 [1-4]</option>
-                    <!-- Outros condomínios podem ser adicionados aqui -->
+                    <option value="BRISAS DA SERRA">BRISAS DA SERRA</option>
+                    <option value="RESIDENCIAL VISTA">RESIDENCIAL VISTA</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="bloco">Bloco (BL):</label>
-                <input type="text" id="bloco" required placeholder="Ex: 10" pattern="[0-9]+" aria-required="true">
+                <label for="bloco">Bloco (BL)</label>
+                <input type="text" id="bloco" placeholder="Ex: 10" required pattern="[0-9]+">
             </div>
 
             <div class="form-group">
-                <label for="ap">Apartamento (AP):</label>
-                <input type="text" id="ap" required placeholder="Ex: 101" pattern="[0-9]+" aria-required="true">
+                <label for="apartamento">Apartamento (AP)</label>
+                <input type="text" id="apartamento" placeholder="Ex: 101" required pattern="[0-9]+">
             </div>
 
-            <fieldset class="form-group">
-                <legend>Ponto do Interfone:</legend>
-                <div class="radio-group" role="radiogroup">
+            <div class="form-group">
+                <label>Ponto do Interfone</label>
+                <div class="radio-group">
                     <div class="radio-option">
-                        <input type="radio" id="ponto1" name="ponto" value="1" checked aria-checked="true">
+                        <input type="radio" id="ponto1" name="ponto" value="1" checked>
                         <label for="ponto1">PRIMEIRO PONTO</label>
                     </div>
                     <div class="radio-option">
-                        <input type="radio" id="ponto2" name="ponto" value="2" aria-checked="false">
+                        <input type="radio" id="ponto2" name="ponto" value="2">
                         <label for="ponto2">SEGUNDO PONTO</label>
                     </div>
                 </div>
-            </fieldset>
+            </div>
 
-            <button type="submit" id="gerarBtn">🌱 GERAR CREDENCIAIS</button>
+            <button type="submit" class="btn">
+                <i class="fas fa-key"></i>
+                GERAR CREDENCIAIS
+            </button>
         </form>
 
-        <div id="resultado" role="status" aria-live="polite"></div>
+        <div id="result" class="result"></div>
     </div>
 
-    <script src="js/script.js" type="module"></script>
+    <script>
+        document.getElementById('credentialForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Obter valores do formulário
+            const condominio = document.getElementById('condominio').value;
+            const bloco = document.getElementById('bloco').value;
+            const apartamento = document.getElementById('apartamento').value;
+            const ponto = document.querySelector('input[name="ponto"]:checked').value;
+            
+            // Gerar credenciais
+            const usuario = `${bloco}${apartamento}${ponto}`;
+            const senha = `rmt@${condominio.toLowerCase().replace(/\s/g, '')}${bloco}${apartamento}${ponto}`;
+            
+            // Mostrar resultado
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <p><strong>Credenciais Geradas:</strong></p>
+                <p>Usuário: <strong>${usuario}</strong></p>
+                <p>Senha: <strong>${senha}</strong></p>
+                <p>Condomínio: <strong>${condominio}</strong></p>
+            `;
+            resultDiv.className = 'result success';
+            resultDiv.style.display = 'block';
+            
+            // Copiar para área de transferência
+            navigator.clipboard.writeText(`Usuário: ${usuario}\nSenha: ${senha}`);
+        });
+    </script>
 </body>
 </html>
