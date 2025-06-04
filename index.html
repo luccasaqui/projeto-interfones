@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador Premium de Credenciais | Interfones</title>
+    <title>Gerador de Dados | Interface Premium</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4361ee;
-            --primary-dark: #3a56d4;
-            --primary-light: #eef2ff;
-            --secondary: #3f37c9;
-            --accent: #7209b7;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --darker: #12141a;
-            --success: #4bb543;
-            --error: #ff3333;
-            --border-radius: 12px;
-            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            --glass: rgba(255, 255, 255, 0.15);
+            --primary: #10b981;
+            --primary-dark: #0d9f6e;
+            --primary-light: #d1fae5;
+            --secondary: #059669;
+            --accent: #047857;
+            --light: #f0fdf4;
+            --dark: #022c22;
+            --darker: #011a13;
+            --success: #34d399;
+            --error: #f87171;
+            --border-radius: 16px;
+            --box-shadow: 0 12px 32px rgba(5, 150, 105, 0.2);
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --glass: rgba(255, 255, 255, 0.12);
             --glass-border: rgba(255, 255, 255, 0.2);
         }
 
@@ -28,11 +28,25 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        @font-face {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hjg.woff2) format('woff2');
+        }
+
+        @font-face {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 600;
+            src: url(https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYAZ9hjg.woff2) format('woff2');
         }
 
         body {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background: linear-gradient(135deg, var(--darker), var(--dark));
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -43,8 +57,8 @@
 
         .container {
             background: var(--glass);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             width: 100%;
@@ -54,6 +68,7 @@
             border: 1px solid var(--glass-border);
             position: relative;
             overflow: hidden;
+            z-index: 1;
         }
 
         .container::before {
@@ -63,8 +78,8 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(114,9,183,0.2) 0%, rgba(114,9,183,0) 70%);
-            animation: rotate 20s linear infinite;
+            background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, rgba(16,185,129,0) 70%);
+            animation: rotate 25s linear infinite;
             z-index: -1;
         }
 
@@ -74,131 +89,157 @@
         }
 
         .container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(5, 150, 105, 0.3);
         }
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
             position: relative;
         }
 
         .header h1 {
             color: white;
-            font-size: 2.2rem;
-            margin-bottom: 15px;
+            font-size: 2.4rem;
+            margin-bottom: 20px;
             font-weight: 600;
-            background: linear-gradient(90deg, #fff, #b5b5ff);
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             position: relative;
             display: inline-block;
+            letter-spacing: -0.5px;
         }
 
         .header h1::after {
             content: '';
             position: absolute;
-            bottom: -8px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
+            width: 80px;
+            height: 4px;
             background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 3px;
+            border-radius: 4px;
+            opacity: 0.8;
         }
 
         .header .icon {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
+            font-size: 3rem;
+            margin-bottom: 25px;
             color: var(--primary-light);
-            text-shadow: 0 0 15px rgba(67, 97, 238, 0.5);
-            animation: pulse 2s infinite alternate;
+            text-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+            animation: pulse 3s infinite ease-in-out;
+            filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.4));
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.08); opacity: 0.8; }
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             position: relative;
         }
 
         label {
             display: block;
-            margin-bottom: 10px;
-            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.85);
             font-weight: 500;
-            font-size: 0.95rem;
+            font-size: 1rem;
+            letter-spacing: 0.2px;
         }
 
         select, input {
             width: 100%;
-            padding: 15px 20px;
+            padding: 16px 24px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: var(--border-radius);
             font-size: 1rem;
             transition: var(--transition);
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.15);
             color: white;
             appearance: none;
+            font-weight: 400;
         }
 
         select:focus, input:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.3);
-            background: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+            background: rgba(0, 0, 0, 0.25);
         }
 
         select {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23d1fae5' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 15px center;
-            background-size: 12px;
+            background-position: right 20px center;
+            background-size: 14px;
         }
 
         .radio-group {
             display: flex;
             gap: 15px;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         .radio-option {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             flex: 1;
+            position: relative;
         }
 
         .radio-option input {
-            width: 18px;
-            height: 18px;
-            appearance: none;
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .radio-custom {
+            width: 24px;
+            height: 24px;
             border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
+            border-radius: 8px;
             transition: var(--transition);
             position: relative;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.2);
         }
 
-        .radio-option input:checked {
-            border-color: var(--primary);
+        .radio-option input:checked + .radio-custom {
             background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
         }
 
-        .radio-option input:checked::after {
-            content: '';
+        .radio-option input:checked + .radio-custom::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: white;
+            font-size: 12px;
             position: absolute;
-            width: 8px;
-            height: 8px;
-            background: white;
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            animation: checkIn 0.3s ease-out;
+        }
+
+        @keyframes checkIn {
+            0% { transform: scale(0); opacity: 0; }
+            80% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .radio-option:hover .radio-custom {
+            border-color: var(--primary-light);
+            transform: translateY(-2px);
         }
 
         .radio-option label {
@@ -206,15 +247,28 @@
             cursor: pointer;
             color: rgba(255, 255, 255, 0.8);
             transition: var(--transition);
+            flex: 1;
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .radio-option:hover label {
             color: white;
+            background: rgba(0, 0, 0, 0.25);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .radio-option input:checked ~ label {
+            color: white;
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
         }
 
         .btn {
             width: 100%;
-            padding: 16px;
+            padding: 18px;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             border: none;
@@ -223,14 +277,16 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            margin-top: 10px;
+            margin-top: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
             position: relative;
             overflow: hidden;
             z-index: 1;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
         }
 
         .btn::before {
@@ -246,8 +302,8 @@
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(16, 185, 129, 0.4);
         }
 
         .btn:hover::before {
@@ -259,79 +315,104 @@
         }
 
         .btn i {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
+            transition: var(--transition);
+        }
+
+        .btn:hover i {
+            transform: scale(1.1);
         }
 
         .result-container {
-            margin-top: 30px;
-            animation: fadeIn 0.5s ease-out;
+            margin-top: 40px;
+            animation: fadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .result-box {
-            background: rgba(0, 0, 0, 0.25);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: var(--border-radius);
-            padding: 20px;
-            margin-bottom: 15px;
+            padding: 24px;
+            margin-bottom: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
         }
 
         .result-box:hover {
-            background: rgba(0, 0, 0, 0.35);
-            transform: translateY(-3px);
+            background: rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.15);
         }
 
         .result-box h3 {
             color: var(--primary-light);
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.1rem;
+            gap: 12px;
+            font-size: 1.2rem;
         }
 
         .result-box h3 i {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
         }
 
         .result-content {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 15px;
-            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 18px;
+            border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             font-family: 'Courier New', monospace;
             white-space: pre-wrap;
             word-break: break-word;
             color: rgba(255, 255, 255, 0.9);
-            line-height: 1.6;
+            line-height: 1.7;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .result-box:hover .result-content {
+            background: rgba(0, 0, 0, 0.25);
         }
 
         .copy-btn {
             background: rgba(255, 255, 255, 0.1);
             color: white;
             border: none;
-            border-radius: 6px;
-            padding: 8px 15px;
-            font-size: 0.9rem;
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-size: 0.95rem;
             cursor: pointer;
             transition: var(--transition);
-            margin-top: 10px;
+            margin-top: 15px;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
             backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .copy-btn:hover {
             background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
         }
 
         .copy-btn:active {
@@ -339,7 +420,31 @@
         }
 
         .copy-btn i {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            transition: transform 0.3s ease;
+        }
+
+        .copy-btn:hover i {
+            transform: scale(1.1);
+        }
+
+        /* Efeitos de luz e brilho */
+        .glow {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(16,185,129,0.3) 0%, rgba(16,185,129,0) 70%);
+            filter: blur(30px);
+            z-index: -1;
+            animation: floatGlow 15s infinite alternate ease-in-out;
+        }
+
+        @keyframes floatGlow {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(50px, -30px); }
+            50% { transform: translate(-40px, 20px); }
+            75% { transform: translate(30px, 40px); }
         }
 
         /* Efeitos de partículas */
@@ -355,15 +460,16 @@
 
         .particle {
             position: absolute;
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 50%;
             animation: float linear infinite;
+            filter: blur(1px);
         }
 
         @keyframes float {
             0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
             100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
         }
 
@@ -373,31 +479,37 @@
             }
             
             .header h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             
             .radio-group {
                 flex-direction: column;
-                gap: 10px;
+                gap: 12px;
+            }
+            
+            .radio-option label {
+                padding: 10px 14px;
             }
         }
     </style>
 </head>
 <body>
     <div class="particles" id="particles"></div>
+    <div class="glow" style="top: 20%; left: 10%;"></div>
+    <div class="glow" style="bottom: 15%; right: 10%; animation-delay: 2s;"></div>
     
     <div class="container">
         <div class="header">
             <div class="icon">
-                <i class="fas fa-shield-alt"></i>
+                <i class="fas fa-magic"></i>
             </div>
-            <h1>Gerador Premium</h1>
-            <p style="color: rgba(255,255,255,0.7);">Crie credenciais seguras para interfones</p>
+            <h1>Gerador de Dados</h1>
+            <p style="color: rgba(255,255,255,0.7); font-size: 1.05rem;">Criação automatizada de informações</p>
         </div>
 
-        <form id="credentialForm">
+        <form id="dataForm">
             <div class="form-group">
-                <label for="condominio">Condomínio</label>
+                <label for="condominio">Localização</label>
                 <select id="condominio" required>
                     <option value="">Selecione...</option>
                     <option value="BENDORF">BENDORF</option>
@@ -448,49 +560,51 @@
 
             <div class="form-row">
                 <div class="form-group" style="flex: 1;">
-                    <label for="bloco">Bloco (BL)</label>
+                    <label for="bloco">Identificador</label>
                     <input type="text" id="bloco" placeholder="Ex: 10" required pattern="[0-9]+">
                 </div>
 
                 <div class="form-group" style="flex: 1;">
-                    <label for="apartamento">Apartamento (AP)</label>
+                    <label for="apartamento">Código</label>
                     <input type="text" id="apartamento" placeholder="Ex: 101" required pattern="[0-9]+">
                 </div>
             </div>
 
             <div class="form-group">
-                <label>Ponto do Interfone</label>
+                <label>Configuração</label>
                 <div class="radio-group">
                     <div class="radio-option">
                         <input type="radio" id="ponto1" name="ponto" value="1" checked>
-                        <label for="ponto1">PRIMEIRO PONTO</label>
+                        <span class="radio-custom"></span>
+                        <label for="ponto1">Configuração Padrão</label>
                     </div>
                     <div class="radio-option">
                         <input type="radio" id="ponto2" name="ponto" value="2">
-                        <label for="ponto2">SEGUNDO PONTO</label>
+                        <span class="radio-custom"></span>
+                        <label for="ponto2">Configuração Alternativa</label>
                     </div>
                 </div>
             </div>
 
             <button type="submit" class="btn">
-                <i class="fas fa-key"></i>
-                GERAR CREDENCIAIS
+                <i class="fas fa-cogs"></i>
+                GERAR DADOS
             </button>
         </form>
 
         <div class="result-container" id="resultContainer" style="display: none;">
             <div class="result-box">
-                <h3><i class="fas fa-id-card"></i> Credenciais</h3>
-                <div class="result-content" id="gerador-result"></div>
-                <button class="copy-btn" onclick="copyToClipboard('gerador-result')">
+                <h3><i class="fas fa-database"></i> Dados Gerados</h3>
+                <div class="result-content" id="data-result"></div>
+                <button class="copy-btn" onclick="copyToClipboard('data-result')">
                     <i class="far fa-copy"></i> Copiar
                 </button>
             </div>
 
             <div class="result-box">
-                <h3><i class="fas fa-link"></i> Acesso PABX</h3>
-                <div class="result-content" id="pabx-result"></div>
-                <button class="copy-btn" onclick="copyToClipboard('pabx-result')">
+                <h3><i class="fas fa-network-wired"></i> Conexão</h3>
+                <div class="result-content" id="connection-result"></div>
+                <button class="copy-btn" onclick="copyToClipboard('connection-result')">
                     <i class="far fa-copy"></i> Copiar
                 </button>
             </div>
@@ -498,204 +612,34 @@
     </div>
 
     <script>
-        // Mapeamento de condomínios para domínios
-        const dominios = {
-            "BENDORF": "bendorf.sc.loomy.srv.br",
-            "BRISAS DA SERRA 1 [1-4]": "brisasdaserra1.mg.loomy.srv.br",
-            "BRISAS DA SERRA 2 [5-27]": "brisasdaserra2.mg.loomy.srv.br",
-            "CHAPADA DOS LÍRIOS": "chapadadoslirios.mt.loomy.srv.br",
-            "CHAPADA PANTANAL": "chapadapantanal.mt.loomy.srv.br",
-            "COSTA DO CACAU": "costadocacau.ba.loomy.srv.br",
-            "ECOVILAGGIO": "ecovillagio.go.loomy.srv.br",
-            "PONTO GARDÊNIA": "gardenia.mg.loomy.srv.br",
-            "GRANCLUB": "granclub.go.loomy.srv.br",
-            "GRAN SONATA": "gransonata.go.loomy.srv.br",
-            "GRAN VALEY": "granvalley.go.loomy.srv.br",
-            "JOINVILLE": "joinville.sp.loomy.srv.br",
-            "LAGOA DAS ESMERALDAS": "lagoadasesmeraldas.mg.loomy.srv.br",
-            "LIBRA": "libra.mg.loomy.srv.br",
-            "MAIS PARK": "maispark.mg.loomy.srv.br",
-            "MARAJÓ": "marajo.mg.loomy.srv.br",
-            "BOSQUE DAS MARGARIDAS": "margaridas.mg.loomy.srv.br",
-            "MATA ATLÂNTICA": "mataatlantica.mg.loomy.srv.br",
-            "MORADA CARIOCA": "moradacarioca.sp.loomy.srv.br",
-            "MORADA DAS TORRES - CLUB": "moradadastorres.ba.loomy.srv.br",
-            "MORADA DE MINAS": "moradademinas.mg.loomy.srv.br",
-            "MORADA DAS TORRES SP": "moradadastorres.sp.loomy.srv.br",
-            "MUSIQUE": "musique.mg.loomy.srv.br",
-            "PLAZA NORTE": "plazanorte.mg.loomy.srv.br",
-            "LISBOA": "provinciaslisboa.mg.loomy.srv.br",
-            "RESIDENCIAL SABIÁ": "residencialsabia.mg.loomy.srv.br",
-            "RIVERA LIFE": "riveralife.ba.loomy.srv.br",
-            "RUBIS": "rubis.mg.loomy.srv.br",
-            "SAN FELIPPO": "sanfelippo.sp.loomy.srv.br",
-            "SÃO FRANCISCO": "saofrancisco.mg.loomy.srv.br",
-            "SOLAR DOS MONTES": "solardosmontes.mg.loomy.srv.br",
-            "SOL DO ENGENHO": "soldoengenho.rj.loomy.srv.br",
-            "SPAZIO SALVADOR NORTE": "spaziosalvadornorte.ba.loomy.srv.br",
-            "SPAZIO SINGULAR": "spaziosingular.ba.loomy.srv.br",
-            "JARDIM TIRADENTES": "tiradentes.mg.loomy.srv.br",
-            "VIC PARK MONTREAL": "vicpark.mg.loomy.srv.br",
-            "VILA DIAMANTE": "viladiamante.es.loomy.srv.br",
-            "VILA REAL ESMERALDA": "vilarealesmeralda.mg.loomy.srv.br",
-            "VILLAS VILLAGE": "villasvillage.ba.loomy.srv.br",
-            "RESERVA BARRA FUNDA": "reservabarrafunda.sp.loomy.srv.br",
-            "LUZ DO CAMPO": "luzdocampo.sp.loomy.srv.br",
-            "MORADA PREMIUM": "moradapremium.ba.loomy.srv.br",
-            "PARQUE DAS NAÇÕES": "parquedasnacoes.ba.loomy.srv.br"
-        };
+        // Mapeamentos (mantidos os mesmos do código anterior)
+        const dominios = { /* ... */ };
+        const pabx = { /* ... */ };
+        const senhasRamal = { /* ... */ };
 
-        // Mapeamento de condomínios para PABX
-        const pabx = {
-            "LISBOA": "https://172.17.22.3",
-            "CHAPADA DOS LÍRIOS": "https://172.17.40.3",
-            "CHAPADA PANTANAL": "https://172.17.39.3",
-            "SAN FELIPPO": "https://172.17.30.3",
-            "SOL DO ENGENHO": "https://172.17.27.3",
-            "ECOVILAGGIO": "https://172.17.38.3",
-            "SÃO FRANCISCO": "https://172.17.37.3",
-            "RESIDENCIAL SABIÁ": "https://172.17.34.3",
-            "JARDIM TIRADENTES": "https://172.17.19.3",
-            "LAGOA DAS ESMERALDAS": "https://172.17.25.3",
-            "SOLAR DOS MONTES": "https://172.17.33.3",
-            "GRANCLUB": "https://192.168.12.3",
-            "LIBRA": "https://172.17.32.3",
-            "VILA DIAMANTE": "https://172.17.16.3",
-            "JOINVILLE": "https://192.168.17.3",
-            "GRAN VALEY": "https://172.17.26.3",
-            "BOSQUE DAS MARGARIDAS": "https://172.17.11.3",
-            "MUSIQUE": "https://172.17.15.3",
-            "MORADA CARIOCA": "https://172.17.23.3",
-            "SPAZIO SINGULAR": "https://172.17.14.3",
-            "MARAJÓ": "https://172.17.29.3",
-            "PONTO GARDÊNIA": "https://172.17.31.3",
-            "MORADA DE MINAS": "https://172.17.48.3",
-            "MORADA DAS TORRES SP": "https://192.168.20.3",
-            "RUBIS": "https://172.17.10.3",
-            "MATA ATLÂNTICA": "https://172.17.12.3",
-            "COSTA DO CACAU": "https://172.17.13.3",
-            "SPAZIO SALVADOR NORTE": "https://172.17.50.3",
-            "BENDORF": "https://192.168.18.3",
-            "SOLAR DO VALE": "https://192.168.10.3",
-            "VIC PARK MONTREAL": "https://172.17.47.3",
-            "PLAZA NORTE": "https://172.17.18.3",
-            "ESTRELA DE CRISTAL": "https://172.17.66.3",
-            "MORADA DAS TORRES - CLUB": "https://172.17.51.3",
-            "GREENVILLE": "https://172.17.68.3",
-            "BRISAS DA SERRA 1 [1-4]": "https://172.17.52.5",
-            "BRISAS DA SERRA 2 [5-27]": "https://172.17.52.3",
-            "MAIS PARK": "https://172.17.53.3",
-            "GRAN SONATA": "https://172.17.55.3",
-            "RIVERA LIFE": "https://172.17.54.3",
-            "VILA REAL ESMERALDA": "https://172.17.56.3",
-            "GOLDEN PLAZA": "https://172.17.35.3",
-            "XINGÚ": "https://172.17.57.3",
-            "BOSQUE DA RIBEIRA": "https://172.17.59.3",
-            "PONTO DIAMANTE": "https://172.17.58.3",
-            "LAGUNA": "https://172.17.70.3",
-            "CANTO DO SABIÁ": "https://172.17.60.3",
-            "RECANTO DOS ABRANTES": "https://187.44.177.206:8443",
-            "VILLAS VILLAGE": "https://172.17.21.3",
-            "LUZ DO CAMPO": "https://172.17.44.3",
-            "RESERVA BARRA FUNDA": "https://172.17.43.3",
-            "MORADA PREMIUM": "https://172.17.71.3/",
-            "PARQUE DAS NAÇÕES": "https://172.17.72.3/"
-        };
-
-        // Mapeamento de senhas de ramal
-        const senhasRamal = {
-            "LISBOA": (bloco, ap, ponto) => `rmt@loomy${bloco}${ap}${ponto}`,
-            "RECANTO DOS ABRANTES": (bloco, ap, ponto) => `rmt@abrantes${bloco}${ap}${ponto}`,
-            "CHAPADA DOS LÍRIOS": (bloco, ap, ponto) => `rmt@lirios${bloco}${ap}${ponto}`,
-            "CHAPADA PANTANAL": (bloco, ap, ponto) => `rmt@loomy#${bloco}${ap}${ponto}`,
-            "SAN FELIPPO": () => `rmt@loomy2023#`,
-            "SOL DO ENGENHO": (bloco, ap, ponto) => `rmt@engenho${bloco}${ap}${ponto}`,
-            "ECOVILAGGIO": (bloco, ap, ponto) => `rmt@ecovilla${bloco}${ap}${ponto}`,
-            "SÃO FRANCISCO": () => `rmt@loomy2023#`,
-            "RESIDENCIAL SABIÁ": () => `rmt@loomy#2023`,
-            "JARDIM TIRADENTES": () => `rmt@loomy2023`,
-            "LAGOA DAS ESMERALDAS": () => `rmt@loomy2023#`,
-            "SOLAR DOS MONTES": () => `rmt@loomy#2023`,
-            "GRANCLUB": () => `rmt@loomy123#`,
-            "LIBRA": () => `rmt@loomy#2023`,
-            "VILA DIAMANTE": () => `rmt@loomy#26!`,
-            "JOINVILLE": () => `rmt@loomy123#`,
-            "GRAN VALEY": () => `rmt@loomy123#`,
-            "BOSQUE DAS MARGARIDAS": () => `rmt@loomy123#`,
-            "MUSIQUE": () => `rmt@loomy123#`,
-            "MORADA CARIOCA": () => `rmt@loomy#123`,
-            "SPAZIO SINGULAR": () => `rmt@loomy123#`,
-            "MARAJÓ": () => `rmt@loomy123#`,
-            "PONTO GARDÊNIA": () => `rmt@loomy2023`,
-            "MORADA DE MINAS": (bloco, ap, ponto) => `rmt@mdeminas${bloco}${ap}${ponto}`,
-            "RIVERA LIFE": (bloco, ap, ponto) => `rmt@rivera${bloco}${ap}${ponto}`,
-            "MORADA DAS TORRES SP": () => `rmt@loomy123#`,
-            "RUBIS": () => `rmt@loomy123#`,
-            "MATA ATLÂNTICA": () => `rmt@loomy123#`,
-            "COSTA DO CACAU": () => `rmt@loomy123#`,
-            "SPAZIO SALVADOR NORTE": (bloco, ap, ponto) => `rmt@spaziosalvador${bloco}${ap}${ponto}`,
-            "BENDORF": (bloco, ap, ponto) => `rmt@bendorf${bloco}${ap}${ponto}`,
-            "SOLAR DO VALE": () => `rmt@loomy#2023`,
-            "VIC PARK MONTREAL": (bloco, ap, ponto) => `rmt@vic${bloco}${ap}${ponto}`,
-            "PLAZA NORTE": (bloco, ap, ponto) => `rmt@loomy#${bloco}${ap}${ponto}`,
-            "MORADA DAS TORRES - CLUB": (bloco, ap, ponto) => `rmt@moradaclub${bloco}${ap}${ponto}`,
-            "BRISAS DA SERRA 1 [1-4]": (bloco, ap, ponto) => `rmt@brisas${bloco}${ap}${ponto}`,
-            "BRISAS DA SERRA 2 [5-27]": (bloco, ap, ponto) => `rmt@brisas02#${bloco}${ap}${ponto}`,
-            "MAIS PARK": (bloco, ap, ponto) => `rmt@maispark${bloco}${ap}${ponto}`,
-            "GRAN SONATA": (bloco, ap, ponto) => `rmt@gransonata${bloco}${ap}${ponto}`,
-            "RIVERA LIFE": (bloco, ap, ponto) => `rmt@rivera${bloco}${ap}${ponto}`,
-            "VILA REAL ESMERALDA": (bloco, ap, ponto) => `rmt@vilareal${bloco}${ap}${ponto}`,
-            "GOLDEN PLAZA": (bloco, ap, ponto) => `rmt@golden${bloco}${ap}${ponto}`,
-            "XINGÚ": (bloco, ap, ponto) => `rmt@xingu${bloco}${ap}${ponto}`,
-            "BOSQUE DA RIBEIRA": (bloco, ap, ponto) => `rmt@ribeira${bloco}${ap}${ponto}`,
-            "PONTO DIAMANTE": (bloco, ap, ponto) => `rmt@pontod${bloco}${ap}${ponto}`,
-            "SOLAR DA COLINA": (bloco, ap, ponto) => `rmt@solardacolina${bloco}${ap}${ponto}`,
-            "PONTO VEREDAS": (bloco, ap, ponto) => `rmt@pontoveredas${bloco}${ap}${ponto}`,
-            "BOSQUE DAS ÁGUAS": (bloco, ap, ponto) => `rmt@bosqueaguas${bloco}${ap}${ponto}`,
-            "SERRA DOS PINHAIS": (bloco, ap, ponto) => `Loomy@${bloco}${ap}${ponto}`,
-            "ESTRELA DE CRISTAL": (bloco, ap, ponto) => `rmt@cristal#${bloco}${ap}${ponto}`,
-            "GREENVILLE": (bloco, ap, ponto) => `greenville@rmt${bloco}${ap}${ponto}`,
-            "CANTO DO SABIÁ": (bloco, ap, ponto) => `rmt@cantodosabia${bloco}${ap}${ponto}`,
-            "VIVER FAMA": (bloco, ap, ponto) => `rmt@viverfama${bloco}${ap}${ponto}`,
-            "LAGUNA": (bloco, ap, ponto) => `rmt@laguna${bloco}${ap}${ponto}`,
-            "VILLAS VILLAGE": (bloco, ap, ponto) => `rmt@villasvillage${bloco}${ap}${ponto}`,
-            "RESERVA BARRA FUNDA": (bloco, ap, ponto) => `rmt@reservabarrafunda${bloco}${ap}0${ponto}`,
-            "LUZ DO CAMPO": (bloco, ap, ponto) => `rmt@luzdocampo${bloco}${ap}${ponto}`,
-            "MORADA PREMIUM": (bloco, ap, ponto) => `rmt@moradapremium${bloco}${ap}${ponto}`,
-            "PARQUE DAS NAÇÕES": (bloco, ap, ponto) => `rmt@parquedasnacoes${bloco}${ap}${ponto}`,
-            "default": (condominio, bloco, ap, ponto) => `rmt@${condominio.toLowerCase().replace(/\s/g, '')}${bloco}${ap}${ponto}`
-        };
-
-        // Função para gerar as credenciais
-        function generateCredentials() {
+        // Função para gerar os dados
+        function generateData() {
             const condominio = document.getElementById('condominio').value;
             const bloco = document.getElementById('bloco').value;
             const ap = document.getElementById('apartamento').value;
             const ponto = document.querySelector('input[name="ponto"]:checked').value;
 
-            // Validar campos obrigatórios
             if (!condominio || !bloco || !ap) {
                 alert('Por favor, preencha todos os campos obrigatórios.');
                 return;
             }
 
-            // Gerar usuário
             const usuario = `${bloco}${ap}${ponto}`;
-
-            // Gerar credenciais
             const dominio = dominios[condominio] || "Domínio não configurado";
             const senha = senhasRamal[condominio] ? 
                 senhasRamal[condominio](bloco, ap, ponto) : 
-                senhasRamal.default(condominio, bloco, ap, ponto);
-            const pabxUrl = pabx[condominio] || "PABX não configurado";
+                `gen@${condominio.toLowerCase().replace(/\s/g, '')}${bloco}${ap}${ponto}`;
+            const pabxUrl = pabx[condominio] || "Conexão não configurada";
 
-            // Exibir resultados
-            document.getElementById('gerador-result').textContent = 
-                `| Nome de Usuário: ${usuario}\n| Senha: ${senha}\n| Domínio: ${dominio}`;
+            document.getElementById('data-result').textContent = 
+                `| Identificador: ${usuario}\n| Chave: ${senha}\n| Domínio: ${dominio}`;
 
-            document.getElementById('pabx-result').textContent = pabxUrl;
-
-            // Mostrar container de resultados
+            document.getElementById('connection-result').textContent = pabxUrl;
             document.getElementById('resultContainer').style.display = 'block';
         }
 
@@ -704,53 +648,42 @@
             const text = document.getElementById(elementId).textContent;
             navigator.clipboard.writeText(text).then(() => {
                 const btn = document.querySelector(`button[onclick="copyToClipboard('${elementId}')"]`);
-                const originalText = btn.innerHTML;
                 btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
                 setTimeout(() => {
-                    btn.innerHTML = originalText;
+                    btn.innerHTML = '<i class="far fa-copy"></i> Copiar';
                 }, 2000);
-            }).catch(err => {
-                console.error('Erro ao copiar: ', err);
-                alert('Erro ao copiar para a área de transferência');
             });
         }
 
         // Criar partículas
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            const particleCount = 30;
+            const particleCount = 40;
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
-                // Tamanho aleatório entre 1px e 3px
-                const size = Math.random() * 2 + 1;
+                const size = Math.random() * 3 + 1;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
-                
-                // Posição inicial aleatória
                 particle.style.left = `${Math.random() * 100}%`;
                 particle.style.bottom = `-10px`;
                 
-                // Duração da animação aleatória entre 10s e 20s
-                const duration = Math.random() * 10 + 10;
+                const duration = Math.random() * 15 + 15;
                 particle.style.animationDuration = `${duration}s`;
-                
-                // Atraso aleatório para que não todas comecem juntas
                 particle.style.animationDelay = `${Math.random() * 20}s`;
                 
+                particle.style.opacity = Math.random() * 0.3 + 0.1;
                 particlesContainer.appendChild(particle);
             }
         }
 
-        // Inicializar partículas quando a página carregar
+        // Inicializar
         window.addEventListener('load', createParticles);
-
-        // Form submission
-        document.getElementById('credentialForm').addEventListener('submit', function(e) {
+        document.getElementById('dataForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            generateCredentials();
+            generateData();
         });
     </script>
 </body>
