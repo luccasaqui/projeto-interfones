@@ -3,687 +3,767 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Dados | Interface Premium</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>GERADOR DE DADOS | Interfones</title>
     <style>
         :root {
-            --primary: #10b981;
-            --primary-dark: #0d9f6e;
-            --primary-light: #d1fae5;
-            --secondary: #059669;
-            --accent: #047857;
-            --light: #f0fdf4;
-            --dark: #022c22;
-            --darker: #011a13;
-            --success: #34d399;
-            --error: #f87171;
-            --border-radius: 16px;
-            --box-shadow: 0 12px 32px rgba(5, 150, 105, 0.2);
-            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            --glass: rgba(255, 255, 255, 0.12);
-            --glass-border: rgba(255, 255, 255, 0.2);
+            --primary: #2c3e50;
+            --primary-dark: #1a252f;
+            --secondary: #3498db;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #95a5a6;
+            --light-gray: #ecf0f1;
+            --border-radius: 6px;
+            --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-        }
-
-        @font-face {
-            font-family: 'Inter';
-            font-style: normal;
-            font-weight: 400;
-            src: url(https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hjg.woff2) format('woff2');
-        }
-
-        @font-face {
-            font-family: 'Inter';
-            font-style: normal;
-            font-weight: 600;
-            src: url(https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYAZ9hjg.woff2) format('woff2');
+            font-family: 'Segoe UI', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, var(--darker), var(--dark));
+            background-color: #f5f7fa;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            color: white;
+            color: var(--dark);
+            line-height: 1.6;
         }
 
         .container {
-            background: var(--glass);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
+            background: white;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             width: 100%;
-            max-width: 500px;
-            padding: 40px;
+            max-width: 900px;
+            padding: 30px;
             transition: var(--transition);
-            border: 1px solid var(--glass-border);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, rgba(16,185,129,0) 70%);
-            animation: rotate 25s linear infinite;
-            z-index: -1;
-        }
-
-        @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .container:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 50px rgba(5, 150, 105, 0.3);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             position: relative;
+            padding-bottom: 20px;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            right: 25%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.1), transparent);
         }
 
         .header h1 {
-            color: white;
-            font-size: 2.4rem;
-            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 28px;
+            margin-bottom: 8px;
             font-weight: 600;
-            background: linear-gradient(90deg, var(--primary), var(--primary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            position: relative;
-            display: inline-block;
             letter-spacing: -0.5px;
         }
 
-        .header h1::after {
-            content: '';
-            position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 4px;
-            opacity: 0.8;
+        .header .subtitle {
+            color: var(--gray);
+            font-size: 14px;
+            font-weight: 500;
         }
 
-        .header .icon {
-            font-size: 3rem;
-            margin-bottom: 25px;
-            color: var(--primary-light);
-            text-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
-            animation: pulse 3s infinite ease-in-out;
-            filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.4));
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.08); opacity: 0.8; }
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
         .form-group {
-            margin-bottom: 30px;
-            position: relative;
+            flex: 1;
+            margin-bottom: 0;
         }
 
         label {
             display: block;
-            margin-bottom: 12px;
-            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 8px;
+            color: var(--dark);
             font-weight: 500;
-            font-size: 1rem;
-            letter-spacing: 0.2px;
+            font-size: 14px;
         }
 
         select, input {
             width: 100%;
-            padding: 16px 24px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 15px;
+            border: 1px solid #dfe6e9;
             border-radius: var(--border-radius);
-            font-size: 1rem;
+            font-size: 15px;
             transition: var(--transition);
-            background: rgba(0, 0, 0, 0.15);
-            color: white;
-            appearance: none;
-            font-weight: 400;
+            background-color: white;
+            color: var(--dark);
         }
 
         select:focus, input:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
-            background: rgba(0, 0, 0, 0.25);
-        }
-
-        select {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23d1fae5' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 20px center;
-            background-size: 14px;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
         }
 
         .radio-group {
             display: flex;
             gap: 15px;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         .radio-option {
             display: flex;
             align-items: center;
-            gap: 12px;
-            flex: 1;
-            position: relative;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .radio-option:hover {
+            background-color: rgba(52, 152, 219, 0.05);
         }
 
         .radio-option input {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .radio-custom {
-            width: 24px;
-            height: 24px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 8px;
-            transition: var(--transition);
-            position: relative;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .radio-option input:checked + .radio-custom {
-            background: var(--primary);
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.3);
-        }
-
-        .radio-option input:checked + .radio-custom::after {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            color: white;
-            font-size: 12px;
-            position: absolute;
-            animation: checkIn 0.3s ease-out;
-        }
-
-        @keyframes checkIn {
-            0% { transform: scale(0); opacity: 0; }
-            80% { transform: scale(1.2); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .radio-option:hover .radio-custom {
-            border-color: var(--primary-light);
-            transform: translateY(-2px);
+            width: auto;
+            accent-color: var(--secondary);
         }
 
         .radio-option label {
             margin-bottom: 0;
+            font-weight: normal;
             cursor: pointer;
-            color: rgba(255, 255, 255, 0.8);
-            transition: var(--transition);
-            flex: 1;
-            padding: 12px 16px;
-            background: rgba(0, 0, 0, 0.15);
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .radio-option:hover label {
-            color: white;
-            background: rgba(0, 0, 0, 0.25);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .radio-option input:checked ~ label {
-            color: white;
-            background: rgba(16, 185, 129, 0.1);
-            border-color: rgba(16, 185, 129, 0.3);
         }
 
         .btn {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 14px;
+            background-color: var(--primary);
             color: white;
             border: none;
             border-radius: var(--border-radius);
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 15px;
+            font-weight: 500;
             cursor: pointer;
             transition: var(--transition);
-            margin-top: 20px;
+            margin-top: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
+            gap: 10px;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            transition: var(--transition);
-            z-index: -1;
         }
 
         .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(16, 185, 129, 0.4);
-        }
-
-        .btn:hover::before {
-            left: 0;
-        }
-
-        .btn:active {
-            transform: translateY(0);
+            background-color: var(--primary-dark);
         }
 
         .btn i {
-            font-size: 1.3rem;
+            font-size: 16px;
+        }
+
+        .results-container {
+            margin-top: 30px;
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
             transition: var(--transition);
         }
 
-        .btn:hover i {
-            transform: scale(1.1);
-        }
-
-        .result-container {
-            margin-top: 40px;
-            animation: fadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .results-container.visible {
+            opacity: 1;
+            height: auto;
         }
 
         .result-box {
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            margin-top: 20px;
+            padding: 20px;
             border-radius: var(--border-radius);
-            padding: 24px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .result-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--primary), var(--accent));
-        }
-
-        .result-box:hover {
-            background: rgba(0, 0, 0, 0.3);
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.15);
+            background-color: var(--light-gray);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .result-box h3 {
-            color: var(--primary-light);
-            margin-bottom: 18px;
+            color: var(--primary);
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 1.2rem;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 600;
         }
 
         .result-box h3 i {
-            font-size: 1.4rem;
+            font-size: 18px;
+            color: var(--secondary);
         }
 
         .result-content {
-            background: rgba(0, 0, 0, 0.15);
-            padding: 18px;
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            font-family: 'Courier New', monospace;
+            background-color: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            border: 1px solid #dfe6e9;
+            font-family: 'Roboto Mono', monospace;
             white-space: pre-wrap;
             word-break: break-word;
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.7;
-            font-size: 0.95rem;
-            transition: var(--transition);
-        }
-
-        .result-box:hover .result-content {
-            background: rgba(0, 0, 0, 0.25);
+            font-size: 14px;
+            line-height: 1.8;
         }
 
         .copy-btn {
-            background: rgba(255, 255, 255, 0.1);
+            background-color: var(--secondary);
             color: white;
             border: none;
-            border-radius: 8px;
-            padding: 10px 18px;
-            font-size: 0.95rem;
+            border-radius: var(--border-radius);
+            padding: 8px 15px;
+            font-size: 13px;
             cursor: pointer;
             transition: var(--transition);
-            margin-top: 15px;
+            margin-top: 10px;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 5px;
+            font-weight: 500;
         }
 
         .copy-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
-        }
-
-        .copy-btn:active {
-            transform: translateY(0);
+            background-color: #2980b9;
         }
 
         .copy-btn i {
-            font-size: 0.95rem;
-            transition: transform 0.3s ease;
+            font-size: 13px;
         }
 
-        .copy-btn:hover i {
-            transform: scale(1.1);
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #dfe6e9;
+            margin-bottom: 20px;
         }
 
-        /* Efeitos de luz e brilho */
-        .glow {
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(16,185,129,0.3) 0%, rgba(16,185,129,0) 70%);
-            filter: blur(30px);
-            z-index: -1;
-            animation: floatGlow 15s infinite alternate ease-in-out;
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray);
         }
 
-        @keyframes floatGlow {
-            0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(50px, -30px); }
-            50% { transform: translate(-40px, 20px); }
-            75% { transform: translate(30px, 40px); }
+        .tab.active {
+            border-bottom-color: var(--secondary);
+            color: var(--primary);
         }
 
-        /* Efeitos de partículas */
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
+        .tab:hover:not(.active) {
+            color: var(--primary);
         }
 
-        .particle {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 50%;
-            animation: float linear infinite;
-            filter: blur(1px);
+        .tab-content {
+            display: none;
         }
 
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        .tab-content.active {
+            display: block;
         }
 
         @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
             .container {
-                padding: 30px;
+                padding: 20px;
             }
             
             .header h1 {
-                font-size: 2rem;
+                font-size: 24px;
             }
             
             .radio-group {
                 flex-direction: column;
-                gap: 12px;
+                gap: 5px;
             }
-            
-            .radio-option label {
-                padding: 10px 14px;
+
+            .tab {
+                padding: 10px 15px;
+                font-size: 13px;
             }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="particles" id="particles"></div>
-    <div class="glow" style="top: 20%; left: 10%;"></div>
-    <div class="glow" style="bottom: 15%; right: 10%; animation-delay: 2s;"></div>
-    
     <div class="container">
         <div class="header">
-            <div class="icon">
-                <i class="fas fa-magic"></i>
-            </div>
-            <h1>Gerador de Dados</h1>
-            <p style="color: rgba(255,255,255,0.7); font-size: 1.05rem;">Criação automatizada de informações</p>
+            <h1>GERADOR DE DADOS</h1>
+            <div class="subtitle">Sistema de Credenciais para Interfones</div>
         </div>
 
-        <form id="dataForm">
-            <div class="form-group">
-                <label for="condominio">Localização</label>
-                <select id="condominio" required>
-                    <option value="">Selecione...</option>
-                    <option value="BENDORF">BENDORF</option>
-                    <option value="BRISAS DA SERRA 1 [1-4]">BRISAS DA SERRA 1 [1-4]</option>
-                    <option value="BRISAS DA SERRA 2 [5-27]">BRISAS DA SERRA 2 [5-27]</option>
-                    <option value="CHAPADA DOS LÍRIOS">CHAPADA DOS LÍRIOS</option>
-                    <option value="CHAPADA PANTANAL">CHAPADA PANTANAL</option>
-                    <option value="COSTA DO CACAU">COSTA DO CACAU</option>
-                    <option value="ECOVILAGGIO">ECOVILAGGIO</option>
-                    <option value="PONTO GARDÊNIA">PONTO GARDÊNIA</option>
-                    <option value="GRANCLUB">GRANCLUB</option>
-                    <option value="GRAN SONATA">GRAN SONATA</option>
-                    <option value="GRAN VALEY">GRAN VALEY</option>
-                    <option value="JOINVILLE">JOINVILLE</option>
-                    <option value="LAGOA DAS ESMERALDAS">LAGOA DAS ESMERALDAS</option>
-                    <option value="LIBRA">LIBRA</option>
-                    <option value="MAIS PARK">MAIS PARK</option>
-                    <option value="MARAJÓ">MARAJÓ</option>
-                    <option value="BOSQUE DAS MARGARIDAS">BOSQUE DAS MARGARIDAS</option>
-                    <option value="MATA ATLÂNTICA">MATA ATLÂNTICA</option>
-                    <option value="MORADA CARIOCA">MORADA CARIOCA</option>
-                    <option value="MORADA DAS TORRES - CLUB">MORADA DAS TORRES - CLUB</option>
-                    <option value="MORADA DE MINAS">MORADA DE MINAS</option>
-                    <option value="MORADA DAS TORRES SP">MORADA DAS TORRES SP</option>
-                    <option value="MUSIQUE">MUSIQUE</option>
-                    <option value="PLAZA NORTE">PLAZA NORTE</option>
-                    <option value="LISBOA">LISBOA</option>
-                    <option value="RESIDENCIAL SABIÁ">RESIDENCIAL SABIÁ</option>
-                    <option value="RIVERA LIFE">RIVERA LIFE</option>
-                    <option value="RUBIS">RUBIS</option>
-                    <option value="SAN FELIPPO">SAN FELIPPO</option>
-                    <option value="SÃO FRANCISCO">SÃO FRANCISCO</option>
-                    <option value="SOLAR DOS MONTES">SOLAR DOS MONTES</option>
-                    <option value="SOL DO ENGENHO">SOL DO ENGENHO</option>
-                    <option value="SPAZIO SALVADOR NORTE">SPAZIO SALVADOR NORTE</option>
-                    <option value="SPAZIO SINGULAR">SPAZIO SINGULAR</option>
-                    <option value="JARDIM TIRADENTES">JARDIM TIRADENTES</option>
-                    <option value="VIC PARK MONTREAL">VIC PARK MONTREAL</option>
-                    <option value="VILA DIAMANTE">VILA DIAMANTE</option>
-                    <option value="VILA REAL ESMERALDA">VILA REAL ESMERALDA</option>
-                    <option value="VILLAS VILLAGE">VILLAS VILLAGE</option>
-                    <option value="RESERVA BARRA FUNDA">RESERVA BARRA FUNDA</option>
-                    <option value="LUZ DO CAMPO">LUZ DO CAMPO</option>
-                    <option value="MORADA PREMIUM">MORADA PREMIUM</option>
-                    <option value="PARQUE DAS NAÇÕES">PARQUE DAS NAÇÕES</option>
-                </select>
-            </div>
+        <div class="tabs">
+            <div class="tab active" data-tab="form">Formulário</div>
+            <div class="tab" data-tab="info">Informações</div>
+        </div>
 
-            <div class="form-row">
-                <div class="form-group" style="flex: 1;">
-                    <label for="bloco">Identificador</label>
-                    <input type="text" id="bloco" placeholder="Ex: 10" required pattern="[0-9]+">
-                </div>
-
-                <div class="form-group" style="flex: 1;">
-                    <label for="apartamento">Código</label>
-                    <input type="text" id="apartamento" placeholder="Ex: 101" required pattern="[0-9]+">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>Configuração</label>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="ponto1" name="ponto" value="1" checked>
-                        <span class="radio-custom"></span>
-                        <label for="ponto1">Configuração Padrão</label>
+        <div class="tab-content active" id="form-tab">
+            <form id="credentialForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="condominio1">Condomínio Principal</label>
+                        <select id="condominio1" required>
+                            <option value="">Selecione um condomínio...</option>
+                            <option value="BENDORF">BENDORF</option>
+                            <option value="BRISAS DA SERRA 1 [1-4]">BRISAS DA SERRA 1 [1-4]</option>
+                            <option value="BRISAS DA SERRA 2 [5-27]">BRISAS DA SERRA 2 [5-27]</option>
+                            <option value="CHAPADA DOS LÍRIOS">CHAPADA DOS LÍRIOS</option>
+                            <option value="CHAPADA PANTANAL">CHAPADA PANTANAL</option>
+                            <option value="COSTA DO CACAU">COSTA DO CACAU</option>
+                            <option value="ECOVILAGGIO">ECOVILAGGIO</option>
+                            <option value="PONTO GARDÊNIA">PONTO GARDÊNIA</option>
+                            <option value="GRANCLUB">GRANCLUB</option>
+                            <option value="GRAN SONATA">GRAN SONATA</option>
+                            <option value="GRAN VALEY">GRAN VALEY</option>
+                            <option value="JOINVILLE">JOINVILLE</option>
+                            <option value="LAGOA DAS ESMERALDAS">LAGOA DAS ESMERALDAS</option>
+                            <option value="LIBRA">LIBRA</option>
+                            <option value="MAIS PARK">MAIS PARK</option>
+                            <option value="MARAJÓ">MARAJÓ</option>
+                            <option value="BOSQUE DAS MARGARIDAS">BOSQUE DAS MARGARIDAS</option>
+                            <option value="MATA ATLÂNTICA">MATA ATLÂNTICA</option>
+                            <option value="MORADA CARIOCA">MORADA CARIOCA</option>
+                            <option value="MORADA DAS TORRES - CLUB">MORADA DAS TORRES - CLUB</option>
+                            <option value="MORADA DE MINAS">MORADA DE MINAS</option>
+                            <option value="MORADA DAS TORRES SP">MORADA DAS TORRES SP</option>
+                            <option value="MUSIQUE">MUSIQUE</option>
+                            <option value="PLAZA NORTE">PLAZA NORTE</option>
+                            <option value="LISBOA">LISBOA</option>
+                            <option value="RESIDENCIAL SABIÁ">RESIDENCIAL SABIÁ</option>
+                            <option value="RIVERA LIFE">RIVERA LIFE</option>
+                            <option value="RUBIS">RUBIS</option>
+                            <option value="SAN FELIPPO">SAN FELIPPO</option>
+                            <option value="SÃO FRANCISCO">SÃO FRANCISCO</option>
+                            <option value="SOLAR DOS MONTES">SOLAR DOS MONTES</option>
+                            <option value="SOL DO ENGENHO">SOL DO ENGENHO</option>
+                            <option value="SPAZIO SALVADOR NORTE">SPAZIO SALVADOR NORTE</option>
+                            <option value="SPAZIO SINGULAR">SPAZIO SINGULAR</option>
+                            <option value="JARDIM TIRADENTES">JARDIM TIRADENTES</option>
+                            <option value="VIC PARK MONTREAL">VIC PARK MONTREAL</option>
+                            <option value="VILA DIAMANTE">VILA DIAMANTE</option>
+                            <option value="VILA REAL ESMERALDA">VILA REAL ESMERALDA</option>
+                            <option value="VILLAS VILLAGE">VILLAS VILLAGE</option>
+                            <option value="RESERVA BARRA FUNDA">RESERVA BARRA FUNDA</option>
+                            <option value="LUZ DO CAMPO">LUZ DO CAMPO</option>
+                            <option value="MORADA PREMIUM">MORADA PREMIUM</option>
+                            <option value="PARQUE DAS NAÇÕES">PARQUE DAS NAÇÕES</option>
+                            <option value="N/A">N/A</option>
+                        </select>
                     </div>
-                    <div class="radio-option">
-                        <input type="radio" id="ponto2" name="ponto" value="2">
-                        <span class="radio-custom"></span>
-                        <label for="ponto2">Configuração Alternativa</label>
+
+                    <div class="form-group">
+                        <label for="condominio2">Condomínio Secundário (opcional)</label>
+                        <select id="condominio2">
+                            <option value="N/A">N/A</option>
+                            <option value="BOSQUE DAS ÁGUAS">BOSQUE DAS ÁGUAS</option>
+                            <option value="BOSQUE DA RIBEIRA">BOSQUE DA RIBEIRA</option>
+                            <option value="CANTO DO SABIÁ">CANTO DO SABIÁ</option>
+                            <option value="ESTRELA DE CRISTAL">ESTRELA DE CRISTAL</option>
+                            <option value="GOLDEN PLAZA">GOLDEN PLAZA</option>
+                            <option value="GREENVILLE">GREENVILLE</option>
+                            <option value="LAGUNA">LAGUNA</option>
+                            <option value="RECANTO DOS ABRANTES">RECANTO DOS ABRANTES</option>
+                            <option value="XINGÚ">XINGÚ</option>
+                            <option value="SERRA DOS PINHAIS">SERRA DOS PINHAIS</option>
+                            <option value="VIVER FAMA">VIVER FAMA</option>
+                            <option value="PONTO DIAMANTE">PONTO DIAMANTE</option>
+                            <option value="PONTO VEREDAS">PONTO VEREDAS</option>
+                            <option value="SOLAR DA COLINA">SOLAR DA COLINA</option>
+                            <option value="VILLAS VILLAGE">VILLAS VILLAGE</option>
+                            <option value="RESERVA BARRA FUNDA">RESERVA BARRA FUNDA</option>
+                            <option value="LUZ DO CAMPO">LUZ DO CAMPO</option>
+                            <option value="MORADA PREMIUM">MORADA PREMIUM</option>
+                            <option value="PARQUE DAS NAÇÕES">PARQUE DAS NAÇÕES</option>
+                        </select>
                     </div>
                 </div>
-            </div>
 
-            <button type="submit" class="btn">
-                <i class="fas fa-cogs"></i>
-                GERAR DADOS
-            </button>
-        </form>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bloco">Bloco (BL)</label>
+                        <input type="text" id="bloco" placeholder="Ex: 10" required pattern="[0-9]+">
+                    </div>
 
-        <div class="result-container" id="resultContainer" style="display: none;">
-            <div class="result-box">
-                <h3><i class="fas fa-database"></i> Dados Gerados</h3>
-                <div class="result-content" id="data-result"></div>
-                <button class="copy-btn" onclick="copyToClipboard('data-result')">
-                    <i class="far fa-copy"></i> Copiar
+                    <div class="form-group">
+                        <label for="apartamento">Apartamento (AP)</label>
+                        <input type="text" id="apartamento" placeholder="Ex: 100" required pattern="[0-9]+">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ponto">Ponto do Interfone</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="ponto1" name="ponto" value="1" checked>
+                                <label for="ponto1">PRIMEIRO PONTO</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="ponto2" name="ponto" value="2">
+                                <label for="ponto2">SEGUNDO PONTO</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">
+                    <i class="fas fa-key"></i>
+                    GERAR DADOS
                 </button>
-            </div>
+            </form>
 
+            <div class="results-container" id="results-container">
+                <div class="result-box">
+                    <h3><i class="fas fa-user-shield"></i> Credenciais de Acesso</h3>
+                    <div class="result-content" id="gerador-result"></div>
+                    <button class="copy-btn" onclick="copyToClipboard('gerador-result')">
+                        <i class="far fa-copy"></i> Copiar Credenciais
+                    </button>
+                </div>
+
+                <div class="result-box">
+                    <h3><i class="fas fa-network-wired"></i> Endereço PABX</h3>
+                    <div class="result-content" id="pabx-result"></div>
+                    <button class="copy-btn" onclick="copyToClipboard('pabx-result')">
+                        <i class="far fa-copy"></i> Copiar PABX
+                    </button>
+                </div>
+
+                <div class="result-box">
+                    <h3><i class="fas fa-lock"></i> Senha do Ramal</h3>
+                    <div class="result-content" id="senha-result"></div>
+                    <button class="copy-btn" onclick="copyToClipboard('senha-result')">
+                        <i class="far fa-copy"></i> Copiar Senha
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="info-tab">
             <div class="result-box">
-                <h3><i class="fas fa-network-wired"></i> Conexão</h3>
-                <div class="result-content" id="connection-result"></div>
-                <button class="copy-btn" onclick="copyToClipboard('connection-result')">
-                    <i class="far fa-copy"></i> Copiar
-                </button>
+                <h3><i class="fas fa-info-circle"></i> Instruções de Uso</h3>
+                <div class="result-content">
+                    <p><strong>Como utilizar o gerador:</strong></p>
+                    <ol>
+                        <li>Selecione o condomínio principal na lista</li>
+                        <li>Se necessário, selecione um condomínio secundário</li>
+                        <li>Informe o número do bloco (apenas números)</li>
+                        <li>Informe o número do apartamento (apenas números)</li>
+                        <li>Selecione o ponto do interfone (primeiro ou segundo ponto)</li>
+                        <li>Clique em "GERAR DADOS" para criar as credenciais</li>
+                    </ol>
+                    <p><strong>Dicas:</strong></p>
+                    <ul>
+                        <li>Você pode copiar cada seção individualmente usando os botões "Copiar"</li>
+                        <li>O condomínio secundário é opcional e pode ser deixado como "N/A"</li>
+                        <li>Certifique-se de inserir apenas números nos campos de bloco e apartamento</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Mapeamentos (mantidos os mesmos do código anterior)
-        const dominios = { /* ... */ };
-        const pabx = { /* ... */ };
-        const senhasRamal = { /* ... */ };
+        // Mapeamento de condomínios para domínios
+        const dominios = {
+            "BENDORF": "bendorf.sc.loomy.srv.br",
+            "BRISAS DA SERRA 1 [1-4]": "brisasdaserra1.mg.loomy.srv.br",
+            "BRISAS DA SERRA 2 [5-27]": "brisasdaserra2.mg.loomy.srv.br",
+            "CHAPADA DOS LÍRIOS": "chapadadoslirios.mt.loomy.srv.br",
+            "CHAPADA PANTANAL": "chapadapantanal.mt.loomy.srv.br",
+            "COSTA DO CACAU": "costadocacau.ba.loomy.srv.br",
+            "ECOVILAGGIO": "ecovillagio.go.loomy.srv.br",
+            "PONTO GARDÊNIA": "gardenia.mg.loomy.srv.br",
+            "GRANCLUB": "granclub.go.loomy.srv.br",
+            "GRAN SONATA": "gransonata.go.loomy.srv.br",
+            "GRAN VALEY": "granvalley.go.loomy.srv.br",
+            "JOINVILLE": "joinville.sp.loomy.srv.br",
+            "LAGOA DAS ESMERALDAS": "lagoadasesmeraldas.mg.loomy.srv.br",
+            "LIBRA": "libra.mg.loomy.srv.br",
+            "MAIS PARK": "maispark.mg.loomy.srv.br",
+            "MARAJÓ": "marajo.mg.loomy.srv.br",
+            "BOSQUE DAS MARGARIDAS": "margaridas.mg.loomy.srv.br",
+            "MATA ATLÂNTICA": "mataatlantica.mg.loomy.srv.br",
+            "MORADA CARIOCA": "moradacarioca.sp.loomy.srv.br",
+            "MORADA DAS TORRES - CLUB": "moradadastorres.ba.loomy.srv.br",
+            "MORADA DE MINAS": "moradademinas.mg.loomy.srv.br",
+            "MORADA DAS TORRES SP": "moradadastorres.sp.loomy.srv.br",
+            "MUSIQUE": "musique.mg.loomy.srv.br",
+            "PLAZA NORTE": "plazanorte.mg.loomy.srv.br",
+            "LISBOA": "provinciaslisboa.mg.loomy.srv.br",
+            "RESIDENCIAL SABIÁ": "residencialsabia.mg.loomy.srv.br",
+            "RIVERA LIFE": "riveralife.ba.loomy.srv.br",
+            "RUBIS": "rubis.mg.loomy.srv.br",
+            "SAN FELIPPO": "sanfelippo.sp.loomy.srv.br",
+            "SÃO FRANCISCO": "saofrancisco.mg.loomy.srv.br",
+            "SOLAR DOS MONTES": "solardosmontes.mg.loomy.srv.br",
+            "SOL DO ENGENHO": "soldoengenho.rj.loomy.srv.br",
+            "SPAZIO SALVADOR NORTE": "spaziosalvadornorte.ba.loomy.srv.br",
+            "SPAZIO SINGULAR": "spaziosingular.ba.loomy.srv.br",
+            "JARDIM TIRADENTES": "tiradentes.mg.loomy.srv.br",
+            "VIC PARK MONTREAL": "vicpark.mg.loomy.srv.br",
+            "VILA DIAMANTE": "viladiamante.es.loomy.srv.br",
+            "VILA REAL ESMERALDA": "vilarealesmeralda.mg.loomy.srv.br",
+            "VILLAS VILLAGE": "villasvillage.ba.loomy.srv.br",
+            "RESERVA BARRA FUNDA": "reservabarrafunda.sp.loomy.srv.br",
+            "LUZ DO CAMPO": "luzdocampo.sp.loomy.srv.br",
+            "MORADA PREMIUM": "moradapremium.ba.loomy.srv.br",
+            "PARQUE DAS NAÇÕES": "parquedasnacoes.ba.loomy.srv.br",
+            "BOSQUE DAS ÁGUAS": "bosquedasaguas.mg.loomy.srv.br",
+            "BOSQUE DA RIBEIRA": "bosquedaribeira.mg.loomy.srv.br",
+            "CANTO DO SABIÁ": "cantodosabia.mg.loomy.srv.br",
+            "ESTRELA DE CRISTAL": "estreladecristal.loomy.srv.br",
+            "GOLDEN PLAZA": "goldenplaza.sp.loomy.srv.br",
+            "GREENVILLE": "greenville.mg.loomy.srv.br",
+            "LAGUNA": "laguna.ba.loomy.srv.br",
+            "RECANTO DOS ABRANTES": "recantodosabrantes.ba.loomy.srv.br",
+            "XINGÚ": "residencialxingu.mg.loomy.srv.br",
+            "SERRA DOS PINHAIS": "serradospinhais.mg.loomy.srv.br",
+            "VIVER FAMA": "viverfama.go.loomy.srv.br",
+            "PONTO DIAMANTE": "pontodiamante.mg.loomy.srv.br",
+            "PONTO VEREDAS": "pontoveredas.mg.loomy.srv.br",
+            "SOLAR DA COLINA": "solardacolina.mg.loomy.srv.br",
+            "N/A": ""
+        };
 
-        // Função para gerar os dados
-        function generateData() {
-            const condominio = document.getElementById('condominio').value;
+        // Mapeamento de condomínios para PABX
+        const pabx = {
+            "LISBOA": "https://172.17.22.3",
+            "CHAPADA DOS LÍRIOS": "https://172.17.40.3",
+            "CHAPADA PANTANAL": "https://172.17.39.3",
+            "SAN FELIPPO": "https://172.17.30.3",
+            "SOL DO ENGENHO": "https://172.17.27.3",
+            "ECOVILAGGIO": "https://172.17.38.3",
+            "SÃO FRANCISCO": "https://172.17.37.3",
+            "RESIDENCIAL SABIÁ": "https://172.17.34.3",
+            "JARDIM TIRADENTES": "https://172.17.19.3",
+            "LAGOA DAS ESMERALDAS": "https://172.17.25.3",
+            "SOLAR DOS MONTES": "https://172.17.33.3",
+            "GRANCLUB": "https://192.168.12.3",
+            "LIBRA": "https://172.17.32.3",
+            "VILA DIAMANTE": "https://172.17.16.3",
+            "JOINVILLE": "https://192.168.17.3",
+            "GRAN VALEY": "https://172.17.26.3",
+            "BOSQUE DAS MARGARIDAS": "https://172.17.11.3",
+            "MUSIQUE": "https://172.17.15.3",
+            "MORADA CARIOCA": "https://172.17.23.3",
+            "SPAZIO SINGULAR": "https://172.17.14.3",
+            "MARAJÓ": "https://172.17.29.3",
+            "PONTO GARDÊNIA": "https://172.17.31.3",
+            "MORADA DE MINAS": "https://172.17.48.3",
+            "MORADA DAS TORRES SP": "https://192.168.20.3",
+            "RUBIS": "https://172.17.10.3",
+            "MATA ATLÂNTICA": "https://172.17.12.3",
+            "COSTA DO CACAU": "https://172.17.13.3",
+            "SPAZIO SALVADOR NORTE": "https://172.17.50.3",
+            "BENDORF": "https://192.168.18.3",
+            "SOLAR DO VALE": "https://192.168.10.3",
+            "VIC PARK MONTREAL": "https://172.17.47.3",
+            "PLAZA NORTE": "https://172.17.18.3",
+            "ESTRELA DE CRISTAL": "https://172.17.66.3",
+            "MORADA DAS TORRES - CLUB": "https://172.17.51.3",
+            "GREENVILLE": "https://172.17.68.3",
+            "BRISAS DA SERRA 1 [1-4]": "https://172.17.52.5",
+            "BRISAS DA SERRA 2 [5-27]": "https://172.17.52.3",
+            "MAIS PARK": "https://172.17.53.3",
+            "GRAN SONATA": "https://172.17.55.3",
+            "RIVERA LIFE": "https://172.17.54.3",
+            "VILA REAL ESMERALDA": "https://172.17.56.3",
+            "GOLDEN PLAZA": "https://172.17.35.3",
+            "XINGÚ": "https://172.17.57.3",
+            "BOSQUE DA RIBEIRA": "https://172.17.59.3",
+            "PONTO DIAMANTE": "https://172.17.58.3",
+            "LAGUNA": "https://172.17.70.3",
+            "CANTO DO SABIÁ": "https://172.17.60.3",
+            "RECANTO DOS ABRANTES": "https://187.44.177.206:8443",
+            "VILLAS VILLAGE": "https://172.17.21.3",
+            "LUZ DO CAMPO": "https://172.17.44.3",
+            "RESERVA BARRA FUNDA": "https://172.17.43.3",
+            "MORADA PREMIUM": "https://172.17.71.3/",
+            "PARQUE DAS NAÇÕES": "https://172.17.72.3/",
+            "SOLAR DA COLINA": "https://192.168.13.3",
+            "PONTO VEREDAS": "https://172.17.61.3",
+            "BOSQUE DAS ÁGUAS": "https://172.17.62.3",
+            "SERRA DOS PINHAIS": "https://172.17.20.3",
+            "VIVER FAMA": "https://172.17.64.3",
+            "N/A": ""
+        };
+
+        // Mapeamento de senhas de ramal
+        const senhasRamal = {
+            "LISBOA": (bloco, ap, ponto) => `rmt@loomy${bloco}${ap}${ponto}`,
+            "RECANTO DOS ABRANTES": (bloco, ap, ponto) => `rmt@abrantes${bloco}${ap}${ponto}`,
+            "CHAPADA DOS LÍRIOS": (bloco, ap, ponto) => `rmt@lirios${bloco}${ap}${ponto}`,
+            "CHAPADA PANTANAL": (bloco, ap, ponto) => `rmt@loomy#${bloco}${ap}${ponto}`,
+            "SAN FELIPPO": () => `rmt@loomy2023#`,
+            "SOL DO ENGENHO": (bloco, ap, ponto) => `rmt@engenho${bloco}${ap}${ponto}`,
+            "ECOVILAGGIO": (bloco, ap, ponto) => `rmt@ecovilla${bloco}${ap}${ponto}`,
+            "SÃO FRANCISCO": () => `rmt@loomy2023#`,
+            "RESIDENCIAL SABIÁ": () => `rmt@loomy#2023`,
+            "JARDIM TIRADENTES": () => `rmt@loomy2023`,
+            "LAGOA DAS ESMERALDAS": () => `rmt@loomy2023#`,
+            "SOLAR DOS MONTES": () => `rmt@loomy#2023`,
+            "GRANCLUB": () => `rmt@loomy123#`,
+            "LIBRA": () => `rmt@loomy#2023`,
+            "VILA DIAMANTE": () => `rmt@loomy#26!`,
+            "JOINVILLE": () => `rmt@loomy123#`,
+            "GRAN VALEY": () => `rmt@loomy123#`,
+            "BOSQUE DAS MARGARIDAS": () => `rmt@loomy123#`,
+            "MUSIQUE": () => `rmt@loomy123#`,
+            "MORADA CARIOCA": () => `rmt@loomy#123`,
+            "SPAZIO SINGULAR": () => `rmt@loomy123#`,
+            "MARAJÓ": () => `rmt@loomy123#`,
+            "PONTO GARDÊNIA": () => `rmt@loomy2023`,
+            "MORADA DE MINAS": (bloco, ap, ponto) => `rmt@mdeminas${bloco}${ap}${ponto}`,
+            "RIVERA LIFE": (bloco, ap, ponto) => `rmt@rivera${bloco}${ap}${ponto}`,
+            "MORADA DAS TORRES SP": () => `rmt@loomy123#`,
+            "RUBIS": () => `rmt@loomy123#`,
+            "MATA ATLÂNTICA": () => `rmt@loomy123#`,
+            "COSTA DO CACAU": () => `rmt@loomy123#`,
+            "SPAZIO SALVADOR NORTE": (bloco, ap, ponto) => `rmt@spaziosalvador${bloco}${ap}${ponto}`,
+            "BENDORF": (bloco, ap, ponto) => `rmt@bendorf${bloco}${ap}${ponto}`,
+            "SOLAR DO VALE": () => `rmt@loomy#2023`,
+            "VIC PARK MONTREAL": (bloco, ap, ponto) => `rmt@vic${bloco}${ap}${ponto}`,
+            "PLAZA NORTE": (bloco, ap, ponto) => `rmt@loomy#${bloco}${ap}${ponto}`,
+            "MORADA DAS TORRES - CLUB": (bloco, ap, ponto) => `rmt@moradaclub${bloco}${ap}${ponto}`,
+            "BRISAS DA SERRA 1 [1-4]": (bloco, ap, ponto) => `rmt@brisas${bloco}${ap}${ponto}`,
+            "BRISAS DA SERRA 2 [5-27]": (bloco, ap, ponto) => `rmt@brisas02#${bloco}${ap}${ponto}`,
+            "MAIS PARK": (bloco, ap, ponto) => `rmt@maispark${bloco}${ap}${ponto}`,
+            "GRAN SONATA": (bloco, ap, ponto) => `rmt@gransonata${bloco}${ap}${ponto}`,
+            "RIVERA LIFE": (bloco, ap, ponto) => `rmt@rivera${bloco}${ap}${ponto}`,
+            "VILA REAL ESMERALDA": (bloco, ap, ponto) => `rmt@vilareal${bloco}${ap}${ponto}`,
+            "GOLDEN PLAZA": (bloco, ap, ponto) => `rmt@golden${bloco}${ap}${ponto}`,
+            "XINGÚ": (bloco, ap, ponto) => `rmt@xingu${bloco}${ap}${ponto}`,
+            "BOSQUE DA RIBEIRA": (bloco, ap, ponto) => `rmt@ribeira${bloco}${ap}${ponto}`,
+            "PONTO DIAMANTE": (bloco, ap, ponto) => `rmt@pontod${bloco}${ap}${ponto}`,
+            "SOLAR DA COLINA": (bloco, ap, ponto) => `rmt@solardacolina${bloco}${ap}${ponto}`,
+            "PONTO VEREDAS": (bloco, ap, ponto) => `rmt@pontoveredas${bloco}${ap}${ponto}`,
+            "BOSQUE DAS ÁGUAS": (bloco, ap, ponto) => `rmt@bosqueaguas${bloco}${ap}${ponto}`,
+            "SERRA DOS PINHAIS": (bloco, ap, ponto) => `Loomy@${bloco}${ap}${ponto}`,
+            "ESTRELA DE CRISTAL": (bloco, ap, ponto) => `rmt@cristal#${bloco}${ap}${ponto}`,
+            "GREENVILLE": (bloco, ap, ponto) => `greenville@rmt${bloco}${ap}${ponto}`,
+            "CANTO DO SABIÁ": (bloco, ap, ponto) => `rmt@cantodosabia${bloco}${ap}${ponto}`,
+            "VIVER FAMA": (bloco, ap, ponto) => `rmt@viverfama${bloco}${ap}${ponto}`,
+            "LAGUNA": (bloco, ap, ponto) => `rmt@laguna${bloco}${ap}${ponto}`,
+            "VILLAS VILLAGE": (bloco, ap, ponto) => `rmt@villasvillage${bloco}${ap}${ponto}`,
+            "RESERVA BARRA FUNDA": (bloco, ap, ponto) => `rmt@reservabarrafunda${bloco}${ap}0${ponto}`,
+            "LUZ DO CAMPO": (bloco, ap, ponto) => `rmt@luzdocampo${bloco}${ap}${ponto}`,
+            "MORADA PREMIUM": (bloco, ap, ponto) => `rmt@moradapremium${bloco}${ap}${ponto}`,
+            "PARQUE DAS NAÇÕES": (bloco, ap, ponto) => `rmt@parquedasnacoes${bloco}${ap}${ponto}`,
+            "N/A": () => ""
+        };
+
+        // Função para gerar as credenciais
+        function generateCredentials() {
+            const condominio1 = document.getElementById('condominio1').value;
+            const condominio2 = document.getElementById('condominio2').value;
             const bloco = document.getElementById('bloco').value;
             const ap = document.getElementById('apartamento').value;
             const ponto = document.querySelector('input[name="ponto"]:checked').value;
 
-            if (!condominio || !bloco || !ap) {
+            // Validar campos obrigatórios
+            if (!condominio1 || !bloco || !ap) {
                 alert('Por favor, preencha todos os campos obrigatórios.');
                 return;
             }
 
+            // Gerar usuário
             const usuario = `${bloco}${ap}${ponto}`;
-            const dominio = dominios[condominio] || "Domínio não configurado";
-            const senha = senhasRamal[condominio] ? 
-                senhasRamal[condominio](bloco, ap, ponto) : 
-                `gen@${condominio.toLowerCase().replace(/\s/g, '')}${bloco}${ap}${ponto}`;
-            const pabxUrl = pabx[condominio] || "Conexão não configurada";
 
-            document.getElementById('data-result').textContent = 
-                `| Identificador: ${usuario}\n| Chave: ${senha}\n| Domínio: ${dominio}`;
+            // Gerar credenciais para o condomínio principal
+            const dominio1 = dominios[condominio1] || "Domínio não configurado";
+            const senha1 = senhasRamal[condominio1] ? senhasRamal[condominio1](bloco, ap, ponto) : `rmt@${condominio1.toLowerCase().replace(/\s/g, '')}${bloco}${ap}${ponto}`;
+            const pabx1 = pabx[condominio1] || "PABX não configurado";
 
-            document.getElementById('connection-result').textContent = pabxUrl;
-            document.getElementById('resultContainer').style.display = 'block';
+            // Gerar credenciais para o condomínio secundário (se aplicável)
+            let dominio2 = "";
+            let senha2 = "";
+            let pabx2 = "";
+
+            if (condominio2 && condominio2 !== "N/A") {
+                dominio2 = dominios[condominio2] || "Domínio não configurado";
+                senha2 = senhasRamal[condominio2] ? senhasRamal[condominio2](bloco, ap, ponto) : `rmt@${condominio2.toLowerCase().replace(/\s/g, '')}${bloco}${ap}${ponto}`;
+                pabx2 = pabx[condominio2] || "PABX não configurado";
+            }
+
+            // Formatar resultados
+            document.getElementById('gerador-result').textContent = 
+                `USUÁRIO: ${usuario}\nSENHA: ${senha1}\nDOMÍNIO: ${dominio1}` + 
+                (dominio2 ? `\n\nUSUÁRIO: ${usuario}\nSENHA: ${senha2}\nDOMÍNIO: ${dominio2}` : "");
+
+            document.getElementById('pabx-result').textContent = 
+                pabx1 + (pabx2 ? `\n\n${pabx2}` : "");
+
+            document.getElementById('senha-result').textContent = 
+                senha1 + (senha2 ? `\n\n${senha2}` : "");
+
+            // Mostrar resultados com animação
+            document.getElementById('results-container').classList.add('visible');
         }
 
         // Função para copiar para área de transferência
         function copyToClipboard(elementId) {
             const text = document.getElementById(elementId).textContent;
             navigator.clipboard.writeText(text).then(() => {
-                const btn = document.querySelector(`button[onclick="copyToClipboard('${elementId}')"]`);
+                const btn = document.querySelector(`#${elementId} + .copy-btn`);
+                const originalText = btn.innerHTML;
                 btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
                 setTimeout(() => {
-                    btn.innerHTML = '<i class="far fa-copy"></i> Copiar';
+                    btn.innerHTML = originalText;
                 }, 2000);
+            }).catch(err => {
+                console.error('Erro ao copiar: ', err);
+                alert('Não foi possível copiar o texto. Tente novamente.');
             });
         }
 
-        // Criar partículas
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 40;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
                 
-                const size = Math.random() * 3 + 1;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.bottom = `-10px`;
-                
-                const duration = Math.random() * 15 + 15;
-                particle.style.animationDuration = `${duration}s`;
-                particle.style.animationDelay = `${Math.random() * 20}s`;
-                
-                particle.style.opacity = Math.random() * 0.3 + 0.1;
-                particlesContainer.appendChild(particle);
-            }
-        }
+                tab.classList.add('active');
+                document.getElementById(`${tab.dataset.tab}-tab`).classList.add('active');
+            });
+        });
 
-        // Inicializar
-        window.addEventListener('load', createParticles);
-        document.getElementById('dataForm').addEventListener('submit', function(e) {
+        // Form submission
+        document.getElementById('credentialForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            generateData();
+            generateCredentials();
+            
+            // Scroll suave para os resultados
+            document.getElementById('results-container').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        // Melhorar experiência nos selects
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('focus', () => {
+                select.style.borderColor = '#3498db';
+            });
+            select.addEventListener('blur', () => {
+                select.style.borderColor = '#dfe6e9';
+            });
         });
     </script>
 </body>
