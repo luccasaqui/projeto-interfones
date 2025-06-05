@@ -4,148 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GERADOR DE DADOS | Interfones</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <style>
         :root {
-            --primary-dark: #0a3d1a;
-            --primary: #128c37;
-            --primary-light: #1abc56;
-            --secondary: #2ecc71;
-            --dark: #0c1e12;
-            --light: #e8f5e9;
-            --gray: #7f8c8d;
-            --light-gray: #ecf0f1;
-            --border-radius: 10px;
-            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --telegram-primary: #18222d;
+            --telegram-secondary: #2b5278;
+            --telegram-accent: #3e7eb1;
+            --telegram-bg: #0e1621;
+            --telegram-text: #e1e9f2;
+            --telegram-green: #2e7d32;
+            --telegram-dark-green: #1b5e20;
+            --telegram-light-green: #4caf50;
+            --telegram-pattern-opacity: 0.03;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            --transition: all 0.3s ease;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background-color: var(--dark);
+            background-color: var(--telegram-bg);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(46, 125, 50, var(--telegram-pattern-opacity)) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(46, 125, 50, var(--telegram-pattern-opacity)) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(46, 125, 50, var(--telegram-pattern-opacity)) 0%, transparent 30%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
-            color: white;
-            line-height: 1.6;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 0;
-            opacity: 0.3;
-        }
-
-        .stars {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .star {
-            position: absolute;
-            background-color: white;
-            border-radius: 50%;
-            animation: twinkle var(--duration, 5s) infinite ease-in-out;
-            opacity: var(--opacity, 0.5);
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 1; }
+            color: var(--telegram-text);
         }
 
         .container {
-            background: rgba(10, 61, 26, 0.85);
+            background-color: var(--telegram-primary);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             width: 100%;
-            max-width: 900px;
+            max-width: 850px;
             padding: 30px;
             transition: var(--transition);
-            border: 1px solid rgba(18, 140, 55, 0.3);
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(8px);
+            border: 1px solid rgba(46, 125, 50, 0.1);
         }
 
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, var(--primary-light), var(--secondary), var(--primary-dark));
-            z-index: -1;
-            border-radius: var(--border-radius);
-            opacity: 0.7;
-            animation: borderGlow 8s linear infinite;
-        }
-
-        @keyframes borderGlow {
-            0% { filter: blur(5px); opacity: 0.7; }
-            50% { filter: blur(8px); opacity: 0.4; }
-            100% { filter: blur(5px); opacity: 0.7; }
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         }
 
         .header {
             text-align: center;
             margin-bottom: 30px;
             position: relative;
-            padding-bottom: 20px;
         }
 
         .header::after {
             content: '';
-            position: absolute;
-            bottom: 0;
-            left: 25%;
-            right: 25%;
+            display: block;
+            width: 100%;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(46, 204, 113, 0.5), transparent);
+            background: linear-gradient(90deg, transparent, rgba(46, 125, 50, 0.5), transparent);
+            margin-top: 20px;
         }
 
         .header h1 {
-            color: white;
+            color: var(--telegram-light-green);
             font-size: 28px;
-            margin-bottom: 8px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header .subtitle {
-            color: var(--gray);
-            font-size: 14px;
-            font-weight: 500;
+            margin-bottom: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         .header .icon {
             font-size: 40px;
-            color: var(--secondary);
+            color: var(--telegram-light-green);
             margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+            text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
         }
 
         .form-row {
@@ -157,33 +96,34 @@
         .form-group {
             flex: 1;
             margin-bottom: 0;
-            position: relative;
         }
 
         label {
             display: block;
             margin-bottom: 8px;
-            color: var(--light);
+            color: var(--telegram-text);
             font-weight: 500;
+            opacity: 0.9;
             font-size: 14px;
         }
 
         select, input {
             width: 100%;
-            padding: 14px 15px;
-            border: 1px solid rgba(46, 204, 113, 0.3);
+            padding: 12px 15px;
+            border: 1px solid rgba(46, 125, 50, 0.3);
             border-radius: var(--border-radius);
             font-size: 15px;
             transition: var(--transition);
-            background-color: rgba(12, 30, 18, 0.7);
-            color: white;
+            background-color: rgba(24, 34, 45, 0.8);
+            color: var(--telegram-text);
+            backdrop-filter: blur(2px);
         }
 
         select:focus, input:focus {
             outline: none;
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.3);
-            background-color: rgba(12, 30, 18, 0.9);
+            border-color: var(--telegram-light-green);
+            background-color: rgba(30, 40, 50, 0.8);
+            box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.3);
         }
 
         .radio-group {
@@ -196,21 +136,19 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 15px;
+            background: rgba(30, 40, 50, 0.5);
+            padding: 8px 12px;
             border-radius: var(--border-radius);
             transition: var(--transition);
-            background-color: rgba(12, 30, 18, 0.5);
-            border: 1px solid rgba(46, 204, 113, 0.2);
         }
 
         .radio-option:hover {
-            background-color: rgba(46, 204, 113, 0.1);
-            transform: translateY(-2px);
+            background: rgba(46, 125, 50, 0.2);
         }
 
         .radio-option input {
             width: auto;
-            accent-color: var(--secondary);
+            accent-color: var(--telegram-light-green);
         }
 
         .radio-option label {
@@ -221,8 +159,8 @@
 
         .btn {
             width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            padding: 14px;
+            background-color: var(--telegram-green);
             color: white;
             border: none;
             border-radius: var(--border-radius);
@@ -230,37 +168,18 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            margin-top: 25px;
+            margin-top: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
             letter-spacing: 0.5px;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: 0.5s;
-            z-index: -1;
-        }
-
-        .btn:hover::before {
-            left: 100%;
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(18, 140, 55, 0.4);
+            background-color: var(--telegram-dark-green);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .btn:active {
@@ -273,102 +192,64 @@
 
         .results-container {
             margin-top: 30px;
-            opacity: 0;
-            height: 0;
-            overflow: hidden;
-            transition: var(--transition);
-        }
-
-        .results-container.visible {
-            opacity: 1;
-            height: auto;
         }
 
         .result-box {
             margin-top: 20px;
             padding: 20px;
             border-radius: var(--border-radius);
-            background-color: rgba(12, 30, 18, 0.7);
-            border: 1px solid rgba(46, 204, 113, 0.2);
-            position: relative;
-            overflow: hidden;
+            background-color: rgba(30, 40, 50, 0.5);
+            border: 1px solid rgba(46, 125, 50, 0.1);
+            transition: var(--transition);
         }
 
-        .result-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--primary-light), var(--secondary));
+        .result-box:hover {
+            border-color: rgba(46, 125, 50, 0.3);
         }
 
         .result-box h3 {
-            color: var(--secondary);
+            color: var(--telegram-light-green);
             margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 18px;
         }
 
         .result-box h3 i {
-            font-size: 18px;
-            color: var(--secondary);
+            font-size: 20px;
         }
 
         .result-content {
-            background-color: rgba(12, 30, 18, 0.9);
+            background-color: rgba(20, 30, 40, 0.7);
             padding: 15px;
-            border-radius: 6px;
-            border: 1px solid rgba(46, 204, 113, 0.1);
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(46, 125, 50, 0.1);
             font-family: 'Roboto Mono', monospace;
             white-space: pre-wrap;
             word-break: break-word;
+            color: #b0bec5;
             font-size: 14px;
-            line-height: 1.8;
-            color: var(--light);
+            line-height: 1.5;
         }
 
         .copy-btn {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            background-color: var(--telegram-green);
             color: white;
             border: none;
             border-radius: var(--border-radius);
-            padding: 10px 16px;
+            padding: 8px 15px;
             font-size: 14px;
             cursor: pointer;
             transition: var(--transition);
             margin-top: 10px;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            font-weight: 500;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .copy-btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: translateX(-100%);
-            transition: 0.5s;
-        }
-
-        .copy-btn:hover::after {
-            transform: translateX(100%);
+            gap: 5px;
         }
 
         .copy-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(10, 61, 26, 0.3);
+            background-color: var(--telegram-dark-green);
         }
 
         .copy-btn i {
@@ -377,71 +258,81 @@
 
         .tabs {
             display: flex;
-            border-bottom: 1px solid rgba(46, 204, 113, 0.2);
+            border-bottom: 1px solid rgba(46, 125, 50, 0.2);
             margin-bottom: 20px;
         }
 
         .tab {
-            padding: 12px 20px;
+            padding: 10px 20px;
             cursor: pointer;
             border-bottom: 3px solid transparent;
             transition: var(--transition);
-            font-size: 14px;
             font-weight: 500;
-            color: var(--gray);
+            color: var(--telegram-text);
+            opacity: 0.7;
             position: relative;
         }
 
         .tab.active {
-            border-bottom-color: var(--secondary);
-            color: white;
+            border-bottom-color: var(--telegram-light-green);
+            color: var(--telegram-light-green);
+            font-weight: 600;
+            opacity: 1;
         }
 
         .tab:hover:not(.active) {
-            color: var(--light);
+            opacity: 1;
+            color: var(--telegram-text);
         }
 
         .tab-content {
             display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .tab-content.active {
             display: block;
         }
 
-        .info-list {
-            list-style-type: none;
-            counter-reset: info-counter;
-        }
-
-        .info-list li {
+        /* Tooltip for copy buttons */
+        .tooltip {
             position: relative;
-            padding-left: 30px;
-            margin-bottom: 15px;
+            display: inline-block;
         }
 
-        .info-list li::before {
-            counter-increment: info-counter;
-            content: counter(info-counter);
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: var(--telegram-dark-green);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
             position: absolute;
-            left: 0;
-            top: 0;
-            background: var(--secondary);
-            color: var(--dark);
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
             font-size: 12px;
-            font-weight: bold;
         }
 
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Responsive design */
         @media (max-width: 768px) {
             .form-row {
                 flex-direction: column;
-                gap: 15px;
+                gap: 20px;
             }
             
             .container {
@@ -454,181 +345,175 @@
             
             .radio-group {
                 flex-direction: column;
-                gap: 8px;
+                gap: 10px;
             }
 
-            .tab {
-                padding: 10px 15px;
-                font-size: 13px;
+            #info-tab {
+                padding: 15px;
+            }
+    
+            .result-box {
+                margin-top: 0;
+                padding: 15px;
+            }
+    
+            .result-content ol {
+                padding-left: 20px;
+                margin: 10px 0;
+            }
+    
+            .result-content li {
+                margin-bottom: 8px;
+                line-height: 1.5;
             }
         }
 
-        /* Efeitos de partículas */
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background-color: rgba(46, 204, 113, 0.5);
-            pointer-events: none;
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(46, 125, 50, 0.1);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--telegram-green);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--telegram-dark-green);
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="particles-js"></div>
-    <div class="stars" id="stars"></div>
-    
     <div class="container">
         <div class="header">
             <div class="icon">
                 <i class="fas fa-key"></i>
             </div>
-            <h1>GERADOR DE DADOS</h1>
-            <div class="subtitle">Sistema de Credenciais para Interfones</div>
+            <h1>GERADOR DE DADOS PARA INTERFONES</h1>
         </div>
 
         <div class="tabs">
-            <div class="tab active" data-tab="form">
-                <i class="fas fa-keyboard"></i> Formulário
-            </div>
-            <div class="tab" data-tab="info">
-                <i class="fas fa-info-circle"></i> Informações
-            </div>
+            <div class="tab active" data-tab="form">Formulário</div>
+            <div class="tab" data-tab="info">Informações</div>
         </div>
 
         <div class="tab-content active" id="form-tab">
             <form id="credentialForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="condominio1"><i class="fas fa-building"></i> Condomínio Principal</label>
-                        <select id="condominio1" required>
-                            <option value="">Selecione um condomínio...</option>
-                            <option value="BENDORF">BENDORF</option>
-                            <option value="BRISAS DA SERRA 1 [1-4]">BRISAS DA SERRA 1 [1-4]</option>
-                            <option value="BRISAS DA SERRA 2 [5-27]">BRISAS DA SERRA 2 [5-27]</option>
-                            <option value="CHAPADA DOS LÍRIOS">CHAPADA DOS LÍRIOS</option>
-                            <option value="CHAPADA PANTANAL">CHAPADA PANTANAL</option>
-                            <option value="COSTA DO CACAU">COSTA DO CACAU</option>
-                            <option value="ECOVILAGGIO">ECOVILAGGIO</option>
-                            <option value="PONTO GARDÊNIA">PONTO GARDÊNIA</option>
-                            <option value="GRANCLUB">GRANCLUB</option>
-                            <option value="GRAN SONATA">GRAN SONATA</option>
-                            <option value="GRAN VALEY">GRAN VALEY</option>
-                            <option value="JOINVILLE">JOINVILLE</option>
-                            <option value="LAGOA DAS ESMERALDAS">LAGOA DAS ESMERALDAS</option>
-                            <option value="LIBRA">LIBRA</option>
-                            <option value="MAIS PARK">MAIS PARK</option>
-                            <option value="MARAJÓ">MARAJÓ</option>
-                            <option value="BOSQUE DAS MARGARIDAS">BOSQUE DAS MARGARIDAS</option>
-                            <option value="MATA ATLÂNTICA">MATA ATLÂNTICA</option>
-                            <option value="MORADA CARIOCA">MORADA CARIOCA</option>
-                            <option value="MORADA DAS TORRES - CLUB">MORADA DAS TORRES - CLUB</option>
-                            <option value="MORADA DE MINAS">MORADA DE MINAS</option>
-                            <option value="MORADA DAS TORRES SP">MORADA DAS TORRES SP</option>
-                            <option value="MUSIQUE">MUSIQUE</option>
-                            <option value="PLAZA NORTE">PLAZA NORTE</option>
-                            <option value="LISBOA">LISBOA</option>
-                            <option value="RESIDENCIAL SABIÁ">RESIDENCIAL SABIÁ</option>
-                            <option value="RIVERA LIFE">RIVERA LIFE</option>
-                            <option value="RUBIS">RUBIS</option>
-                            <option value="SAN FELIPPO">SAN FELIPPO</option>
-                            <option value="SÃO FRANCISCO">SÃO FRANCISCO</option>
-                            <option value="SOLAR DOS MONTES">SOLAR DOS MONTES</option>
-                            <option value="SOL DO ENGENHO">SOL DO ENGENHO</option>
-                            <option value="SPAZIO SALVADOR NORTE">SPAZIO SALVADOR NORTE</option>
-                            <option value="SPAZIO SINGULAR">SPAZIO SINGULAR</option>
-                            <option value="JARDIM TIRADENTES">JARDIM TIRADENTES</option>
-                            <option value="VIC PARK MONTREAL">VIC PARK MONTREAL</option>
-                            <option value="VILA DIAMANTE">VILA DIAMANTE</option>
-                            <option value="VILA REAL ESMERALDA">VILA REAL ESMERALDA</option>
-                            <option value="VILLAS VILLAGE">VILLAS VILLAGE</option>
-                            <option value="RESERVA BARRA FUNDA">RESERVA BARRA FUNDA</option>
-                            <option value="LUZ DO CAMPO">LUZ DO CAMPO</option>
-                            <option value="MORADA PREMIUM">MORADA PREMIUM</option>
-                            <option value="PARQUE DAS NAÇÕES">PARQUE DAS NAÇÕES</option>
-                            <option value="N/A">N/A</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="condominio2"><i class="fas fa-building"></i> Condomínio Secundário (opcional)</label>
-                        <select id="condominio2">
-                            <option value="N/A">N/A</option>
-                            <option value="BOSQUE DAS ÁGUAS">BOSQUE DAS ÁGUAS</option>
-                            <option value="BOSQUE DA RIBEIRA">BOSQUE DA RIBEIRA</option>
-                            <option value="CANTO DO SABIÁ">CANTO DO SABIÁ</option>
-                            <option value="ESTRELA DE CRISTAL">ESTRELA DE CRISTAL</option>
-                            <option value="GOLDEN PLAZA">GOLDEN PLAZA</option>
-                            <option value="GREENVILLE">GREENVILLE</option>
-                            <option value="LAGUNA">LAGUNA</option>
-                            <option value="RECANTO DOS ABRANTES">RECANTO DOS ABRANTES</option>
-                            <option value="XINGÚ">XINGÚ</option>
-                            <option value="SERRA DOS PINHAIS">SERRA DOS PINHAIS</option>
-                            <option value="VIVER FAMA">VIVER FAMA</option>
-                            <option value="PONTO DIAMANTE">PONTO DIAMANTE</option>
-                            <option value="PONTO VEREDAS">PONTO VEREDAS</option>
-                            <option value="SOLAR DA COLINA">SOLAR DA COLINA</option>
-                            <option value="VILLAS VILLAGE">VILLAS VILLAGE</option>
-                            <option value="RESERVA BARRA FUNDA">RESERVA BARRA FUNDA</option>
-                            <option value="LUZ DO CAMPO">LUZ DO CAMPO</option>
-                            <option value="MORADA PREMIUM">MORADA PREMIUM</option>
-                            <option value="PARQUE DAS NAÇÕES">PARQUE DAS NAÇÕES</option>
-                        </select>
-                    </div>
+                <div class="form-group">
+                    <label for="condominio1">Condomínio Principal</label>
+                    <select id="condominio1" required>
+                        <option value="">Selecione um condomínio...</option>
+                        <option value="BENDORF">BENDORF</option>
+                        <option value="BRISAS DA SERRA 1 [1-4]">BRISAS DA SERRA 1 [1-4]</option>
+                        <option value="BRISAS DA SERRA 2 [5-27]">BRISAS DA SERRA 2 [5-27]</option>
+                        <option value="CHAPADA DOS LÍRIOS">CHAPADA DOS LÍRIOS</option>
+                        <option value="CHAPADA PANTANAL">CHAPADA PANTANAL</option>
+                        <option value="COSTA DO CACAU">COSTA DO CACAU</option>
+                        <option value="ECOVILAGGIO">ECOVILAGGIO</option>
+                        <option value="PONTO GARDÊNIA">PONTO GARDÊNIA</option>
+                        <option value="GRANCLUB">GRANCLUB</option>
+                        <option value="GRAN SONATA">GRAN SONATA</option>
+                        <option value="GRAN VALEY">GRAN VALEY</option>
+                        <option value="JOINVILLE">JOINVILLE</option>
+                        <option value="LAGOA DAS ESMERALDAS">LAGOA DAS ESMERALDAS</option>
+                        <option value="LIBRA">LIBRA</option>
+                        <option value="MAIS PARK">MAIS PARK</option>
+                        <option value="MARAJÓ">MARAJÓ</option>
+                        <option value="BOSQUE DAS MARGARIDAS">BOSQUE DAS MARGARIDAS</option>
+                        <option value="MATA ATLÂNTICA">MATA ATLÂNTICA</option>
+                        <option value="MORADA CARIOCA">MORADA CARIOCA</option>
+                        <option value="MORADA DAS TORRES - CLUB">MORADA DAS TORRES - CLUB</option>
+                        <option value="MORADA DE MINAS">MORADA DE MINAS</option>
+                        <option value="MORADA DAS TORRES SP">MORADA DAS TORRES SP</option>
+                        <option value="MUSIQUE">MUSIQUE</option>
+                        <option value="PLAZA NORTE">PLAZA NORTE</option>
+                        <option value="LISBOA">LISBOA</option>
+                        <option value="RESIDENCIAL SABIÁ">RESIDENCIAL SABIÁ</option>
+                        <option value="RIVERA LIFE">RIVERA LIFE</option>
+                        <option value="RUBIS">RUBIS</option>
+                        <option value="SAN FELIPPO">SAN FELIPPO</option>
+                        <option value="SÃO FRANCISCO">SÃO FRANCISCO</option>
+                        <option value="SOLAR DOS MONTES">SOLAR DOS MONTES</option>
+                        <option value="SOL DO ENGENHO">SOL DO ENGENHO</option>
+                        <option value="SPAZIO SALVADOR NORTE">SPAZIO SALVADOR NORTE</option>
+                        <option value="SPAZIO SINGULAR">SPAZIO SINGULAR</option>
+                        <option value="JARDIM TIRADENTES">JARDIM TIRADENTES</option>
+                        <option value="VIC PARK MONTREAL">VIC PARK MONTREAL</option>
+                        <option value="VILA DIAMANTE">VILA DIAMANTE</option>
+                        <option value="VILA REAL ESMERALDA">VILA REAL ESMERALDA</option>
+                        <option value="VILLAS VILLAGE">VILLAS VILLAGE</option>
+                        <option value="RESERVA BARRA FUNDA">RESERVA BARRA FUNDA</option>
+                        <option value="LUZ DO CAMPO">LUZ DO CAMPO</option>
+                        <option value="MORADA PREMIUM">MORADA PREMIUM</option>
+                        <option value="PARQUE DAS NAÇÕES">PARQUE DAS NAÇÕES</option>
+                        <option value="N/A">N/A</option>
+                    </select>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="bloco"><i class="fas fa-cube"></i> Bloco (BL)</label>
+                        <label for="bloco">Bloco (BL)</label>
                         <input type="text" id="bloco" placeholder="Ex: 10" required pattern="[0-9]+">
                     </div>
 
                     <div class="form-group">
-                        <label for="apartamento"><i class="fas fa-home"></i> Apartamento (AP)</label>
+                        <label for="apartamento">Apartamento (AP)</label>
                         <input type="text" id="apartamento" placeholder="Ex: 100" required pattern="[0-9]+">
                     </div>
 
                     <div class="form-group">
-                        <label for="ponto"><i class="fas fa-plug"></i> Ponto do Interfone</label>
+                        <label for="ponto">Ponto do Interfone</label>
                         <div class="radio-group">
                             <div class="radio-option">
                                 <input type="radio" id="ponto1" name="ponto" value="1" checked>
-                                <label for="ponto1"><i class="fas fa-circle"></i> PRIMEIRO PONTO</label>
+                                <label for="ponto1">PRIMEIRO PONTO</label>
                             </div>
                             <div class="radio-option">
                                 <input type="radio" id="ponto2" name="ponto" value="2">
-                                <label for="ponto2"><i class="fas fa-circle"></i> SEGUNDO PONTO</label>
+                                <label for="ponto2">SEGUNDO PONTO</label>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <button type="submit" class="btn">
-                    <i class="fas fa-magic"></i>
-                    GERAR DADOS
+                    <i class="fas fa-cogs"></i>
+                    GERAR CREDENCIAIS
                 </button>
             </form>
 
-            <div class="results-container" id="results-container">
+            <div class="results-container">
                 <div class="result-box">
-                    <h3><i class="fas fa-user-shield"></i> Credenciais de Acesso</h3>
-                    <div class="result-content" id="gerador-result"></div>
-                    <button class="copy-btn" onclick="copyToClipboard('gerador-result')">
-                        <i class="far fa-copy"></i> Copiar Credenciais
+                    <h3><i class="fas fa-id-card"></i> Credenciais Geradas</h3>
+                    <div class="result-content" id="gerador-result">Preencha o formulário e clique em "Gerar Credenciais"</div>
+                    <button class="copy-btn tooltip" onclick="copyToClipboard('gerador-result')">
+                        <i class="far fa-copy"></i> Copiar
+                        <span class="tooltiptext">Copiar para área de transferência</span>
                     </button>
                 </div>
 
                 <div class="result-box">
-                    <h3><i class="fas fa-network-wired"></i> Endereço PABX</h3>
-                    <div class="result-content" id="pabx-result"></div>
-                    <button class="copy-btn" onclick="copyToClipboard('pabx-result')">
-                        <i class="far fa-copy"></i> Copiar PABX
+                    <h3><i class="fas fa-link"></i> Acesso PABX</h3>
+                    <div class="result-content" id="pabx-result">O endereço do PABX aparecerá aqui</div>
+                    <button class="copy-btn tooltip" onclick="copyToClipboard('pabx-result')">
+                        <i class="far fa-copy"></i> Copiar
+                        <span class="tooltiptext">Copiar para área de transferência</span>
                     </button>
                 </div>
 
                 <div class="result-box">
-                    <h3><i class="fas fa-lock"></i> Senha do Ramal</h3>
-                    <div class="result-content" id="senha-result"></div>
-                    <button class="copy-btn" onclick="copyToClipboard('senha-result')">
-                        <i class="far fa-copy"></i> Copiar Senha
+                    <h3><i class="fas fa-key"></i> Senha do Ramal</h3>
+                    <div class="result-content" id="senha-result">A senha do ramal aparecerá aqui</div>
+                    <button class="copy-btn tooltip" onclick="copyToClipboard('senha-result')">
+                        <i class="far fa-copy"></i> Copiar
+                        <span class="tooltiptext">Copiar para área de transferência</span>
                     </button>
                 </div>
             </div>
@@ -638,20 +523,27 @@
             <div class="result-box">
                 <h3><i class="fas fa-info-circle"></i> Instruções de Uso</h3>
                 <div class="result-content">
-                    <p><strong><i class="fas fa-question-circle"></i> Como utilizar o gerador:</strong></p>
-                    <ol class="info-list">
+                    <p><strong>Como usar o gerador de credenciais:</strong></p>
+                    <ol>
                         <li>Selecione o condomínio principal na lista</li>
-                        <li>Se necessário, selecione um condomínio secundário</li>
                         <li>Informe o número do bloco (apenas números)</li>
                         <li>Informe o número do apartamento (apenas números)</li>
-                        <li>Selecione o ponto do interfone (primeiro ou segundo ponto)</li>
-                        <li>Clique em "GERAR DADOS" para criar as credenciais</li>
+                        <li>Selecione o ponto do interfone (primeiro ou segundo)</li>
+                        <li>Clique em "GERAR CREDENCIAIS"</li>
                     </ol>
-                    <p><strong><i class="fas fa-lightbulb"></i> Dicas:</strong></p>
-                    <ul style="list-style-type: none; padding-left: 0;">
-                        <li><i class="fas fa-copy" style="color: var(--secondary);"></i> Você pode copiar cada seção individualmente usando os botões "Copiar"</li>
-                        <li><i class="fas fa-asterisk" style="color: var(--secondary);"></i> O condomínio secundário é opcional e pode ser deixado como "N/A"</li>
-                        <li><i class="fas fa-exclamation-triangle" style="color: var(--secondary);"></i> Certifique-se de inserir apenas números nos campos de bloco e apartamento</li>
+                    
+                    <p><strong>Dicas úteis:</strong></p>
+                    <ul>
+                        <li>Você pode copiar cada seção individualmente usando os botões "Copiar"</li>
+                        <li>As credenciais são geradas automaticamente com base nas informações fornecidas</li>
+                        <li>Todos os campos são validados antes da geração</li>
+                    </ul>
+                    
+                    <p><strong>Informações técnicas:</strong></p>
+                    <ul>
+                        <li>Este sistema gera credenciais para acesso aos interfones dos condomínios</li>
+                        <li>As senhas seguem padrões específicos para cada condomínio</li>
+                        <li>Os endereços PABX são únicos para cada localização</li>
                     </ul>
                 </div>
             </div>
@@ -704,20 +596,6 @@
             "LUZ DO CAMPO": "luzdocampo.sp.loomy.srv.br",
             "MORADA PREMIUM": "moradapremium.ba.loomy.srv.br",
             "PARQUE DAS NAÇÕES": "parquedasnacoes.ba.loomy.srv.br",
-            "BOSQUE DAS ÁGUAS": "bosquedasaguas.mg.loomy.srv.br",
-            "BOSQUE DA RIBEIRA": "bosquedaribeira.mg.loomy.srv.br",
-            "CANTO DO SABIÁ": "cantodosabia.mg.loomy.srv.br",
-            "ESTRELA DE CRISTAL": "estreladecristal.loomy.srv.br",
-            "GOLDEN PLAZA": "goldenplaza.sp.loomy.srv.br",
-            "GREENVILLE": "greenville.mg.loomy.srv.br",
-            "LAGUNA": "laguna.ba.loomy.srv.br",
-            "RECANTO DOS ABRANTES": "recantodosabrantes.ba.loomy.srv.br",
-            "XINGÚ": "residencialxingu.mg.loomy.srv.br",
-            "SERRA DOS PINHAIS": "serradospinhais.mg.loomy.srv.br",
-            "VIVER FAMA": "viverfama.go.loomy.srv.br",
-            "PONTO DIAMANTE": "pontodiamante.mg.loomy.srv.br",
-            "PONTO VEREDAS": "pontoveredas.mg.loomy.srv.br",
-            "SOLAR DA COLINA": "solardacolina.mg.loomy.srv.br",
             "N/A": ""
         };
 
@@ -851,14 +729,13 @@
         // Função para gerar as credenciais
         function generateCredentials() {
             const condominio1 = document.getElementById('condominio1').value;
-            const condominio2 = document.getElementById('condominio2').value;
             const bloco = document.getElementById('bloco').value;
             const ap = document.getElementById('apartamento').value;
             const ponto = document.querySelector('input[name="ponto"]:checked').value;
 
             // Validar campos obrigatórios
             if (!condominio1 || !bloco || !ap) {
-                showAlert('Por favor, preencha todos os campos obrigatórios.');
+                alert('Por favor, preencha todos os campos obrigatórios.');
                 return;
             }
 
@@ -870,156 +747,30 @@
             const senha1 = senhasRamal[condominio1] ? senhasRamal[condominio1](bloco, ap, ponto) : `rmt@${condominio1.toLowerCase().replace(/\s/g, '')}${bloco}${ap}${ponto}`;
             const pabx1 = pabx[condominio1] || "PABX não configurado";
 
-            // Gerar credenciais para o condomínio secundário (se aplicável)
-            let dominio2 = "";
-            let senha2 = "";
-            let pabx2 = "";
-
-            if (condominio2 && condominio2 !== "N/A") {
-                dominio2 = dominios[condominio2] || "Domínio não configurado";
-                senha2 = senhasRamal[condominio2] ? senhasRamal[condominio2](bloco, ap, ponto) : `rmt@${condominio2.toLowerCase().replace(/\s/g, '')}${bloco}${ap}${ponto}`;
-                pabx2 = pabx[condominio2] || "PABX não configurado";
-            }
-
-            // Formatar resultados
+            // Gerar resultados formatados
             document.getElementById('gerador-result').textContent = 
-                `USUÁRIO: ${usuario}\nSENHA: ${senha1}\nDOMÍNIO: ${dominio1}` + 
-                (dominio2 ? `\n\nUSUÁRIO: ${usuario}\nSENHA: ${senha2}\nDOMÍNIO: ${dominio2}` : "");
+                `| Nome de Usuário: ${usuario}\n| Senha: ${senha1}\n| Domínio: ${dominio1}`;
 
-            document.getElementById('pabx-result').textContent = 
-                pabx1 + (pabx2 ? `\n\n${pabx2}` : "");
-
-            document.getElementById('senha-result').textContent = 
-                senha1 + (senha2 ? `\n\n${senha2}` : "");
-
-            // Mostrar resultados com animação
-            document.getElementById('results-container').classList.add('visible');
-            
-            // Criar efeito de confete
-            createConfetti();
-            
-            // Scroll suave para os resultados
-            document.getElementById('results-container').scrollIntoView({
-                behavior: 'smooth'
-            });
+            document.getElementById('pabx-result').textContent = pabx1;
+            document.getElementById('senha-result').textContent = senha1;
         }
 
-        // Função para mostrar alerta estilizado
-        function showAlert(message) {
-            const alert = document.createElement('div');
-            alert.style.position = 'fixed';
-            alert.style.top = '20px';
-            alert.style.left = '50%';
-            alert.style.transform = 'translateX(-50%)';
-            alert.style.backgroundColor = '#e74c3c';
-            alert.style.color = 'white';
-            alert.style.padding = '15px 25px';
-            alert.style.borderRadius = '5px';
-            alert.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
-            alert.style.zIndex = '1000';
-            alert.style.animation = 'fadeIn 0.3s, fadeOut 0.3s 2.7s';
-            alert.textContent = message;
-            
-            document.body.appendChild(alert);
-            
-            setTimeout(() => {
-                alert.remove();
-            }, 3000);
-        }
-
-        // Função para copiar para área de transferência
+        // Função para copiar para área de transferência com feedback visual
         function copyToClipboard(elementId) {
             const text = document.getElementById(elementId).textContent;
             navigator.clipboard.writeText(text).then(() => {
-                const btn = document.querySelector(`#${elementId} + .copy-btn`);
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
-                btn.style.backgroundColor = '#27ae60';
-                
-                // Criar partícula de confirmação
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.width = '10px';
-                particle.style.height = '10px';
-                particle.style.left = (btn.getBoundingClientRect().left + btn.offsetWidth/2 - 5) + 'px';
-                particle.style.top = (btn.getBoundingClientRect().top - 10) + 'px';
-                document.body.appendChild(particle);
-                
-                // Animação da partícula
-                let pos = 0;
-                const id = setInterval(() => {
-                    pos++;
-                    particle.style.top = (btn.getBoundingClientRect().top - 10 - pos) + 'px';
-                    particle.style.opacity = (100 - pos)/100;
-                    if (pos >= 100) {
-                        clearInterval(id);
-                        particle.remove();
-                    }
-                }, 10);
+                // Mostrar tooltip de sucesso
+                const btn = document.querySelector(`[onclick="copyToClipboard('${elementId}')"]`);
+                const originalText = btn.querySelector('.tooltiptext').textContent;
+                btn.querySelector('.tooltiptext').textContent = 'Copiado!';
                 
                 setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.style.backgroundColor = '';
+                    btn.querySelector('.tooltiptext').textContent = originalText;
                 }, 2000);
             }).catch(err => {
                 console.error('Erro ao copiar: ', err);
-                showAlert('Não foi possível copiar o texto. Tente novamente.');
+                alert('Não foi possível copiar o texto. Por favor, tente novamente.');
             });
-        }
-
-        // Função para criar efeito de confete
-        function createConfetti() {
-            const colors = ['#2ecc71', '#1abc9c', '#3498db', '#9b59b6', '#f1c40f', '#e74c3c'];
-            
-            for (let i = 0; i < 50; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'particle';
-                confetti.style.width = Math.random() * 10 + 5 + 'px';
-                confetti.style.height = Math.random() * 10 + 5 + 'px';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.left = Math.random() * window.innerWidth + 'px';
-                confetti.style.top = '-20px';
-                confetti.style.borderRadius = '50%';
-                document.body.appendChild(confetti);
-                
-                let pos = 0;
-                const speed = Math.random() * 3 + 2;
-                const angle = Math.random() * 360;
-                const x = Math.cos(angle * Math.PI/180) * 5;
-                
-                const anim = () => {
-                    pos += speed;
-                    confetti.style.top = (pos - 20) + 'px';
-                    confetti.style.left = (parseInt(confetti.style.left) + x) + 'px';
-                    confetti.style.opacity = (100 - pos/2)/100;
-                    
-                    if (pos < window.innerHeight) {
-                        requestAnimationFrame(anim);
-                    } else {
-                        confetti.remove();
-                    }
-                };
-                
-                requestAnimationFrame(anim);
-            }
-        }
-
-        // Função para criar estrelas
-        function createStars() {
-            const starsContainer = document.getElementById('stars');
-            const starCount = 100;
-            
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.width = Math.random() * 3 + 'px';
-                star.style.height = star.style.width;
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.opacity = Math.random();
-                star.style.setProperty('--duration', Math.random() * 5 + 3 + 's');
-                starsContainer.appendChild(star);
-            }
         }
 
         // Tab functionality
@@ -1039,99 +790,11 @@
             generateCredentials();
         });
 
-        // Inicializar partículas
+        // Efeito de carregamento ao abrir a página
         document.addEventListener('DOMContentLoaded', () => {
-            particlesJS.load('particles-js', {
-                "particles": {
-                    "number": {
-                        "value": 80,
-                        "density": {
-                            "enable": true,
-                            "value_area": 800
-                        }
-                    },
-                    "color": {
-                        "value": "#2ecc71"
-                    },
-                    "shape": {
-                        "type": "circle",
-                        "stroke": {
-                            "width": 0,
-                            "color": "#000000"
-                        }
-                    },
-                    "opacity": {
-                        "value": 0.3,
-                        "random": true,
-                        "anim": {
-                            "enable": true,
-                            "speed": 1,
-                            "opacity_min": 0.1,
-                            "sync": false
-                        }
-                    },
-                    "size": {
-                        "value": 3,
-                        "random": true,
-                        "anim": {
-                            "enable": true,
-                            "speed": 2,
-                            "size_min": 0.1,
-                            "sync": false
-                        }
-                    },
-                    "line_linked": {
-                        "enable": true,
-                        "distance": 150,
-                        "color": "#1abc56",
-                        "opacity": 0.2,
-                        "width": 1
-                    },
-                    "move": {
-                        "enable": true,
-                        "speed": 1,
-                        "direction": "none",
-                        "random": true,
-                        "straight": false,
-                        "out_mode": "out",
-                        "bounce": false,
-                        "attract": {
-                            "enable": true,
-                            "rotateX": 600,
-                            "rotateY": 1200
-                        }
-                    }
-                },
-                "interactivity": {
-                    "detect_on": "canvas",
-                    "events": {
-                        "onhover": {
-                            "enable": true,
-                            "mode": "grab"
-                        },
-                        "onclick": {
-                            "enable": true,
-                            "mode": "push"
-                        },
-                        "resize": true
-                    },
-                    "modes": {
-                        "grab": {
-                            "distance": 140,
-                            "line_linked": {
-                                "opacity": 0.5
-                            }
-                        },
-                        "push": {
-                            "particles_nb": 4
-                        }
-                    }
-                },
-                "retina_detect": true
-            });
-            
-            // Criar estrelas
-            createStars();
+            setTimeout(() => {
+                document.querySelector('.container').style.opacity = '1';
+            }, 100);
         });
     </script>
 </body>
