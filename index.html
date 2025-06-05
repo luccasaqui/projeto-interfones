@@ -11,508 +11,139 @@
     <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Variáveis CSS para um tema claro e limpo, com acabamento sólido e espaçoso */
-        :root {
-            --primary-bg: #F8FAFC; /* Fundo geral da página (quase branco) */
-            --container-bg: #FFFFFF; /* Fundo do container principal (branco puro) */
-            --element-bg: #F0F4F8; /* Fundo de elementos como inputs/resultados (cinza muito claro) */
-            --border-color-light: #E2E8F0; /* Cor de borda muito suave */
-            --border-color-medium: #CBD5E1; /* Cor de borda um pouco mais definida para solidificar */
-            --text-color-primary: #1E293B; /* Texto principal (azul escuro quase preto) */
-            --text-color-secondary: #475569; /* Texto secundário/rótulos (cinza escuro) */
-            --accent-color: #007AFF; /* Azul principal de destaque (iOS-like, vibrante) */
-            --accent-dark: #0056B3; /* Azul escuro para hover de botões */
-            --shadow-light: rgba(0, 0, 0, 0.04); /* Sombra muito leve */
-            --shadow-medium: rgba(0, 0, 0, 0.08); /* Sombra um pouco mais visível para profundidade */
-            --border-radius-xl: 24px; /* Cantos super arredondados para o container */
-            --border-radius-lg: 16px; /* Cantos arredondados para botões e caixas de resultado */
-            --border-radius-md: 12px; /* Cantos arredondados para inputs e opções de rádio */
-            --transition-speed: 0.25s; /* Velocidade de transição padrão para efeitos suaves */
-        }
-
-        /* Aplicação de estilos globais */
+        /* Estilos personalizados para o corpo e scrollbar que complementam o Tailwind */
         body {
-            font-family: 'Inter', sans-serif; /* Define a fonte principal */
-            background-color: var(--primary-bg); /* Aplica a cor de fundo primária */
-            min-height: 100vh; /* Garante que o corpo ocupa a altura total da viewport */
+            font-family: 'Inter', sans-serif; /* Define a fonte principal para Inter */
+            /* Tailwind classes aplicadas via @apply para uma base de cor clara */
+            @apply bg-gray-50 text-gray-800;
+            /* Gradiente de fundo sutil para um toque sofisticado */
+            background-image: radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.05) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(0, 122, 255, 0.05) 0%, transparent 20%),
+                              radial-gradient(circle at 50% 50%, rgba(0, 122, 255, 0.03) 0%, transparent 30%);
+            min-height: 100vh;
             display: flex;
-            justify-content: center; /* Centraliza horizontalmente */
-            align-items: center; /* Centraliza verticalmente */
-            padding: 40px; /* Aumenta o padding do corpo para mais 'ar' */
-            color: var(--text-color-primary); /* Define a cor do texto principal */
-            -webkit-font-smoothing: antialiased; /* Suavização de fonte para WebKit */
-            -moz-osx-font-smoothing: grayscale; /* Suavização de fonte para Mozilla */
-            line-height: 1.6; /* Define uma altura de linha padrão para melhor leitura */
-        }
-
-        /* Container principal da aplicação */
-        .container {
-            background-color: var(--container-bg); /* Fundo branco puro */
-            border-radius: var(--border-radius-xl); /* Cantos super arredondados */
-            box-shadow: 0 15px 40px var(--shadow-light); /* Sombra suave e presente */
-            width: 100%;
-            max-width: 1000px; /* Aumenta a largura máxima para mais espaço horizontal */
-            padding: 70px; /* Padding generoso para criar mais 'respiro' */
-            transition: transform var(--transition-speed) ease-out, box-shadow var(--transition-speed) ease-out;
-            border: 1px solid var(--border-color-light); /* Borda suave para um acabamento sólido */
-        }
-
-        .container:hover {
-            transform: translateY(-6px); /* Efeito de elevação sutil no hover */
-            box-shadow: 0 20px 50px var(--shadow-medium); /* Sombra um pouco mais forte no hover */
-        }
-
-        /* Estilos do cabeçalho */
-        .header {
-            text-align: center;
-            margin-bottom: 48px; /* Mais espaço abaixo do cabeçalho */
-            position: relative;
-        }
-
-        .header .icon {
-            font-size: 72px; /* Ícone ainda maior para destaque */
-            color: var(--accent-color); /* Cor de destaque para o ícone */
-            margin-bottom: 20px; /* Espaço abaixo do ícone */
-        }
-
-        .header h1 {
-            color: var(--text-color-primary); /* Cor do título */
-            font-size: 44px; /* Título maior e impactante */
-            font-weight: 700; /* Negrito para o título */
-            letter-spacing: -0.9px; /* Ajuste para um visual mais moderno e "apertado" (no bom sentido) */
-            line-height: 1.1; /* Altura de linha ajustada para o título */
-        }
-
-        .header::after {
-            content: '';
-            display: block;
-            width: 150px; /* Linha um pouco mais longa */
-            height: 4px; /* Mais espessa */
-            background-color: var(--accent-color); /* Cor de destaque para a linha */
-            margin: 32px auto 0; /* Centraliza a linha e adiciona espaço */
-            border-radius: 2px;
-            opacity: 0.8;
-        }
-
-        /* Layout de formulário (flex-row em desktop, column em mobile) */
-        .form-row {
-            display: flex;
-            gap: 40px; /* Espaçamento aumentado entre as colunas do formulário */
-            margin-bottom: 32px; /* Mais espaço abaixo da linha do formulário */
-        }
-        @media (max-width: 768px) {
-            .form-row {
-                flex-direction: column; /* Em telas menores, os campos ficam em coluna */
-                gap: 28px; /* Espaçamento ajustado para mobile */
-            }
-        }
-
-        .form-group {
-            flex: 1; /* Permite que os grupos de formulário preencham o espaço disponível */
-        }
-
-        label {
-            display: block;
-            margin-bottom: 12px; /* Mais espaço abaixo do rótulo */
-            color: var(--text-color-secondary); /* Cor secundária para os rótulos */
-            font-weight: 600; /* Seminegrito */
-            font-size: 17px; /* Fonte levemente maior para rótulos */
-        }
-
-        /* Inputs de texto e selects */
-        select, input {
-            width: 100%;
-            padding: 18px 24px; /* Mais padding para maior área de toque e visual sólido */
-            border: 1px solid var(--border-color-medium); /* Borda mais sólida */
-            border-radius: var(--border-radius-md); /* Cantos mais arredondados */
-            font-size: 18px; /* Fonte maior para melhor legibilidade */
-            color: var(--text-color-primary); /* Cor do texto */
-            background-color: var(--element-bg); /* Fundo cinza muito claro */
-            transition: all var(--transition-speed) ease-in-out; /* Transição suave */
-            -webkit-appearance: none; /* Remove estilo padrão do navegador */
-            -moz-appearance: none;
-            appearance: none;
-            box-shadow: inset 0 1px 3px var(--shadow-light); /* Sombra interna para profundidade sutil */
-        }
-
-        select:focus, input:focus {
-            outline: none;
-            border-color: var(--accent-color); /* Borda azul ao focar */
-            box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15), inset 0 1px 3px var(--shadow-light); /* Sombra de foco e interna */
-            background-color: var(--container-bg); /* Fundo branco puro ao focar */
-        }
-
-        /* Ícone de seta personalizado para o select */
-        select {
-            background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22%23475569%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M5.293%207.293a1%201%200%20011.414%200L10%2010.586l3.293-3.293a1%201%200%20111.414%201.414l-4%204a1%201%200%2001-1.414%200l-4-4a1%201%200%20010-1.414z%22%20clip-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E');
-            background-repeat: no-repeat;
-            background-position: right 20px center; /* Ajusta posição da seta */
-            background-size: 1.1em; /* Tamanho da seta */
-            padding-right: 52px; /* Garante espaço para a seta */
-        }
-
-        /* Grupo de opções de rádio */
-        .radio-group {
-            display: flex;
-            gap: 24px; /* Espaçamento aumentado entre as opções de rádio */
-            margin-top: 16px; /* Mais espaço acima */
-            flex-wrap: wrap; /* Permite quebra de linha em telas pequenas */
-            justify-content: center; /* Centraliza o grupo de opções */
-        }
-
-        .radio-option {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--element-bg); /* Fundo cinza muito claro */
-            padding: 16px 24px; /* Mais padding para maior área de toque */
-            border-radius: var(--border-radius-md); /* Cantos mais arredondados */
-            border: 1px solid var(--border-color-medium); /* Borda mais sólida */
-            cursor: pointer;
-            transition: all var(--transition-speed) ease-in-out;
-            /* Removido flex-grow: 1 para que as opções não estiquem, permitindo um agrupamento centralizado */
-            box-shadow: inset 0 1px 3px var(--shadow-light); /* Sombra interna para profundidade */
-        }
-
-        .radio-option:hover {
-            background: var(--container-bg); /* Fundo branco no hover */
-            border-color: var(--accent-color); /* Borda azul no hover */
-            box-shadow: 0 2px 8px var(--shadow-light), inset 0 1px 3px var(--shadow-light); /* Sombra externa e interna */
-        }
-
-        .radio-option input {
-            width: auto;
-            accent-color: var(--accent-color); /* Cor da bolinha do rádio */
-            transform: scale(1.1); /* Ligeiramente maior para visibilidade */
-        }
-
-        .radio-option input:checked + label {
-            color: var(--accent-color); /* Cor azul para o texto da opção selecionada */
-            font-weight: 700; /* Mais negrito */
-        }
-
-        .radio-option label {
-            margin-bottom: 0;
-            font-weight: 600;
-            color: var(--text-color-secondary);
-        }
-
-        /* Botão principal de ação */
-        .btn {
-            width: 100%;
-            padding: 20px 32px; /* Padding generoso para o botão */
-            background-color: var(--accent-color); /* Cor de destaque azul */
-            color: white;
-            border: none;
-            border-radius: var(--border-radius-lg); /* Cantos mais arredondados */
-            font-size: 20px; /* Texto maior no botão */
-            font-weight: 700; /* Negrito */
-            cursor: pointer;
-            transition: all var(--transition-speed) ease-in-out; /* Transição suave para hover/active */
-            margin-top: 48px; /* Mais espaço acima do botão */
-            display: flex;
-            align-items: center;
             justify-content: center;
-            gap: 16px;
-            letter-spacing: 0.3px;
-            box-shadow: 0 6px 15px var(--shadow-medium); /* Sombra mais presente */
-        }
-
-        .btn:hover {
-            background-color: var(--accent-dark); /* Azul mais escuro no hover */
-            box-shadow: 0 8px 20px var(--shadow-medium); /* Sombra um pouco mais forte no hover */
-        }
-
-        .btn:active {
-            transform: scale(0.98); /* Efeito sutil de "apertar" */
-            box-shadow: 0 3px 8px var(--shadow-medium); /* Sombra menor ao pressionar */
-        }
-
-        .btn i {
-            font-size: 24px; /* Ícone maior no botão */
-        }
-
-        /* Caixas de resultado */
-        .results-container {
-            margin-top: 60px; /* Mais espaço acima da seção de resultados */
-        }
-
-        .result-box {
-            background-color: var(--element-bg); /* Fundo cinza muito claro */
-            padding: 36px; /* Mais padding para maior 'respiro' interno */
-            border-radius: var(--border-radius-lg); /* Cantos mais arredondados */
-            border: 1px solid var(--border-color-medium); /* Borda mais sólida */
-            margin-bottom: 32px; /* Espaço aumentado entre as caixas de resultado */
-            box-shadow: 0 3px 10px var(--shadow-light); /* Sombra mais sutil */
-            transition: all var(--transition-speed) ease-out; /* Transição suave para hover */
-        }
-        .result-box:last-child {
-            margin-bottom: 0; /* Remove margem do último elemento */
-        }
-
-        .result-box:hover {
-            border-color: var(--accent-color); /* Borda azul no hover */
-            box-shadow: 0 6px 15px var(--shadow-medium); /* Sombra um pouco mais forte no hover */
-            transform: translateY(-3px); /* Elevação suave no hover */
-        }
-
-        .result-box h3 {
-            color: var(--text-color-primary); /* Cor do título da caixa de resultado */
-            font-size: 24px; /* Título maior */
-            font-weight: 700; /* Negrito */
-            margin-bottom: 20px; /* Mais espaço abaixo do título */
-            display: flex;
             align-items: center;
-            gap: 16px;
+            padding: 20px;
         }
 
-        .result-box h3 i {
-            font-size: 28px; /* Ícone maior no título */
-            color: var(--accent-color); /* Cor de destaque para o ícone */
+        /* Estilo da barra de rolagem para um visual limpo e moderno */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
 
-        .result-content {
-            background-color: var(--container-bg); /* Fundo branco puro para o conteúdo */
-            padding: 24px; /* Mais padding */
-            border-radius: var(--border-radius-md); /* Cantos mais arredondados */
-            border: 1px solid var(--border-color-light); /* Borda suave e sólida */
-            font-family: 'Roboto Mono', monospace; /* Fonte monospace para credenciais */
-            white-space: pre-wrap; /* Preserva quebras de linha */
-            word-break: break-word; /* Quebra palavras longas */
-            color: var(--text-color-primary); /* Cor do texto */
-            font-size: 17px; /* Fonte maior */
-            line-height: 1.8; /* Aumenta a altura da linha para melhor legibilidade */
-            overflow-x: auto; /* Adiciona rolagem horizontal se o conteúdo for muito longo */
-            box-shadow: inset 0 1px 2px var(--shadow-light); /* Sombra interna suave */
+        ::-webkit-scrollbar-track {
+            background: theme('colors.gray.200'); /* Fundo da barra de rolagem */
         }
 
-        /* Botões de copiar */
-        .copy-btn {
-            background-color: var(--accent-color); /* Cor de destaque azul */
-            color: white;
-            border: none;
-            border-radius: var(--border-radius-md); /* Cantos mais arredondados */
-            padding: 14px 22px; /* Mais padding */
-            font-size: 16px; /* Fonte maior */
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--transition-speed) ease-in-out;
-            margin-top: 24px; /* Mais espaço acima */
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 3px 8px var(--shadow-medium);
+        ::-webkit-scrollbar-thumb {
+            background: theme('colors.blue.500'); /* Cor do "polegar" da barra de rolagem (azul) */
+            border-radius: 4px;
         }
 
-        .copy-btn:hover {
-            background-color: var(--accent-dark); /* Azul mais escuro no hover */
-            box-shadow: 0 4px 10px var(--shadow-medium);
-        }
-        .copy-btn:active {
-            transform: scale(0.98); /* Efeito sutil de "apertar" */
-            box-shadow: 0 1px 3px var(--shadow-medium);
-        }
-
-        .copy-btn i {
-            font-size: 18px; /* Ícone maior */
-        }
-
-        /* Abas de navegação */
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid var(--border-color-medium); /* Borda mais sólida */
-            margin-bottom: 48px; /* Mais espaço abaixo das abas */
-        }
-
-        .tab {
-            padding: 16px 32px; /* Mais padding */
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all var(--transition-speed) ease-in-out;
-            font-weight: 600;
-            color: var(--text-color-secondary);
-            position: relative;
-            font-size: 18px; /* Fonte maior */
-            flex-grow: 1; /* Permite que as abas preencham o espaço */
-            text-align: center;
-        }
-
-        .tab.active {
-            border-bottom-color: var(--accent-color); /* Borda azul para aba ativa */
-            color: var(--accent-color); /* Texto azul para aba ativa */
-            font-weight: 700; /* Mais negrito */
-        }
-
-        .tab:hover:not(.active) {
-            color: var(--text-color-primary); /* Texto primário no hover */
-            background-color: rgba(0, 0, 0, 0.03); /* Fundo muito sutil no hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: theme('colors.blue.600'); /* Cor do "polegar" ao passar o mouse */
         }
 
         /* Animação de fade-in para o conteúdo das abas */
         .tab-content {
             display: none;
-            animation: fadeIn 0.4s ease-out; /* Animação de fade-in */
+            animation: fadeIn 0.3s ease-out; /* Animação suave ao trocar de aba */
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         .tab-content.active {
-            display: block;
+            display: block; /* Mostra a aba ativa */
         }
 
-        /* Tooltip */
+        /* Estilo do tooltip para os botões de copiar */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
         .tooltip .tooltiptext {
             visibility: hidden;
-            width: 160px; /* Largura um pouco maior */
-            background-color: var(--text-color-primary); /* Fundo escuro */
+            width: 120px;
+            background-color: theme('colors.gray.800'); /* Fundo escuro do tooltip */
             color: #fff;
             text-align: center;
-            border-radius: var(--border-radius-md);
-            padding: 10px 0;
+            border-radius: theme('borderRadius.md'); /* Cantos arredondados */
+            padding: 5px 0;
             position: absolute;
             z-index: 10;
-            bottom: 120%;
+            bottom: 125%; /* Posiciona acima do botão */
             left: 50%;
-            margin-left: -80px; /* Centraliza */
+            margin-left: -60px; /* Centraliza o tooltip */
             opacity: 0;
-            transition: opacity var(--transition-speed) ease-out, visibility var(--transition-speed) ease-out;
-            font-size: 14px;
-        }
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1;
+            transition: opacity 0.3s, visibility 0.3s; /* Transição para aparecer/desaparecer */
+            font-size: 0.75rem; /* Tamanho da fonte menor */
         }
 
-        /* Caixa de Mensagem Personalizada (substitui alert()) */
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1; /* Torna o tooltip visível ao passar o mouse */
+        }
+
+        /* Estilos para a caixa de mensagem personalizada (substitui alert()) */
         #message-box {
             position: fixed;
-            top: 40px; /* Mais para baixo */
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: var(--text-color-primary);
+            background-color: #333; /* Fundo escuro padrão */
             color: white;
-            padding: 18px 32px; /* Mais padding */
-            border-radius: var(--border-radius-lg); /* Mais arredondado */
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-            z-index: 1000;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000; /* Garante que fique acima de outros elementos */
             opacity: 0;
-            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-            font-size: 18px; /* Texto maior */
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out; /* Animação ao aparecer */
+            font-size: 15px;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 10px;
         }
         #message-box.show {
             opacity: 1;
-            transform: translateX(-50%) translateY(0);
+            transform: translateX(-50%) translateY(0); /* Mostra e move para cima */
         }
         #message-box.error {
-            background-color: #D32F2F; /* Vermelho mais forte */
+            background-color: #dc3545; /* Vermelho para mensagens de erro */
         }
         #message-box.success {
-            background-color: #388E3C; /* Verde mais forte */
-        }
-
-        /* Estilização da barra de rolagem */
-        ::-webkit-scrollbar {
-            width: 12px; /* Mais larga */
-            height: 12px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--element-bg); /* Fundo da barra de rolagem */
-            border-radius: 6px; /* Mais arredondado */
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent-color); /* Cor do "polegar" (azul) */
-            border-radius: 6px; /* Mais arredondado */
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-dark); /* Azul escuro no hover */
-        }
-
-        /* Ajustes específicos para mobile */
-        @media (max-width: 640px) {
-            .container {
-                padding: 30px; /* Menos padding em telas muito pequenas */
-                border-radius: var(--border-radius-lg);
-            }
-            .header h1 {
-                font-size: 32px;
-            }
-            .header .icon {
-                font-size: 56px;
-            }
-            .header::after {
-                width: 100px;
-            }
-            label {
-                font-size: 15px;
-            }
-            select, input {
-                padding: 14px 18px;
-                font-size: 16px;
-            }
-            .radio-option {
-                padding: 12px 18px;
-            }
-            .btn {
-                padding: 16px 24px;
-                font-size: 18px;
-            }
-            .result-box {
-                padding: 24px;
-            }
-            .result-box h3 {
-                font-size: 20px;
-            }
-            .result-content {
-                padding: 18px;
-                font-size: 15px;
-                line-height: 1.6;
-            }
-            .copy-btn {
-                padding: 10px 16px;
-                font-size: 14px;
-            }
-            .tabs {
-                margin-bottom: 30px;
-            }
-            .tab {
-                padding: 12px 20px;
-                font-size: 16px;
-            }
-            #message-box {
-                font-size: 16px;
-                padding: 14px 24px;
-            }
+            background-color: #28a745; /* Verde para mensagens de sucesso */
         }
     </style>
 </head>
 <body>
     <!-- Caixa de Mensagem Personalizada -->
     <div id="message-box" class="flex items-center justify-center">
-        <i id="message-icon" class="fas"></i>
-        <span id="message-text"></span>
+        <i id="message-icon" class="fas"></i> <!-- Ícone da mensagem -->
+        <span id="message-text"></span> <!-- Texto da mensagem -->
     </div>
 
     <!-- Container Principal do Site -->
-    <div class="container">
+    <div class="container bg-white rounded-xl shadow-2xl w-full max-w-4xl p-8 transition-all duration-300 ease-in-out hover:shadow-3xl">
         <!-- Cabeçalho da Aplicação -->
-        <div class="header">
-            <div class="icon">
-                <i class="fas fa-key"></i>
+        <div class="header text-center mb-8 relative">
+            <div class="icon text-5xl text-blue-500 mb-4 drop-shadow-md">
+                <i class="fas fa-key"></i> <!-- Ícone da chave -->
             </div>
-            <h1>GERADOR DE DADOS PARA INTERFONES</h1>
+            <h1 class="text-3xl font-semibold text-gray-800 tracking-tight mb-4">GERADOR DE DADOS PARA INTERFONES</h1>
+            <!-- Linha decorativa com gradiente sutil -->
+            <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent"></div>
         </div>
 
         <!-- Abas de Navegação (Formulário e Informações) -->
-        <div class="tabs">
-            <div class="tab active" data-tab="form">Formulário</div>
-            <div class="tab" data-tab="info">Informações</div>
+        <div class="tabs flex border-b border-gray-200 mb-8">
+            <div class="tab px-6 py-3 cursor-pointer border-b-2 border-transparent text-gray-600 font-medium transition-colors duration-200 ease-in-out hover:text-blue-500 active:border-blue-500 active:text-blue-500" data-tab="form">Formulário</div>
+            <div class="tab px-6 py-3 cursor-pointer border-b-2 border-transparent text-gray-600 font-medium transition-colors duration-200 ease-in-out hover:text-blue-500" data-tab="info">Informações</div>
         </div>
 
         <!-- Conteúdo da Aba do Formulário -->
@@ -520,8 +151,8 @@
             <form id="credentialForm">
                 <!-- Campo de Seleção do Condomínio Principal -->
                 <div class="form-group mb-6">
-                    <label for="condominio1">Condomínio Principal</label>
-                    <select id="condominio1" required>
+                    <label for="condominio1" class="block text-gray-700 text-sm font-medium mb-2">Condomínio Principal</label>
+                    <select id="condominio1" required class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition duration-200">
                         <option value="">Selecione um condomínio...</option>
                         <option value="BENDORF">BENDORF</option>
                         <option value="BRISAS DA SERRA 1 [1-4]">BRISAS DA SERRA 1 [1-4]</option>
@@ -571,68 +202,74 @@
                 </div>
 
                 <!-- Linha de Campos: Bloco, Apartamento e Ponto do Interfone -->
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="bloco">Bloco (BL)</label>
-                        <input type="text" id="bloco" placeholder="Ex: 10" required pattern="[0-9]+">
+                <div class="form-row flex flex-col md:flex-row gap-6 mb-6">
+                    <div class="form-group flex-1">
+                        <label for="bloco" class="block text-gray-700 text-sm font-medium mb-2">Bloco (BL)</label>
+                        <input type="text" id="bloco" placeholder="Ex: 10" required pattern="[0-9]+" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition duration-200">
                     </div>
 
-                    <div class="form-group">
-                        <label for="apartamento">Apartamento (AP)</label>
-                        <input type="text" id="apartamento" placeholder="Ex: 100" required pattern="[0-9]+">
+                    <div class="form-group flex-1">
+                        <label for="apartamento" class="block text-gray-700 text-sm font-medium mb-2">Apartamento (AP)</label>
+                        <input type="text" id="apartamento" placeholder="Ex: 100" required pattern="[0-9]+" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition duration-200">
                     </div>
 
-                    <div class="form-group">
-                        <label for="ponto">Ponto do Interfone</label>
-                        <div class="radio-group">
+                    <div class="form-group flex-1">
+                        <label for="ponto" class="block text-gray-700 text-sm font-medium mb-2">Ponto do Interfone</label>
+                        <div class="radio-group flex flex-col sm:flex-row gap-4 mt-2">
                             <!-- Opção de rádio para Primeiro Ponto -->
-                            <div class="radio-option">
-                                <input type="radio" id="ponto1" name="ponto" value="1" checked>
-                                <label for="ponto1">PRIMEIRO PONTO</label>
+                            <div class="radio-option flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-lg transition-colors duration-200 hover:bg-blue-50">
+                                <input type="radio" id="ponto1" name="ponto" value="1" checked class="form-radio text-blue-500 focus:ring-blue-200">
+                                <label for="ponto1" class="text-gray-700 text-sm font-medium cursor-pointer select-none">PRIMEIRO PONTO</label>
                             </div>
                             <!-- Opção de rádio para Segundo Ponto -->
-                            <div class="radio-option">
-                                <input type="radio" id="ponto2" name="ponto" value="2">
-                                <label for="ponto2">SEGUNDO PONTO</label>
+                            <div class="radio-option flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-lg transition-colors duration-200 hover:bg-blue-50">
+                                <input type="radio" id="ponto2" name="ponto" value="2" class="form-radio text-blue-500 focus:ring-blue-200">
+                                <label for="ponto2" class="text-gray-700 text-sm font-medium cursor-pointer select-none">SEGUNDO PONTO</label>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Botão de Geração de Credenciais -->
-                <button type="submit" class="btn">
-                    <i class="fas fa-cogs"></i>
+                <button type="submit" class="btn w-full py-3 bg-blue-600 text-white font-semibold rounded-lg text-lg tracking-wide shadow-md transition-all duration-200 hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center gap-3 mt-6">
+                    <i class="fas fa-cogs text-xl"></i> <!-- Ícone de engrenagens -->
                     GERAR CREDENCIAIS
                 </button>
             </form>
 
             <!-- Seção de Resultados -->
-            <div class="results-container">
+            <div class="results-container mt-8">
                 <!-- Caixa de Resultado: Credenciais Geradas -->
-                <div class="result-box">
-                    <h3><i class="fas fa-id-card"></i> Credenciais Geradas</h3>
-                    <div class="result-content" id="gerador-result">Preencha o formulário e clique em "Gerar Credenciais"</div>
-                    <button class="copy-btn tooltip">
+                <div class="result-box bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-200 mb-6 transition-all duration-200 hover:border-blue-200">
+                    <h3 class="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-3">
+                        <i class="fas fa-id-card text-2xl"></i> Credenciais Geradas
+                    </h3>
+                    <div class="result-content bg-gray-100 p-4 rounded-lg font-mono text-gray-700 text-sm leading-relaxed border border-gray-200 overflow-auto" id="gerador-result">Preencha o formulário e clique em "Gerar Credenciais"</div>
+                    <button class="copy-btn tooltip bg-blue-500 text-white rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 mt-4 inline-flex items-center gap-2">
                         <i class="far fa-copy"></i> Copiar
                         <span class="tooltiptext">Copiar para área de transferência</span>
                     </button>
                 </div>
 
                 <!-- Caixa de Resultado: Acesso PABX -->
-                <div class="result-box">
-                    <h3><i class="fas fa-link"></i> Acesso PABX</h3>
-                    <div class="result-content" id="pabx-result">O endereço do PABX aparecerá aqui</div>
-                    <button class="copy-btn tooltip">
+                <div class="result-box bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-200 mb-6 transition-all duration-200 hover:border-blue-200">
+                    <h3 class="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-3">
+                        <i class="fas fa-link text-2xl"></i> Acesso PABX
+                    </h3>
+                    <div class="result-content bg-gray-100 p-4 rounded-lg font-mono text-gray-700 text-sm leading-relaxed border border-gray-200 overflow-auto" id="pabx-result">O endereço do PABX aparecerá aqui</div>
+                    <button class="copy-btn tooltip bg-blue-500 text-white rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 mt-4 inline-flex items-center gap-2">
                         <i class="far fa-copy"></i> Copiar
                         <span class="tooltiptext">Copiar para área de transferência</span>
                     </button>
                 </div>
 
                 <!-- Caixa de Resultado: Senha do Ramal -->
-                <div class="result-box">
-                    <h3><i class="fas fa-key"></i> Senha do Ramal</h3>
-                    <div class="result-content" id="senha-result">A senha do ramal aparecerá aqui</div>
-                    <button class="copy-btn tooltip">
+                <div class="result-box bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-200 transition-all duration-200 hover:border-blue-200">
+                    <h3 class="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-3">
+                        <i class="fas fa-key text-2xl"></i> Senha do Ramal
+                    </h3>
+                    <div class="result-content bg-gray-100 p-4 rounded-lg font-mono text-gray-700 text-sm leading-relaxed border border-gray-200 overflow-auto" id="senha-result">A senha do ramal aparecerá aqui</div>
+                    <button class="copy-btn tooltip bg-blue-500 text-white rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 mt-4 inline-flex items-center gap-2">
                         <i class="far fa-copy"></i> Copiar
                         <span class="tooltiptext">Copiar para área de transferência</span>
                     </button>
@@ -642,9 +279,11 @@
 
         <!-- Conteúdo da Aba de Informações -->
         <div class="tab-content" id="info-tab">
-            <div class="result-box">
-                <h3><i class="fas fa-info-circle"></i> Instruções de Uso</h3>
-                <div class="result-content">
+            <div class="result-box bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-200 transition-all duration-200 hover:border-blue-200">
+                <h3 class="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-3">
+                    <i class="fas fa-info-circle text-2xl"></i> Instruções de Uso
+                </h3>
+                <div class="result-content bg-gray-100 p-4 rounded-lg text-gray-700 text-sm leading-relaxed border border-gray-200 overflow-auto">
                     <p class="mb-3"><strong>Como usar o gerador de credenciais:</strong></p>
                     <ol class="list-decimal list-inside ml-4 mb-4 space-y-2">
                         <li>Selecione o condomínio principal na lista</li>
@@ -744,10 +383,10 @@
             "LUZ DO CAMPO": "luzdocampo.sp.loomy.srv.br",
             "MORADA PREMIUM": "moradapremium.ba.loomy.srv.br",
             "PARQUE DAS NAÇÕES": "parquedasnacoes.ba.loomy.srv.br",
-            "N/A": ""
+            "N/A": "" // Valor padrão para "Não Aplicável"
         };
 
-        // Mapeamento de condomínios para PABX
+        // Mapeamento de condomínios para PABX (baseado nas suas variáveis)
         const pabx = {
             "LISBOA": "https://172.17.22.3",
             "CHAPADA DOS LÍRIOS": "https://172.17.40.3",
@@ -807,43 +446,43 @@
             "BOSQUE DAS ÁGUAS": "https://172.17.62.3",
             "SERRA DOS PINHAIS": "https://172.17.20.3",
             "VIVER FAMA": "https://172.17.64.3",
-            "N/A": ""
+            "N/A": "" // Valor padrão para "Não Aplicável"
         };
 
-        // Mapeamento de senhas de ramal
+        // Mapeamento de senhas de ramal (baseado nas suas variáveis, usando funções para senhas dinâmicas)
         const senhasRamal = {
             "LISBOA": (bloco, ap, ponto) => `rmt@loomy${bloco}${ap}${ponto}`,
             "RECANTO DOS ABRANTES": (bloco, ap, ponto) => `rmt@abrantes${bloco}${ap}${ponto}`,
             "CHAPADA DOS LÍRIOS": (bloco, ap, ponto) => `rmt@lirios${bloco}${ap}${ponto}`,
             "CHAPADA PANTANAL": (bloco, ap, ponto) => `rmt@loomy#${bloco}${ap}${ponto}`,
-            "SAN FELIPPO": () => `rmt@loomy2023#`,
+            "SAN FELIPPO": () => `rmt@loomy2023#`, // Senha estática
             "SOL DO ENGENHO": (bloco, ap, ponto) => `rmt@engenho${bloco}${ap}${ponto}`,
             "ECOVILAGGIO": (bloco, ap, ponto) => `rmt@ecovilla${bloco}${ap}${ponto}`,
-            "SÃO FRANCISCO": () => `rmt@loomy2023#`,
-            "RESIDENCIAL SABIÁ": () => `rmt@loomy#2023`,
-            "JARDIM TIRADENTES": () => `rmt@loomy2023`,
-            "LAGOA DAS ESMERALDAS": () => `rmt@loomy2023#`,
-            "SOLAR DOS MONTES": () => `rmt@loomy#2023`,
-            "GRANCLUB": () => `rmt@loomy123#`,
-            "LIBRA": () => `rmt@loomy#2023`,
-            "VILA DIAMANTE": () => `rmt@loomy#26!`,
-            "JOINVILLE": () => `rmt@loomy123#`,
-            "GRAN VALEY": () => `rmt@loomy123#`,
-            "BOSQUE DAS MARGARIDAS": () => `rmt@loomy123#`,
-            "MUSIQUE": () => `rmt@loomy123#`,
-            "MORADA CARIOCA": () => `rmt@loomy#123`,
-            "SPAZIO SINGULAR": () => `rmt@loomy123#`,
-            "MARAJÓ": () => `rmt@loomy123#`,
-            "PONTO GARDÊNIA": () => `rmt@loomy2023`,
+            "SÃO FRANCISCO": () => `rmt@loomy2023#`, // Senha estática
+            "RESIDENCIAL SABIÁ": () => `rmt@loomy#2023`, // Senha estática
+            "JARDIM TIRADENTES": () => `rmt@loomy2023`, // Senha estática
+            "LAGOA DAS ESMERALDAS": () => `rmt@loomy2023#`, // Senha estática
+            "SOLAR DOS MONTES": () => `rmt@loomy#2023`, // Senha estática
+            "GRANCLUB": () => `rmt@loomy123#`, // Senha estática
+            "LIBRA": () => `rmt@loomy#2023`, // Senha estática
+            "VILA DIAMANTE": () => `rmt@loomy#26!`, // Senha estática
+            "JOINVILLE": () => `rmt@loomy123#`, // Senha estática
+            "GRAN VALEY": () => `rmt@loomy123#`, // Senha estática
+            "BOSQUE DAS MARGARIDAS": () => `rmt@loomy123#`, // Senha estática
+            "MUSIQUE": () => `rmt@loomy123#`, // Senha estática
+            "MORADA CARIOCA": () => `rmt@loomy#123`, // Senha estática
+            "SPAZIO SINGULAR": () => `rmt@loomy123#`, // Senha estática
+            "MARAJÓ": () => `rmt@loomy123#`, // Senha estática
+            "PONTO GARDÊNIA": () => `rmt@loomy2023`, // Senha estática
             "MORADA DE MINAS": (bloco, ap, ponto) => `rmt@mdeminas${bloco}${ap}${ponto}`,
             "RIVERA LIFE": (bloco, ap, ponto) => `rmt@rivera${bloco}${ap}${ponto}`,
-            "MORADA DAS TORRES SP": () => `rmt@loomy123#`,
-            "RUBIS": () => `rmt@loomy123#`,
-            "MATA ATLÂNTICA": () => `rmt@loomy123#`,
-            "COSTA DO CACAU": () => `rmt@loomy123#`,
+            "MORADA DAS TORRES SP": () => `rmt@loomy123#`, // Senha estática
+            "RUBIS": () => `rmt@loomy123#`, // Senha estática
+            "MATA ATLÂNTICA": () => `rmt@loomy123#`, // Senha estática
+            "COSTA DO CACAU": () => `rmt@loomy123#`, // Senha estática
             "SPAZIO SALVADOR NORTE": (bloco, ap, ponto) => `rmt@spaziosalvador${bloco}${ap}${ponto}`,
             "BENDORF": (bloco, ap, ponto) => `rmt@bendorf${bloco}${ap}${ponto}`,
-            "SOLAR DO VALE": () => `rmt@loomy#2023`,
+            "SOLAR DO VALE": () => `rmt@loomy#2023`, // Senha estática
             "VIC PARK MONTREAL": (bloco, ap, ponto) => `rmt@vic${bloco}${ap}${ponto}`,
             "PLAZA NORTE": (bloco, ap, ponto) => `rmt@loomy#${bloco}${ap}${ponto}`,
             "MORADA DAS TORRES - CLUB": (bloco, ap, ponto) => `rmt@moradaclub${bloco}${ap}${ponto}`,
@@ -866,11 +505,12 @@
             "VIVER FAMA": (bloco, ap, ponto) => `rmt@viverfama${bloco}${ap}${ponto}`,
             "LAGUNA": (bloco, ap, ponto) => `rmt@laguna${bloco}${ap}${ponto}`,
             "VILLAS VILLAGE": (bloco, ap, ponto) => `rmt@villasvillage${bloco}${ap}${ponto}`,
+            // Corrigido para incluir '0' conforme sua variável
             "RESERVA BARRA FUNDA": (bloco, ap, ponto) => `rmt@reservabarrafunda${bloco}${ap}0${ponto}`,
             "LUZ DO CAMPO": (bloco, ap, ponto) => `rmt@luzdocampo${bloco}${ap}${ponto}`,
             "MORADA PREMIUM": (bloco, ap, ponto) => `rmt@moradapremium${bloco}${ap}${ponto}`,
             "PARQUE DAS NAÇÕES": (bloco, ap, ponto) => `rmt@parquedasnacoes${bloco}${ap}${ponto}`,
-            "N/A": () => ""
+            "N/A": () => "" // Valor padrão para "Não Aplicável"
         };
 
         // Função principal para gerar as credenciais
@@ -898,6 +538,7 @@
             if (typeof senhaGenerator === 'function') {
                 senha1 = senhaGenerator(bloco, ap, ponto);
             } else {
+                // Fallback para senhas estáticas se não houver função específica
                 senha1 = `rmt@${condominio1.toLowerCase().replace(/\s/g, '')}${bloco}${ap}${ponto}`;
             }
 
@@ -910,23 +551,25 @@
 
             document.getElementById('pabx-result').textContent = pabx1;
             document.getElementById('senha-result').textContent = senha1;
-            showMessage('Credenciais geradas com sucesso!', 'success');
         }
 
         // Função para copiar texto para a área de transferência com feedback visual
         function copyToClipboard(elementId, btnElement) {
             const text = document.getElementById(elementId).textContent;
+            // Cria um elemento temporário para copiar o texto, compatível com iframes
             const tempInput = document.createElement('textarea');
             tempInput.value = text;
             document.body.appendChild(tempInput);
-            tempInput.select();
+            tempInput.select(); // Seleciona o texto no campo temporário
 
             try {
-                document.execCommand('copy');
+                document.execCommand('copy'); // Tenta copiar o texto
+                // Exibe o tooltip de sucesso
                 const tooltiptext = btnElement.querySelector('.tooltiptext');
                 const originalText = tooltiptext.textContent;
-                tooltiptext.textContent = 'Copiado!';
-                
+                tooltiptext.textContent = 'Copiado!'; // Altera o texto do tooltip
+
+                // Restaura o texto original do tooltip após 2 segundos
                 setTimeout(() => {
                     tooltiptext.textContent = originalText;
                 }, 2000);
@@ -934,47 +577,60 @@
                 console.error('Erro ao copiar: ', err);
                 showMessage('Não foi possível copiar o texto. Por favor, tente novamente.', 'error');
             } finally {
-                document.body.removeChild(tempInput);
+                document.body.removeChild(tempInput); // Remove o elemento temporário
             }
         }
 
         // Funcionalidade de Abas
         document.querySelectorAll('.tab').forEach(tab => {
             tab.addEventListener('click', () => {
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                // Remove a classe 'active' e os estilos Tailwind de todas as abas
+                document.querySelectorAll('.tab').forEach(t => {
+                    t.classList.remove('active');
+                    t.classList.remove('border-blue-500', 'text-blue-500');
+                    t.classList.add('border-transparent', 'text-gray-600');
+                });
+                // Oculta todo o conteúdo das abas
                 document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
                 
+                // Adiciona a classe 'active' e os estilos Tailwind à aba clicada
                 tab.classList.add('active');
+                tab.classList.remove('border-transparent', 'text-gray-600');
+                tab.classList.add('border-blue-500', 'text-blue-500');
+
+                // Mostra o conteúdo da aba correspondente
                 document.getElementById(`${tab.dataset.tab}-tab`).classList.add('active');
             });
         });
 
         // Event listener para o envio do formulário
         document.getElementById('credentialForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            generateCredentials();
+            e.preventDefault(); // Impede o envio padrão do formulário
+            generateCredentials(); // Chama a função para gerar as credenciais
         });
 
         // Adiciona funcionalidade de copiar aos botões de copiar
         document.querySelectorAll('.copy-btn').forEach(btn => {
             btn.addEventListener('click', () => {
+                // Encontra o ID do elemento de conteúdo de resultado mais próximo
                 const targetId = btn.closest('.result-box').querySelector('.result-content').id;
-                copyToClipboard(targetId, btn);
+                copyToClipboard(targetId, btn); // Chama a função de copiar
             });
         });
 
         // Inicialização: define a aba "Formulário" como ativa ao carregar a página e aplica animação
         document.addEventListener('DOMContentLoaded', () => {
             const formTab = document.querySelector('.tab[data-tab="form"]');
-            formTab.classList.add('active');
+            formTab.classList.add('active', 'border-blue-500', 'text-blue-500'); // Define como aba ativa inicial
             document.getElementById('form-tab').classList.add('active');
 
+            // Aplica transição de opacidade ao container ao carregar
             const container = document.querySelector('.container');
-            container.style.opacity = '0';
+            container.style.opacity = '0'; // Começa invisível
             setTimeout(() => {
-                container.style.opacity = '1';
-                container.style.transition = 'opacity 0.5s ease-out';
-            }, 100);
+                container.style.opacity = '1'; // Torna visível
+                container.style.transition = 'opacity 0.5s ease-out'; // Animação de 0.5s
+            }, 100); // Pequeno atraso para a animação ser perceptível
         });
     </script>
 </body>
