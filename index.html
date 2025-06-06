@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -135,7 +136,7 @@
             <div class="icon text-5xl text-blue-500 mb-4 drop-shadow-md">
                 <i class="fas fa-key"></i> <!-- Ícone da chave -->
             </div>
-            <h1 class="text-3xl font-semibold text-gray-800 tracking-tight mb-4">GERADOR DE DADOS PARA INTERFONES</h1>
+            <h1 class="text-3xl font-semibold text-gray-800 tracking-tight mb-4">GERADOR DE DADOS DO INTERFONE INTELIGENTE</h1>
             <!-- Linha decorativa com gradiente sutil -->
             <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent"></div>
         </div>
@@ -149,9 +150,9 @@
         <!-- Conteúdo da Aba do Formulário -->
         <div class="tab-content active" id="form-tab">
             <form id="credentialForm">
-                <!-- Campo de Seleção do Condomínio Principal -->
+                <!-- Campo de Seleção do Condomínio -->
                 <div class="form-group mb-6">
-                    <label for="condominio1" class="block text-gray-700 text-sm font-medium mb-2">Condomínio Principal</label>
+                    <label for="condominio1" class="block text-gray-700 text-sm font-medium mb-2">Condomínio</label>
                     <select id="condominio1" required class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition duration-200">
                         <option value="">Selecione um condomínio...</option>
                         <option value="BENDORF">BENDORF</option>
@@ -233,28 +234,28 @@
                 <!-- Botão de Geração de Credenciais -->
                 <button type="submit" class="btn w-full py-3 bg-blue-600 text-white font-semibold rounded-lg text-lg tracking-wide shadow-md transition-all duration-200 hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center gap-3 mt-6">
                     <i class="fas fa-cogs text-xl"></i> <!-- Ícone de engrenagens -->
-                    GERAR CREDENCIAIS
+                    GERAR DADOS DE ACESSO
                 </button>
             </form>
 
             <!-- Seção de Resultados -->
             <div class="results-container mt-8">
-                <!-- Caixa de Resultado: Credenciais Geradas -->
+                <!-- Caixa de Resultado: Dados Gerados -->
                 <div class="result-box bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-200 mb-6 transition-all duration-200 hover:border-blue-200">
                     <h3 class="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-3">
-                        <i class="fas fa-id-card text-2xl"></i> Credenciais Geradas
+                        <i class="fas fa-id-card text-2xl"></i> Dados Gerados
                     </h3>
-                    <div class="result-content bg-gray-100 p-4 rounded-lg font-mono text-gray-700 text-sm leading-relaxed border border-gray-200 overflow-auto" id="gerador-result">Preencha o formulário e clique em "Gerar Credenciais"</div>
+                    <div class="result-content bg-gray-100 p-4 rounded-lg font-mono text-gray-700 text-sm leading-relaxed border border-gray-200 overflow-auto" id="gerador-result">Preencha o formulário e clique em "GERAR DADOS DE ACESSO"</div>
                     <button class="copy-btn tooltip bg-blue-500 text-white rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 mt-4 inline-flex items-center gap-2">
                         <i class="far fa-copy"></i> Copiar
                         <span class="tooltiptext">Copiar para área de transferência</span>
                     </button>
                 </div>
 
-                <!-- Caixa de Resultado: Acesso PABX -->
+                <!-- Caixa de Resultado: Acesso rápido ao PABX -->
                 <div class="result-box bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-200 mb-6 transition-all duration-200 hover:border-blue-200">
                     <h3 class="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-3">
-                        <i class="fas fa-link text-2xl"></i> Acesso PABX
+                        <i class="fas fa-link text-2xl"></i> Acesso rápido ao PABX
                     </h3>
                     <div class="result-content bg-gray-100 p-4 rounded-lg font-mono text-gray-700 text-sm leading-relaxed border border-gray-200 overflow-auto" id="pabx-result">O endereço do PABX aparecerá aqui</div>
                     <button class="copy-btn tooltip bg-blue-500 text-white rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 mt-4 inline-flex items-center gap-2">
@@ -286,11 +287,11 @@
                 <div class="result-content bg-gray-100 p-4 rounded-lg text-gray-700 text-sm leading-relaxed border border-gray-200 overflow-auto">
                     <p class="mb-3"><strong>Como usar o gerador de credenciais:</strong></p>
                     <ol class="list-decimal list-inside ml-4 mb-4 space-y-2">
-                        <li>Selecione o condomínio principal na lista</li>
+                        <li>Selecione o Condomínio na lista</li>
                         <li>Informe o número do bloco (apenas números)</li>
                         <li>Informe o número do apartamento (apenas números)</li>
                         <li>Selecione o ponto do interfone (primeiro ou segundo)</li>
-                        <li>Clique em "GERAR CREDENCIAIS"</li>
+                        <li>Clique em "GERADR DADOS DE ACESSO"</li>
                     </ol>
                     
                     <p class="mb-3"><strong>Dicas úteis:</strong></p>
