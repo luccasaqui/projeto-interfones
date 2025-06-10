@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -141,10 +140,11 @@
             <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent"></div>
         </div>
 
-        <!-- Abas de Navegação (Formulário e Informações) -->
+        <!-- Abas de Navegação (Formulário, Informações e Configuração do Banco de Dados) -->
         <div class="tabs flex border-b border-gray-200 mb-8">
             <div class="tab px-6 py-3 cursor-pointer border-b-2 border-transparent text-gray-600 font-medium transition-colors duration-200 ease-in-out hover:text-blue-500 active:border-blue-500 active:text-blue-500" data-tab="form">Formulário</div>
             <div class="tab px-6 py-3 cursor-pointer border-b-2 border-transparent text-gray-600 font-medium transition-colors duration-200 ease-in-out hover:text-blue-500" data-tab="info">Informações</div>
+            <div class="tab px-6 py-3 cursor-pointer border-b-2 border-transparent text-gray-600 font-medium transition-colors duration-200 ease-in-out hover:text-blue-500" data-tab="netbox">Configuração do Banco de Dados</div>
         </div>
 
         <!-- Conteúdo da Aba do Formulário -->
@@ -154,51 +154,7 @@
                 <div class="form-group mb-6">
                     <label for="condominio1" class="block text-gray-700 text-sm font-medium mb-2">Condomínio</label>
                     <select id="condominio1" required class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition duration-200">
-                        <option value="">Selecione um condomínio...</option>
-                        <option value="BENDORF">BENDORF</option>
-                        <option value="BRISAS DA SERRA 1 [1-4]">BRISAS DA SERRA 1 [1-4]</option>
-                        <option value="BRISAS DA SERRA 2 [5-27]">BRISAS DA SERRA 2 [5-27]</option>
-                        <option value="CHAPADA DOS LÍRIOS">CHAPADA DOS LÍRIOS</option>
-                        <option value="CHAPADA PANTANAL">CHAPADA PANTANAL</option>
-                        <option value="COSTA DO CACAU">COSTA DO CACAU</option>
-                        <option value="ECOVILAGGIO">ECOVILAGGIO</option>
-                        <option value="PONTO GARDÊNIA">PONTO GARDÊNIA</option>
-                        <option value="GRANCLUB">GRANCLUB</option>
-                        <option value="GRAN SONATA">GRAN SONATA</option>
-                        <option value="GRAN VALEY">GRAN VALEY</option>
-                        <option value="JOINVILLE">JOINVILLE</option>
-                        <option value="LAGOA DAS ESMERALDAS">LAGOA DAS ESMERALDAS</option>
-                        <option value="LIBRA">LIBRA</option>
-                        <option value="MAIS PARK">MAIS PARK</option>
-                        <option value="MARAJÓ">MARAJÓ</option>
-                        <option value="BOSQUE DAS MARGARIDAS">BOSQUE DAS MARGARIDAS</option>
-                        <option value="MATA ATLÂNTICA">MATA ATLÂNTICA</option>
-                        <option value="MORADA CARIOCA">MORADA CARIOCA</option>
-                        <option value="MORADA DAS TORRES - CLUB">MORADA DAS TORRES - CLUB</option>
-                        <option value="MORADA DE MINAS">MORADA DE MINAS</option>
-                        <option value="MORADA DAS TORRES SP">MORADA DAS TORRES SP</option>
-                        <option value="MUSIQUE">MUSIQUE</option>
-                        <option value="PLAZA NORTE">PLAZA NORTE</option>
-                        <option value="LISBOA">LISBOA</option>
-                        <option value="RESIDENCIAL SABIÁ">RESIDENCIAL SABIÁ</option>
-                        <option value="RIVERA LIFE">RIVERA LIFE</option>
-                        <option value="RUBIS">RUBIS</option>
-                        <option value="SAN FELIPPO">SAN FELIPPO</option>
-                        <option value="SÃO FRANCISCO">SÃO FRANCISCO</option>
-                        <option value="SOLAR DOS MONTES">SOLAR DOS MONTES</option>
-                        <option value="SOL DO ENGENHO">SOL DO ENGENHO</option>
-                        <option value="SPAZIO SALVADOR NORTE">SPAZIO SALVADOR NORTE</option>
-                        <option value="SPAZIO SINGULAR">SPAZIO SINGULAR</option>
-                        <option value="JARDIM TIRADENTES">JARDIM TIRADENTES</option>
-                        <option value="VIC PARK MONTREAL">VIC PARK MONTREAL</option>
-                        <option value="VILA DIAMANTE">VILA DIAMANTE</option>
-                        <option value="VILA REAL ESMERALDA">VILA REAL ESMERALDA</option>
-                        <option value="VILLAS VILLAGE">VILLAS VILLAGE</option>
-                        <option value="RESERVA BARRA FUNDA">RESERVA BARRA FUNDA</option>
-                        <option value="LUZ DO CAMPO">LUZ DO CAMPO</option>
-                        <option value="MORADA PREMIUM">MORADA PREMIUM</option>
-                        <option value="PARQUE DAS NAÇÕES">PARQUE DAS NAÇÕES</option>
-                        <option value="N/A">N/A</option>
+                        <option value="">Carregando condomínios do banco de dados...</option>
                     </select>
                 </div>
 
@@ -287,7 +243,7 @@
                 <div class="result-content bg-gray-100 p-4 rounded-lg text-gray-700 text-sm leading-relaxed border border-gray-200 overflow-auto">
                     <p class="mb-3"><strong>Como usar o gerador de credenciais:</strong></p>
                     <ol class="list-decimal list-inside ml-4 mb-4 space-y-2">
-                        <li>Selecione o Condomínio na lista</li>
+                        <li>Selecione o Condomínio na lista (carregado do banco de dados)</li>
                         <li>Informe o número do bloco (apenas números)</li>
                         <li>Informe o número do apartamento (apenas números)</li>
                         <li>Selecione o ponto do interfone (primeiro ou segundo)</li>
@@ -305,150 +261,41 @@
                     <ul class="list-disc list-inside ml-4 space-y-2">
                         <li>Este sistema gera credenciais para acesso aos interfones dos condomínios</li>
                         <li>As senhas seguem padrões específicos para cada condomínio</li>
-                        <li>Os endereços PABX são únicos para cada localização</li>
+                        <li>Os endereços PABX e domínios são puxados dinamicamente do banco de dados.</li>
                     </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo da Aba de Configuração do Banco de Dados -->
+        <div class="tab-content" id="netbox-tab">
+            <div class="netbox-config bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-200 mb-6">
+                <h3 class="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-3">
+                    <i class="fas fa-database text-2xl"></i> Configuração do Banco de Dados
+                </h3>
+                <div class="form-group mb-4">
+                    <label for="netboxApiUrl" class="block text-gray-700 text-sm font-medium mb-2">URL da API do Banco de Dados</label>
+                    <input type="url" id="netboxApiUrl" placeholder="Ex: https://netbox.seuservidor.com/api/ipam/ip-addresses/" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition duration-200">
+                </div>
+                <div class="form-group mb-4">
+                    <label for="netboxApiToken" class="block text-gray-700 text-sm font-medium mb-2">Token da API do Banco de Dados</label>
+                    <input type="text" id="netboxApiToken" placeholder="Seu token da API" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition duration-200">
+                </div>
+                <button id="fetchNetboxDataBtn" class="btn w-full py-3 bg-green-600 text-white font-semibold rounded-lg text-lg tracking-wide shadow-md transition-all duration-200 hover:bg-green-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 flex items-center justify-center gap-3">
+                    <i class="fas fa-sync-alt text-xl"></i> Puxar Dados do Banco de Dados
+                </button>
+                <div id="netbox-status-message" class="text-center py-4 text-sm text-gray-600">
+                    Insira a URL e o Token da API do seu banco de dados e clique em "Puxar Dados".
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Função utilitária para exibir mensagens (substitui alert())
-        function showMessage(message, type = 'info') {
-            const msgBox = document.getElementById('message-box');
-            const msgText = document.getElementById('message-text');
-            const msgIcon = document.getElementById('message-icon');
-
-            msgText.textContent = message;
-            msgBox.className = 'flex items-center justify-center'; // Reseta classes para aplicar novas
-            msgBox.classList.add('show', type); // Adiciona classes de exibição e tipo (success, error, info)
-            msgIcon.className = 'fas'; // Reseta o ícone
-
-            // Define o ícone com base no tipo de mensagem
-            if (type === 'error') {
-                msgIcon.classList.add('fa-exclamation-circle');
-            } else if (type === 'success') {
-                msgIcon.classList.add('fa-check-circle');
-            } else {
-                msgIcon.classList.add('fa-info-circle');
-            }
-
-            // Oculta a mensagem após 3 segundos
-            setTimeout(() => {
-                msgBox.classList.remove('show');
-            }, 3000);
-        }
-
-        // Mapeamento de condomínios para domínios (baseado nas suas variáveis)
-        const dominios = {
-            "BENDORF": "bendorf.sc.loomy.srv.br",
-            "BRISAS DA SERRA 1 [1-4]": "brisasdaserra1.mg.loomy.srv.br",
-            "BRISAS DA SERRA 2 [5-27]": "brisasdaserra2.mg.loomy.srv.br",
-            "CHAPADA DOS LÍRIOS": "chapadadoslirios.mt.loomy.srv.br",
-            "CHAPADA PANTANAL": "chapadapantanal.mt.loomy.srv.br",
-            "COSTA DO CACAU": "costadocacau.ba.loomy.srv.br",
-            "ECOVILAGGIO": "ecovillagio.go.loomy.srv.br",
-            "PONTO GARDÊNIA": "gardenia.mg.loomy.srv.br",
-            "GRANCLUB": "granclub.go.loomy.srv.br",
-            "GRAN SONATA": "gransonata.go.loomy.srv.br",
-            "GRAN VALEY": "granvalley.go.loomy.srv.br",
-            "JOINVILLE": "joinville.sp.loomy.srv.br",
-            "LAGOA DAS ESMERALDAS": "lagoadasesmeraldas.mg.loomy.srv.br",
-            "LIBRA": "libra.mg.loomy.srv.br",
-            "MAIS PARK": "maispark.mg.loomy.srv.br",
-            "MARAJÓ": "marajo.mg.loomy.srv.br",
-            "BOSQUE DAS MARGARIDAS": "margaridas.mg.loomy.srv.br",
-            "MATA ATLÂNTICA": "mataatlantica.mg.loomy.srv.br",
-            "MORADA CARIOCA": "moradacarioca.sp.loomy.srv.br",
-            "MORADA DAS TORRES - CLUB": "moradadastorres.ba.loomy.srv.br",
-            "MORADA DE MINAS": "moradademinas.mg.loomy.srv.br",
-            "MORADA DAS TORRES SP": "moradadastorres.sp.loomy.srv.br",
-            "MUSIQUE": "musique.mg.loomy.srv.br",
-            "PLAZA NORTE": "plazanorte.mg.loomy.srv.br",
-            "LISBOA": "provinciaslisboa.mg.loomy.srv.br",
-            "RESIDENCIAL SABIÁ": "residencialsabia.mg.loomy.srv.br",
-            "RIVERA LIFE": "riveralife.ba.loomy.srv.br",
-            "RUBIS": "rubis.mg.loomy.srv.br",
-            "SAN FELIPPO": "sanfelippo.sp.loomy.srv.br",
-            "SÃO FRANCISCO": "saofrancisco.mg.loomy.srv.br",
-            "SOLAR DOS MONTES": "solardosmontes.mg.loomy.srv.br",
-            "SOL DO ENGENHO": "soldoengenho.rj.loomy.srv.br",
-            "SPAZIO SALVADOR NORTE": "spaziosalvadornorte.ba.loomy.srv.br",
-            "SPAZIO SINGULAR": "spaziosingular.ba.loomy.srv.br",
-            "JARDIM TIRADENTES": "tiradentes.mg.loomy.srv.br",
-            "VIC PARK MONTREAL": "vicpark.mg.loomy.srv.br",
-            "VILA DIAMANTE": "viladiamante.es.loomy.srv.br",
-            "VILA REAL ESMERALDA": "vilarealesmeralda.mg.loomy.srv.br",
-            "VILLAS VILLAGE": "villasvillage.ba.loomy.srv.br",
-            "RESERVA BARRA FUNDA": "reservabarrafunda.sp.loomy.srv.br",
-            "LUZ DO CAMPO": "luzdocampo.sp.loomy.srv.br",
-            "MORADA PREMIUM": "moradapremium.ba.loomy.srv.br",
-            "PARQUE DAS NAÇÕES": "parquedasnacoes.ba.loomy.srv.br",
-            "N/A": "" // Valor padrão para "Não Aplicável"
-        };
-
-        // Mapeamento de condomínios para PABX (baseado nas suas variáveis)
-        const pabx = {
-            "LISBOA": "https://172.17.22.3",
-            "CHAPADA DOS LÍRIOS": "https://172.17.40.3",
-            "CHAPADA PANTANAL": "https://172.17.39.3",
-            "SAN FELIPPO": "https://172.17.30.3",
-            "SOL DO ENGENHO": "https://172.17.27.3",
-            "ECOVILAGGIO": "https://172.17.38.3",
-            "SÃO FRANCISCO": "https://172.17.37.3",
-            "RESIDENCIAL SABIÁ": "https://172.17.34.3",
-            "JARDIM TIRADENTES": "https://172.17.19.3",
-            "LAGOA DAS ESMERALDAS": "https://172.17.25.3",
-            "SOLAR DOS MONTES": "https://172.17.33.3",
-            "GRANCLUB": "https://192.168.12.3",
-            "LIBRA": "https://172.17.32.3",
-            "VILA DIAMANTE": "https://172.17.16.3",
-            "JOINVILLE": "https://192.168.17.3",
-            "GRAN VALEY": "https://172.17.26.3",
-            "BOSQUE DAS MARGARIDAS": "https://172.17.11.3",
-            "MUSIQUE": "https://172.17.15.3",
-            "MORADA CARIOCA": "https://172.17.23.3",
-            "SPAZIO SINGULAR": "https://172.17.14.3",
-            "MARAJÓ": "https://172.17.29.3",
-            "PONTO GARDÊNIA": "https://172.17.31.3",
-            "MORADA DE MINAS": "https://172.17.48.3",
-            "MORADA DAS TORRES SP": "https://192.168.20.3",
-            "RUBIS": "https://172.17.10.3",
-            "MATA ATLÂNTICA": "https://172.17.12.3",
-            "COSTA DO CACAU": "https://172.17.13.3",
-            "SPAZIO SALVADOR NORTE": "https://172.17.50.3",
-            "BENDORF": "https://192.168.18.3",
-            "SOLAR DO VALE": "https://192.168.10.3",
-            "VIC PARK MONTREAL": "https://172.17.47.3",
-            "PLAZA NORTE": "https://172.17.18.3",
-            "ESTRELA DE CRISTAL": "https://172.17.66.3",
-            "MORADA DAS TORRES - CLUB": "https://172.17.51.3",
-            "GREENVILLE": "https://172.17.68.3",
-            "BRISAS DA SERRA 1 [1-4]": "https://172.17.52.5",
-            "BRISAS DA SERRA 2 [5-27]": "https://172.17.52.3",
-            "MAIS PARK": "https://172.17.53.3",
-            "GRAN SONATA": "https://172.17.55.3",
-            "RIVERA LIFE": "https://172.17.54.3",
-            "VILA REAL ESMERALDA": "https://172.17.56.3",
-            "GOLDEN PLAZA": "https://172.17.35.3",
-            "XINGÚ": "https://172.17.57.3",
-            "BOSQUE DA RIBEIRA": "https://172.17.59.3",
-            "PONTO DIAMANTE": "https://172.17.58.3",
-            "LAGUNA": "https://172.17.70.3",
-            "CANTO DO SABIÁ": "https://172.17.60.3",
-            "RECANTO DOS ABRANTES": "https://187.44.177.206:8443",
-            "VILLAS VILLAGE": "https://172.17.21.3",
-            "LUZ DO CAMPO": "https://172.17.44.3",
-            "RESERVA BARRA FUNDA": "https://172.17.43.3",
-            "MORADA PREMIUM": "https://172.17.71.3/",
-            "PARQUE DAS NAÇÕES": "https://172.17.72.3/",
-            "SOLAR DA COLINA": "https://192.168.13.3",
-            "PONTO VEREDAS": "https://172.17.61.3",
-            "BOSQUE DAS ÁGUAS": "https://172.17.62.3",
-            "SERRA DOS PINHAIS": "https://172.17.20.3",
-            "VIVER FAMA": "https://172.17.64.3",
-            "N/A": "" // Valor padrão para "Não Aplicável"
-        };
+        // Variáveis globais para armazenar os dados do banco de dados (anteriormente NetBox)
+        let dataFromDatabase = []; // Renomeada para ser mais genérica
+        let dominios = {};
+        let pabx = {};
 
         // Mapeamento de senhas de ramal (baseado nas suas variáveis, usando funções para senhas dinâmicas)
         const senhasRamal = {
@@ -506,13 +353,134 @@
             "VIVER FAMA": (bloco, ap, ponto) => `rmt@viverfama${bloco}${ap}${ponto}`,
             "LAGUNA": (bloco, ap, ponto) => `rmt@laguna${bloco}${ap}${ponto}`,
             "VILLAS VILLAGE": (bloco, ap, ponto) => `rmt@villasvillage${bloco}${ap}${ponto}`,
-            // Corrigido para incluir '0' conforme sua variável
             "RESERVA BARRA FUNDA": (bloco, ap, ponto) => `rmt@reservabarrafunda${bloco}${ap}0${ponto}`,
             "LUZ DO CAMPO": (bloco, ap, ponto) => `rmt@luzdocampo${bloco}${ap}${ponto}`,
             "MORADA PREMIUM": (bloco, ap, ponto) => `rmt@moradapremium${bloco}${ap}${ponto}`,
             "PARQUE DAS NAÇÕES": (bloco, ap, ponto) => `rmt@parquedasnacoes${bloco}${ap}${ponto}`,
             "N/A": () => "" // Valor padrão para "Não Aplicável"
         };
+
+
+        // Função utilitária para exibir mensagens (substitui alert())
+        function showMessage(message, type = 'info') {
+            const msgBox = document.getElementById('message-box');
+            const msgText = document.getElementById('message-text');
+            const msgIcon = document.getElementById('message-icon');
+
+            msgText.textContent = message;
+            msgBox.className = 'flex items-center justify-center'; // Reseta classes para aplicar novas
+            msgBox.classList.add('show', type); // Adiciona classes de exibição e tipo (success, error, info)
+            msgIcon.className = 'fas'; // Reseta o ícone
+
+            // Define o ícone com base no tipo de mensagem
+            if (type === 'error') {
+                msgIcon.classList.add('fa-exclamation-circle');
+            } else if (type === 'success') {
+                msgIcon.classList.add('fa-check-circle');
+            } else {
+                msgIcon.classList.add('fa-info-circle');
+            }
+
+            // Oculta a mensagem após 3 segundos
+            setTimeout(() => {
+                msgBox.classList.remove('show');
+            }, 3000);
+        }
+
+        /**
+         * Fetches IP address data from the database API.
+         * This function should be configured to make an actual HTTP request to your NetBox API.
+         * @param {string} apiUrl - The database API URL (e.g., NetBox API).
+         * @param {string} apiToken - The API Token for authentication.
+         */
+        async function fetchDataFromDatabase(apiUrl, apiToken) {
+            const statusMessageDiv = document.getElementById('netbox-status-message');
+            statusMessageDiv.innerHTML = '<div class="text-center py-4"><i class="fas fa-spinner fa-spin text-blue-500 mr-2"></i> Carregando dados do banco de dados...</div>';
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Token ${apiToken}`,
+                        'Accept': 'application/json', // Solicita o formato JSON
+                    },
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Erro HTTP! Status: ${response.status}, Resposta: ${errorText}`);
+                }
+
+                const data = await response.json();
+                
+                // A API do NetBox geralmente retorna um array 'results' para listas de objetos
+                // Ajuste 'data.results' se sua API retornar em outro formato
+                dataFromDatabase = data.results.map(item => ({
+                    address: item.address ? item.address.split('/')[0] : '', // Obtém apenas o IP sem a máscara /mask
+                    dns_name: item.dns_name || '',
+                    description: item.description || '' // 'description' é o campo que você usa para o nome do condomínio
+                }));
+                
+                populateCondominioDropdown();
+                generateDynamicMappings(dataFromDatabase);
+                statusMessageDiv.innerHTML = '<div class="text-center py-4 text-green-600"><i class="fas fa-check-circle mr-2"></i> Dados do banco de dados carregados com sucesso!</div>';
+                showMessage('Dados do banco de dados carregados com sucesso!', 'success');
+
+            } catch (error) {
+                console.error('Erro ao puxar dados do banco de dados:', error);
+                statusMessageDiv.innerHTML = `<div class="text-center py-4 text-red-500">Erro ao carregar dados do banco de dados. Verifique a URL, o Token e as permissões.</div>`;
+                showMessage('Erro ao carregar dados do banco de dados.', 'error');
+            }
+        }
+
+        /**
+         * Populates the condominium dropdown with unique descriptions from the database data.
+         */
+        function populateCondominioDropdown() {
+            const selectElement = document.getElementById('condominio1');
+            selectElement.innerHTML = '<option value="">Selecione um condomínio...</option>'; // Limpa opções existentes
+
+            const uniqueCondominios = new Set();
+            dataFromDatabase.forEach(item => {
+                if (item.description && item.description !== 'N/A') {
+                    uniqueCondominios.add(item.description);
+                }
+            });
+
+            // Ordena os condomínios alfabeticamente para melhor experiência do usuário
+            const sortedCondominios = Array.from(uniqueCondominios).sort();
+
+            sortedCondominios.forEach(condominio => {
+                const option = document.createElement('option');
+                option.value = condominio;
+                option.textContent = condominio;
+                selectElement.appendChild(option);
+            });
+
+            if (sortedCondominios.length === 0) {
+                selectElement.innerHTML = '<option value="">Nenhum condomínio encontrado. Carregue os dados do banco de dados.</option>';
+            }
+        }
+
+        /**
+         * Generates dynamic `dominios` and `pabx` mappings from fetched database data.
+         * Assumes 'description' is the condominium name, 'dns_name' is the domain,
+         * and 'address' is the PABX IP. Adjust these based on your database structure.
+         * @param {Array<Object>} data - The processed database IP data.
+         */
+        function generateDynamicMappings(data) {
+            dominios = {};
+            pabx = {};
+
+            data.forEach(item => {
+                if (item.description && item.description !== 'N/A') {
+                    dominios[item.description] = item.dns_name;
+                    pabx[item.description] = `https://${item.address}`; // Assumindo PABX acessível via HTTPS
+                }
+            });
+            dominios["N/A"] = "";
+            pabx["N/A"] = "";
+        }
 
         // Função principal para gerar as credenciais
         function generateCredentials() {
@@ -530,7 +498,7 @@
             // Gerar o nome de usuário (RAMAL)
             const usuario = `${bloco}${ap}${ponto}`;
 
-            // Obter o domínio
+            // Obter o domínio do mapeamento dinâmico
             const dominio1 = dominios[condominio1] || "Domínio não configurado";
 
             // Obter a senha do ramal, usando a função apropriada do mapeamento
@@ -540,10 +508,10 @@
                 senha1 = senhaGenerator(bloco, ap, ponto);
             } else {
                 // Fallback para senhas estáticas se não houver função específica
-                senha1 = `rmt@${condominio1.toLowerCase().replace(/\s/g, '')}${bloco}${ap}${ponto}`;
+                senha1 = `rmt@${condominio1.toLowerCase().replace(/[^a-z0-9]/g, '')}${bloco}${ap}${ponto}`;
             }
 
-            // Obter o endereço PABX
+            // Obter o endereço PABX do mapeamento dinâmico
             const pabx1 = pabx[condominio1] || "PABX não configurado";
 
             // Atualizar os elementos de resultado na UI
@@ -619,6 +587,18 @@
             });
         });
 
+        // Event listener para o botão de puxar dados do banco de dados
+        document.getElementById('fetchNetboxDataBtn').addEventListener('click', () => {
+            const apiUrl = document.getElementById('netboxApiUrl').value;
+            const apiToken = document.getElementById('netboxApiToken').value;
+
+            if (!apiUrl || !apiToken) {
+                showMessage('Por favor, insira a URL da API e o Token do banco de dados.', 'error');
+                return;
+            }
+            fetchDataFromDatabase(apiUrl, apiToken);
+        });
+
         // Inicialização: define a aba "Formulário" como ativa ao carregar a página e aplica animação
         document.addEventListener('DOMContentLoaded', () => {
             const formTab = document.querySelector('.tab[data-tab="form"]');
@@ -632,6 +612,11 @@
                 container.style.opacity = '1'; // Torna visível
                 container.style.transition = 'opacity 0.5s ease-out'; // Animação de 0.5s
             }, 100); // Pequeno atraso para a animação ser perceptível
+
+            // A chamada inicial para carregar os dados tentará com os campos vazios
+            // O usuário deverá configurar a URL e o Token na aba "Configuração do Banco de Dados"
+            // e clicar em "Puxar Dados do Banco de Dados" para carregar.
+            // showMessage('Configure a URL e o Token da API do banco de dados na aba "Configuração do Banco de Dados".', 'info');
         });
     </script>
 </body>
