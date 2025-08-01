@@ -1,623 +1,318 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GERADOR DE DADOS | Interfones</title>
-    <!-- Tailwind CSS CDN para um design moderno e responsivo -->
+    <title>GERADOR DE DADOS DO INTERFONE INTELIGENTE</title>
+    <!-- Inclui o Tailwind CSS para um design limpo e responsivo -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter para texto geral e Roboto Mono para credenciais -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <!-- Font Awesome para ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* Estilos personalizados para o corpo e scrollbar que complementam o Tailwind */
         body {
-            font-family: 'Inter', sans-serif; /* Define a fonte principal para Inter */
-            /* Tailwind classes aplicadas via @apply para uma base de cor clara */
-            @apply bg-gray-50 text-gray-800;
-            /* Gradiente de fundo sutil para um toque sofisticado */
-            background-image: radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.05) 0%, transparent 20%),
-                              radial-gradient(circle at 90% 80%, rgba(0, 122, 255, 0.05) 0%, transparent 20%),
-                              radial-gradient(circle at 50% 50%, rgba(0, 122, 255, 0.03) 0%, transparent 30%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        /* Estilo da barra de rolagem para um visual limpo e moderno */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: theme('colors.gray.200'); /* Fundo da barra de rolagem */
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: theme('colors.blue.500'); /* Cor do "polegar" da barra de rolagem (azul) */
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: theme('colors.blue.600'); /* Cor do "polegar" ao passar o mouse */
-        }
-
-        /* Animação de fade-in para o conteúdo das abas */
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease-out; /* Animação suave ao trocar de aba */
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .tab-content.active {
-            display: block; /* Mostra a aba ativa */
-        }
-
-        /* Estilo do tooltip para os botões de copiar */
-        .tooltip {
-            position: relative;
-            display: inline-block;
-        }
-
-        .tooltip .tooltiptext {
-            visibility: hidden;
-            width: 120px;
-            background-color: theme('colors.gray.800'); /* Fundo escuro do tooltip */
-            color: #fff;
-            text-align: center;
-            border-radius: theme('borderRadius.md'); /* Cantos arredondados */
-            padding: 5px 0;
-            position: absolute;
-            z-index: 10;
-            bottom: 125%; /* Posiciona acima do botão */
-            left: 50%;
-            margin-left: -60px; /* Centraliza o tooltip */
-            opacity: 0;
-            transition: opacity 0.3s, visibility 0.3s; /* Transição para aparecer/desaparecer */
-            font-size: 0.75rem; /* Tamanho da fonte menor */
-        }
-
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-            opacity: 1; /* Torna o tooltip visível ao passar o mouse */
-        }
-
-        /* Estilos para a caixa de mensagem personalizada (substitui alert()) */
-        #message-box {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #333; /* Fundo escuro padrão */
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            z-index: 1000; /* Garante que fique acima de outros elementos */
-            opacity: 0;
-            transition: opacity 0.3s ease-out, transform 0.3s ease-out; /* Animação ao aparecer */
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        #message-box.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0); /* Mostra e move para cima */
-        }
-        #message-box.error {
-            background-color: #dc3545; /* Vermelho para mensagens de erro */
-        }
-        #message-box.success {
-            background-color: #28a745; /* Verde para mensagens de sucesso */
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Cor de fundo suave */
         }
     </style>
 </head>
-<body>
-    <!-- Caixa de Mensagem Personalizada -->
-    <div id="message-box" class="flex items-center justify-center">
-        <i id="message-icon" class="fas"></i> <!-- Ícone da mensagem -->
-        <span id="message-text"></span> <!-- Texto da mensagem -->
-    </div>
+<body class="flex items-center justify-center min-h-screen p-4">
 
-    <!-- Container Principal do Site -->
-    <div class="container bg-white rounded-xl shadow-2xl w-full max-w-4xl p-8 transition-all duration-300 ease-in-out hover:shadow-3xl">
-        <!-- Cabeçalho da Aplicação -->
-        <div class="header text-center mb-8 relative">
-            <div class="icon text-5xl text-blue-500 mb-4 drop-shadow-md">
-                <i class="fas fa-key"></i> <!-- Ícone da chave -->
+    <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 w-full max-w-md mx-auto">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">GERADOR DE DADOS DO INTERFONE INTELIGENTE</h1>
+
+        <!-- Formulário de Entrada -->
+        <div class="space-y-4">
+            <div>
+                <label for="condominio" class="block text-sm font-medium text-gray-700">Condomínio</label>
+                <select id="condominio" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    <!-- Condomínios combinados das duas listas fornecidas -->
+                    <option value="">Selecione um condomínio...</option>
+                    <option value="BENDORF">BENDORF</option>
+                    <option value="BRISAS DA SERRA 1 [1-4]">BRISAS DA SERRA 1 [1-4]</option>
+                    <option value="BRISAS DA SERRA 2 [5-27]">BRISAS DA SERRA 2 [5-27]</option>
+                    <option value="CASA BRANCA">CASA BRANCA</option>
+                    <option value="CANTO DO SABIÁ">CANTO DO SABIÁ</option>
+                    <option value="CHAPADA DOS LÍRIOS">CHAPADA DOS LÍRIOS</option>
+                    <option value="CHAPADA PANTANAL">CHAPADA PANTANAL</option>
+                    <option value="COSTA DO CACAU">COSTA DO CACAU</option>
+                    <option value="ECOVILAGGIO">ECOVILAGGIO</option>
+                    <option value="PONTO GARDÊNIA">PONTO GARDÊNIA</option>
+                    <option value="GRANCLUB">GRANCLUB</option>
+                    <option value="GRAN SONATA">GRAN SONATA</option>
+                    <option value="GRAN VALEY">GRAN VALEY</option>
+                    <option value="JOINVILLE">JOINVILLE</option>
+                    <option value="LAGOA DAS ESMERALDAS">LAGOA DAS ESMERALDAS</option>
+                    <option value="LIBRA">LIBRA</option>
+                    <option value="LUZ DO CAMPO">LUZ DO CAMPO</option>
+                    <option value="MAIS PARK">MAIS PARK</option>
+                    <option value="MARAJÓ">MARAJÓ</option>
+                    <option value="BOSQUE DAS MARGARIDAS">BOSQUE DAS MARGARIDAS</option>
+                    <option value="MATA ATLÂNTICA">MATA ATLÂNTICA</option>
+                    <option value="MORADA CARIOCA">MORADA CARIOCA</option>
+                    <option value="MORADA DAS TORRES - CLUB">MORADA DAS TORRES - CLUB</option>
+                    <option value="MORADA DE MINAS">MORADA DE MINAS</option>
+                    <option value="MORADA DAS TORRES SP">MORADA DAS TORRES SP</option>
+                    <option value="MORADA PREMIUM">MORADA PREMIUM</option>
+                    <option value="MUSIQUE">MUSIQUE</option>
+                    <option value="PARQUE DAS NAÇÕES">PARQUE DAS NAÇÕES</option>
+                    <option value="PLAZA NORTE">PLAZA NORTE</option>
+                    <option value="LISBOA">LISBOA</option>
+                    <option value="PORTO DOURADO 2">PORTO DOURADO 2</option>
+                    <option value="PORTO DOURADO 3">PORTO DOURADO 3</option>
+                    <option value="RESIDENCIAL SABIÁ">RESIDENCIAL SABIÁ</option>
+                    <option value="RIVERA LIFE">RIVERA LIFE</option>
+                    <option value="RUBIS">RUBIS</option>
+                    <option value="SAN FELIPPO">SAN FELIPPO</option>
+                    <option value="SÃO FRANCISCO">SÃO FRANCISCO</option>
+                    <option value="SOLAR DOS MONTES">SOLAR DOS MONTES</option>
+                    <option value="SOL DO ENGENHO">SOL DO ENGENHO</option>
+                    <option value="SPAZIO SALVADOR NORTE">SPAZIO SALVADOR NORTE</option>
+                    <option value="SPAZIO SINGULAR">SPAZIO SINGULAR</option>
+                    <option value="JARDIM TIRADENTES">JARDIM TIRADENTES</option>
+                    <option value="VIC PARK MONTREAL">VIC PARK MONTREAL</option>
+                    <option value="VILA DIAMANTE">VILA DIAMANTE</option>
+                    <option value="VILA REAL ESMERALDA">VILA REAL ESMERALDA</option>
+                    <option value="VILLAS VILLAGE">VILLAS VILLAGE</option>
+                    <option value="RESERVA BARRA FUNDA">RESERVA BARRA FUNDA</option>
+                    <option value="VIVER FAMA">VIVER FAMA</option>
+                    <option value="BOSQUE DAS ÁGUAS">BOSQUE DAS ÁGUAS</option>
+                    <option value="BOSQUE DA RIBEIRA">BOSQUE DA RIBEIRA</option>
+                    <option value="ESTRELA DE CRISTAL">ESTRELA DE CRISTAL</option>
+                    <option value="FONTANA">FONTANA</option>
+                    <option value="GOLDEN PLAZA">GOLDEN PLAZA</option>
+                    <option value="GREENVILLE">GREENVILLE</option>
+                    <option value="LAGUNA">LAGUNA</option>
+                    <option value="RECANTO DOS ABRANTES">RECANTO DOS ABRANTES</option>
+                    <option value="XINGÚ">XINGÚ</option>
+                    <option value="SERRA DOS PINHAIS">SERRA DOS PINHAIS</option>
+                    <option value="PONTO DIAMANTE">PONTO DIAMANTE</option>
+                    <option value="PONTO VEREDAS">PONTO VEREDAS</option>
+                    <option value="VILLAGE EUROPA">VILLAGE EUROPA</option>
+                </select>
             </div>
-            <h1 class="text-3xl font-semibold text-gray-800 tracking-tight mb-4">GERADOR DE DADOS DO INTERFONE INTELIGENTE</h1>
-            <!-- Linha decorativa com gradiente sutil -->
-            <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent"></div>
-        </div>
 
-        <!-- Abas de Navegação (Formulário, Informações e Configuração do Banco de Dados) -->
-        <div class="tabs flex border-b border-gray-200 mb-8">
-            <div class="tab px-6 py-3 cursor-pointer border-b-2 border-transparent text-gray-600 font-medium transition-colors duration-200 ease-in-out hover:text-blue-500 active:border-blue-500 active:text-blue-500" data-tab="form">Formulário</div>
-            <div class="tab px-6 py-3 cursor-pointer border-b-2 border-transparent text-gray-600 font-medium transition-colors duration-200 ease-in-out hover:text-blue-500" data-tab="info">Informações</div>
-            <div class="tab px-6 py-3 cursor-pointer border-b-2 border-transparent text-gray-600 font-medium transition-colors duration-200 ease-in-out hover:text-blue-500" data-tab="netbox">Configuração do Banco de Dados</div>
-        </div>
+            <div>
+                <label for="bloco" class="block text-sm font-medium text-gray-700">Bloco</label>
+                <input type="text" id="bloco" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
 
-        <!-- Conteúdo da Aba do Formulário -->
-        <div class="tab-content active" id="form-tab">
-            <form id="credentialForm">
-                <!-- Campo de Seleção do Condomínio -->
-                <div class="form-group mb-6">
-                    <label for="condominio1" class="block text-gray-700 text-sm font-medium mb-2">Condomínio</label>
-                    <select id="condominio1" required class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition duration-200">
-                        <option value="">Carregando condomínios do banco de dados...</option>
-                    </select>
-                </div>
+            <div>
+                <label for="apartamento" class="block text-sm font-medium text-gray-700">Apartamento</label>
+                <input type="text" id="apartamento" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+            </div>
 
-                <!-- Linha de Campos: Bloco, Apartamento e Ponto do Interfone -->
-                <div class="form-row flex flex-col md:flex-row gap-6 mb-6">
-                    <div class="form-group flex-1">
-                        <label for="bloco" class="block text-gray-700 text-sm font-medium mb-2">Bloco (BL)</label>
-                        <input type="text" id="bloco" placeholder="Ex: 10" required pattern="[0-9]+" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition duration-200">
-                    </div>
-
-                    <div class="form-group flex-1">
-                        <label for="apartamento" class="block text-gray-700 text-sm font-medium mb-2">Apartamento (AP)</label>
-                        <input type="text" id="apartamento" placeholder="Ex: 100" required pattern="[0-9]+" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition duration-200">
-                    </div>
-
-                    <div class="form-group flex-1">
-                        <label for="ponto" class="block text-gray-700 text-sm font-medium mb-2">Ponto do Interfone</label>
-                        <div class="radio-group flex flex-col sm:flex-row gap-4 mt-2">
-                            <!-- Opção de rádio para Primeiro Ponto -->
-                            <div class="radio-option flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-lg transition-colors duration-200 hover:bg-blue-50">
-                                <input type="radio" id="ponto1" name="ponto" value="1" checked class="form-radio text-blue-500 focus:ring-blue-200">
-                                <label for="ponto1" class="text-gray-700 text-sm font-medium cursor-pointer select-none">PRIMEIRO PONTO</label>
-                            </div>
-                            <!-- Opção de rádio para Segundo Ponto -->
-                            <div class="radio-option flex items-center gap-2 bg-gray-100 px-4 py-2 rounded-lg transition-colors duration-200 hover:bg-blue-50">
-                                <input type="radio" id="ponto2" name="ponto" value="2" class="form-radio text-blue-500 focus:ring-blue-200">
-                                <label for="ponto2" class="text-gray-700 text-sm font-medium cursor-pointer select-none">SEGUNDO PONTO</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Botão de Geração de Credenciais -->
-                <button type="submit" class="btn w-full py-3 bg-blue-600 text-white font-semibold rounded-lg text-lg tracking-wide shadow-md transition-all duration-200 hover:bg-blue-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 flex items-center justify-center gap-3 mt-6">
-                    <i class="fas fa-cogs text-xl"></i> <!-- Ícone de engrenagens -->
-                    GERAR DADOS DE ACESSO
-                </button>
-            </form>
-
-            <!-- Seção de Resultados -->
-            <div class="results-container mt-8">
-                <!-- Caixa de Resultado: Dados Gerados -->
-                <div class="result-box bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-200 mb-6 transition-all duration-200 hover:border-blue-200">
-                    <h3 class="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-3">
-                        <i class="fas fa-id-card text-2xl"></i> Dados Gerados
-                    </h3>
-                    <div class="result-content bg-gray-100 p-4 rounded-lg font-mono text-gray-700 text-sm leading-relaxed border border-gray-200 overflow-auto" id="gerador-result">Preencha o formulário e clique em "GERAR DADOS DE ACESSO"</div>
-                    <button class="copy-btn tooltip bg-blue-500 text-white rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 mt-4 inline-flex items-center gap-2">
-                        <i class="far fa-copy"></i> Copiar
-                        <span class="tooltiptext">Copiar para área de transferência</span>
-                    </button>
-                </div>
-
-                <!-- Caixa de Resultado: Acesso rápido ao PABX -->
-                <div class="result-box bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-200 mb-6 transition-all duration-200 hover:border-blue-200">
-                    <h3 class="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-3">
-                        <i class="fas fa-link text-2xl"></i> Acesso rápido ao PABX
-                    </h3>
-                    <div class="result-content bg-gray-100 p-4 rounded-lg font-mono text-gray-700 text-sm leading-relaxed border border-gray-200 overflow-auto" id="pabx-result">O endereço do PABX aparecerá aqui</div>
-                    <button class="copy-btn tooltip bg-blue-500 text-white rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 mt-4 inline-flex items-center gap-2">
-                        <i class="far fa-copy"></i> Copiar
-                        <span class="tooltiptext">Copiar para área de transferência</span>
-                    </button>
-                </div>
-
-                <!-- Caixa de Resultado: Senha do Ramal -->
-                <div class="result-box bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-200 transition-all duration-200 hover:border-blue-200">
-                    <h3 class="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-3">
-                        <i class="fas fa-key text-2xl"></i> Senha do Ramal
-                    </h3>
-                    <div class="result-content bg-gray-100 p-4 rounded-lg font-mono text-gray-700 text-sm leading-relaxed border border-gray-200 overflow-auto" id="senha-result">A senha do ramal aparecerá aqui</div>
-                    <button class="copy-btn tooltip bg-blue-500 text-white rounded-md px-4 py-2 text-sm font-medium transition-colors duration-200 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 mt-4 inline-flex items-center gap-2">
-                        <i class="far fa-copy"></i> Copiar
-                        <span class="tooltiptext">Copiar para área de transferência</span>
-                    </button>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Ponto</label>
+                <div class="flex space-x-4">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="ponto" value="1" class="form-radio text-blue-600" checked>
+                        <span class="ml-2 text-gray-700">Primeiro Ponto</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="ponto" value="2" class="form-radio text-blue-600">
+                        <span class="ml-2 text-gray-700">Segundo Ponto</span>
+                    </label>
                 </div>
             </div>
+
+            <button id="gerarDadosBtn" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                GERAR DADOS
+            </button>
         </div>
 
-        <!-- Conteúdo da Aba de Informações -->
-        <div class="tab-content" id="info-tab">
-            <div class="result-box bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-200 transition-all duration-200 hover:border-blue-200">
-                <h3 class="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-3">
-                    <i class="fas fa-info-circle text-2xl"></i> Instruções de Uso
-                </h3>
-                <div class="result-content bg-gray-100 p-4 rounded-lg text-gray-700 text-sm leading-relaxed border border-gray-200 overflow-auto">
-                    <p class="mb-3"><strong>Como usar o gerador de credenciais:</strong></p>
-                    <ol class="list-decimal list-inside ml-4 mb-4 space-y-2">
-                        <li>Selecione o Condomínio na lista (carregado do banco de dados)</li>
-                        <li>Informe o número do bloco (apenas números)</li>
-                        <li>Informe o número do apartamento (apenas números)</li>
-                        <li>Selecione o ponto do interfone (primeiro ou segundo)</li>
-                        <li>Clique em "GERAR DADOS DE ACESSO"</li>
-                    </ol>
-                    
-                    <p class="mb-3"><strong>Dicas úteis:</strong></p>
-                    <ul class="list-disc list-inside ml-4 mb-4 space-y-2">
-                        <li>Você pode copiar cada seção individualmente usando os botões "Copiar"</li>
-                        <li>As credenciais são geradas automaticamente com base nas informações fornecidas</li>
-                        <li>Todos os campos são validados antes da geração</li>
-                    </ul>
-                    
-                    <p class="mb-3"><strong>Informações técnicas:</strong></p>
-                    <ul class="list-disc list-inside ml-4 space-y-2">
-                        <li>Este sistema gera credenciais para acesso aos interfones dos condomínios</li>
-                        <li>As senhas seguem padrões específicos para cada condomínio</li>
-                        <li>Os endereços PABX e domínios são puxados dinamicamente do banco de dados.</li>
-                    </ul>
+        <!-- Campos de Saída -->
+        <div id="outputSection" class="mt-8 space-y-4 hidden">
+            <!-- Usuário -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">USUÁRIO</label>
+                <div class="flex items-center mt-1">
+                    <input type="text" id="usuarioOutput" readonly class="flex-1 px-3 py-2 bg-gray-100 border border-gray-300 rounded-l-md shadow-sm text-gray-900 focus:outline-none sm:text-sm">
+                    <button class="copy-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-r-md border border-l-0 border-gray-300 hover:bg-gray-300 focus:outline-none transition-colors duration-200" data-target="usuarioOutput">
+                        Copiar
+                    </button>
                 </div>
             </div>
-        </div>
 
-        <!-- Conteúdo da Aba de Configuração do Banco de Dados -->
-        <div class="tab-content" id="netbox-tab">
-            <div class="netbox-config bg-gray-50 p-6 rounded-xl shadow-sm border border-gray-200 mb-6">
-                <h3 class="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-3">
-                    <i class="fas fa-database text-2xl"></i> Configuração do Banco de Dados
-                </h3>
-                <div class="form-group mb-4">
-                    <label for="netboxApiUrl" class="block text-gray-700 text-sm font-medium mb-2">URL da API do Banco de Dados</label>
-                    <input type="url" id="netboxApiUrl" placeholder="Ex: https://netbox.seuservidor.com/api/ipam/ip-addresses/" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition duration-200">
+            <!-- Senha -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">SENHA</label>
+                <div class="flex items-center mt-1">
+                    <input type="text" id="senhaOutput" readonly class="flex-1 px-3 py-2 bg-gray-100 border border-gray-300 rounded-l-md shadow-sm text-gray-900 focus:outline-none sm:text-sm">
+                    <button class="copy-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-r-md border border-l-0 border-gray-300 hover:bg-gray-300 focus:outline-none transition-colors duration-200" data-target="senhaOutput">
+                        Copiar
+                    </button>
                 </div>
-                <div class="form-group mb-4">
-                    <label for="netboxApiToken" class="block text-gray-700 text-sm font-medium mb-2">Token da API do Banco de Dados</label>
-                    <input type="text" id="netboxApiToken" placeholder="Seu token da API" class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900 bg-gray-50 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition duration-200">
+            </div>
+
+            <!-- Domínio -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700">DOMÍNIO</label>
+                <div class="flex items-center mt-1">
+                    <input type="text" id="dominioOutput" readonly class="flex-1 px-3 py-2 bg-gray-100 border border-gray-300 rounded-l-md shadow-sm text-gray-900 focus:outline-none sm:text-sm">
+                    <button class="copy-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-r-md border border-l-0 border-gray-300 hover:bg-gray-300 focus:outline-none transition-colors duration-200" data-target="dominioOutput">
+                        Copiar
+                    </button>
                 </div>
-                <button id="fetchNetboxDataBtn" class="btn w-full py-3 bg-green-600 text-white font-semibold rounded-lg text-lg tracking-wide shadow-md transition-all duration-200 hover:bg-green-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 flex items-center justify-center gap-3">
-                    <i class="fas fa-sync-alt text-xl"></i> Puxar Dados do Banco de Dados
-                </button>
-                <div id="netbox-status-message" class="text-center py-4 text-sm text-gray-600">
-                    Insira a URL e o Token da API do seu banco de dados e clique em "Puxar Dados".
-                </div>
+            </div>
+            
+            <div id="messageBox" class="mt-4 p-3 bg-green-100 text-green-700 rounded-md text-sm text-center hidden">
+                Texto copiado para a área de transferência!
             </div>
         </div>
     </div>
 
     <script>
-        // Variáveis globais para armazenar os dados do banco de dados (anteriormente NetBox)
-        let dataFromDatabase = []; // Renomeada para ser mais genérica
-        let dominios = {};
-        let pabx = {};
-
-        // Mapeamento de senhas de ramal (baseado nas suas variáveis, usando funções para senhas dinâmicas)
-        const senhasRamal = {
-            "LISBOA": (bloco, ap, ponto) => `rmt@loomy${bloco}${ap}${ponto}`,
-            "RECANTO DOS ABRANTES": (bloco, ap, ponto) => `rmt@abrantes${bloco}${ap}${ponto}`,
-            "CHAPADA DOS LÍRIOS": (bloco, ap, ponto) => `rmt@lirios${bloco}${ap}${ponto}`,
-            "CHAPADA PANTANAL": (bloco, ap, ponto) => `rmt@loomy#${bloco}${ap}${ponto}`,
-            "SAN FELIPPO": () => `rmt@loomy2023#`, // Senha estática
-            "SOL DO ENGENHO": (bloco, ap, ponto) => `rmt@engenho${bloco}${ap}${ponto}`,
-            "ECOVILAGGIO": (bloco, ap, ponto) => `rmt@ecovilla${bloco}${ap}${ponto}`,
-            "SÃO FRANCISCO": () => `rmt@loomy2023#`, // Senha estática
-            "RESIDENCIAL SABIÁ": () => `rmt@loomy#2023`, // Senha estática
-            "JARDIM TIRADENTES": () => `rmt@loomy2023`, // Senha estática
-            "LAGOA DAS ESMERALDAS": () => `rmt@loomy2023#`, // Senha estática
-            "SOLAR DOS MONTES": () => `rmt@loomy#2023`, // Senha estática
-            "GRANCLUB": () => `rmt@loomy123#`, // Senha estática
-            "LIBRA": () => `rmt@loomy#2023`, // Senha estática
-            "VILA DIAMANTE": () => `rmt@loomy#26!`, // Senha estática
-            "JOINVILLE": () => `rmt@loomy123#`, // Senha estática
-            "GRAN VALEY": () => `rmt@loomy123#`, // Senha estática
-            "BOSQUE DAS MARGARIDAS": () => `rmt@loomy123#`, // Senha estática
-            "MUSIQUE": () => `rmt@loomy123#`, // Senha estática
-            "MORADA CARIOCA": () => `rmt@loomy#123`, // Senha estática
-            "SPAZIO SINGULAR": () => `rmt@loomy123#`, // Senha estática
-            "MARAJÓ": () => `rmt@loomy123#`, // Senha estática
-            "PONTO GARDÊNIA": () => `rmt@loomy2023`, // Senha estática
-            "MORADA DE MINAS": (bloco, ap, ponto) => `rmt@mdeminas${bloco}${ap}${ponto}`,
-            "RIVERA LIFE": (bloco, ap, ponto) => `rmt@rivera${bloco}${ap}${ponto}`,
-            "MORADA DAS TORRES SP": () => `rmt@loomy123#`, // Senha estática
-            "RUBIS": () => `rmt@loomy123#`, // Senha estática
-            "MATA ATLÂNTICA": () => `rmt@loomy123#`, // Senha estática
-            "COSTA DO CACAU": () => `rmt@loomy123#`, // Senha estática
-            "SPAZIO SALVADOR NORTE": (bloco, ap, ponto) => `rmt@spaziosalvador${bloco}${ap}${ponto}`,
-            "BENDORF": (bloco, ap, ponto) => `rmt@bendorf${bloco}${ap}${ponto}`,
-            "SOLAR DO VALE": () => `rmt@loomy#2023`, // Senha estática
-            "VIC PARK MONTREAL": (bloco, ap, ponto) => `rmt@vic${bloco}${ap}${ponto}`,
-            "PLAZA NORTE": (bloco, ap, ponto) => `rmt@loomy#${bloco}${ap}${ponto}`,
-            "MORADA DAS TORRES - CLUB": (bloco, ap, ponto) => `rmt@moradaclub${bloco}${ap}${ponto}`,
-            "BRISAS DA SERRA 1 [1-4]": (bloco, ap, ponto) => `rmt@brisas${bloco}${ap}${ponto}`,
-            "BRISAS DA SERRA 2 [5-27]": (bloco, ap, ponto) => `rmt@brisas02#${bloco}${ap}${ponto}`,
-            "MAIS PARK": (bloco, ap, ponto) => `rmt@maispark${bloco}${ap}${ponto}`,
-            "GRAN SONATA": (bloco, ap, ponto) => `rmt@gransonata${bloco}${ap}${ponto}`,
-            "VILA REAL ESMERALDA": (bloco, ap, ponto) => `rmt@vilareal${bloco}${ap}${ponto}`,
-            "GOLDEN PLAZA": (bloco, ap, ponto) => `rmt@golden${bloco}${ap}${ponto}`,
-            "XINGÚ": (bloco, ap, ponto) => `rmt@xingu${bloco}${ap}${ponto}`,
-            "BOSQUE DA RIBEIRA": (bloco, ap, ponto) => `rmt@ribeira${bloco}${ap}${ponto}`,
-            "PONTO DIAMANTE": (bloco, ap, ponto) => `rmt@pontod${bloco}${ap}${ponto}`,
-            "SOLAR DA COLINA": (bloco, ap, ponto) => `rmt@solardacolina${bloco}${ap}${ponto}`,
-            "PONTO VEREDAS": (bloco, ap, ponto) => `rmt@pontoveredas${bloco}${ap}${ponto}`,
-            "BOSQUE DAS ÁGUAS": (bloco, ap, ponto) => `rmt@bosqueaguas${bloco}${ap}${ponto}`,
-            "SERRA DOS PINHAIS": (bloco, ap, ponto) => `Loomy@${bloco}${ap}${ponto}`,
-            "ESTRELA DE CRISTAL": (bloco, ap, ponto) => `rmt@cristal#${bloco}${ap}${ponto}`,
-            "GREENVILLE": (bloco, ap, ponto) => `greenville@rmt${bloco}${ap}${ponto}`,
-            "CANTO DO SABIÁ": (bloco, ap, ponto) => `rmt@cantodosabia${bloco}${ap}${ponto}`,
-            "VIVER FAMA": (bloco, ap, ponto) => `rmt@viverfama${bloco}${ap}${ponto}`,
-            "LAGUNA": (bloco, ap, ponto) => `rmt@laguna${bloco}${ap}${ponto}`,
-            "VILLAS VILLAGE": (bloco, ap, ponto) => `rmt@villasvillage${bloco}${ap}${ponto}`,
-            "RESERVA BARRA FUNDA": (bloco, ap, ponto) => `rmt@reservabarrafunda${bloco}${ap}0${ponto}`,
-            "LUZ DO CAMPO": (bloco, ap, ponto) => `rmt@luzdocampo${bloco}${ap}${ponto}`,
-            "MORADA PREMIUM": (bloco, ap, ponto) => `rmt@moradapremium${bloco}${ap}${ponto}`,
-            "PARQUE DAS NAÇÕES": (bloco, ap, ponto) => `rmt@parquedasnacoes${bloco}${ap}${ponto}`,
-            "N/A": () => "" // Valor padrão para "Não Aplicável"
+        // Mapeamento dos condomínios para domínios e senhas, consolidado das listas fornecidas
+        const condominiumData = {
+            "BENDORF": { domain: "bendorf.sc.loomy.srv.br", passwordPrefix: "rmt@bendorf" },
+            "BRISAS DA SERRA 1 [1-4]": { domain: "brisasdaserra1.mg.loomy.srv.br", passwordPrefix: "rmt@brisas" },
+            "BRISAS DA SERRA 2 [5-27]": { domain: "brisasdaserra2.mg.loomy.srv.br", passwordPrefix: "rmt@brisas02#" },
+            "CHAPADA DOS LÍRIOS": { domain: "chapadadoslirios.mt.loomy.srv.br", passwordPrefix: "rmt@lirios" },
+            "CHAPADA PANTANAL": { domain: "chapadapantanal.mt.loomy.srv.br", passwordPrefix: "rmt@loomy#" },
+            "COSTA DO CACAU": { domain: "costadocacau.ba.loomy.srv.br", passwordPrefix: "rmt@loomy123#" },
+            "ECOVILAGGIO": { domain: "ecovillagio.go.loomy.srv.br", passwordPrefix: "rmt@ecovilla" },
+            "PONTO GARDÊNIA": { domain: "gardenia.mg.loomy.srv.br", passwordPrefix: "rmt@loomy2023" },
+            "GRANCLUB": { domain: "granclub.go.loomy.srv.br", passwordPrefix: "rmt@loomy123#" },
+            "GRAN SONATA": { domain: "gransonata.go.loomy.srv.br", passwordPrefix: "rmt@gransonata" },
+            "GRAN VALEY": { domain: "granvalley.go.loomy.srv.br", passwordPrefix: "rmt@loomy123#" },
+            "JOINVILLE": { domain: "joinville.sp.loomy.srv.br", passwordPrefix: "rmt@loomy123#" },
+            "LAGOA DAS ESMERALDAS": { domain: "lagoadasesmeraldas.mg.loomy.srv.br", passwordPrefix: "rmt@loomy2023#" },
+            "LIBRA": { domain: "libra.mg.loomy.srv.br", passwordPrefix: "rmt@loomy#2023" },
+            "MAIS PARK": { domain: "maispark.mg.loomy.srv.br", passwordPrefix: "rmt@maispark" },
+            "MARAJÓ": { domain: "marajo.mg.loomy.srv.br", passwordPrefix: "rmt@loomy123#" },
+            "BOSQUE DAS MARGARIDAS": { domain: "margaridas.mg.loomy.srv.br", passwordPrefix: "rmt@loomy123#" },
+            "MATA ATLÂNTICA": { domain: "mataatlantica.mg.loomy.srv.br", passwordPrefix: "rmt@loomy123#" },
+            "MORADA CARIOCA": { domain: "moradacarioca.sp.loomy.srv.br", passwordPrefix: "rmt@loomy#123" },
+            "MORADA DAS TORRES - CLUB": { domain: "moradadastorres.ba.loomy.srv.br", passwordPrefix: "rmt@moradaclub" },
+            "MORADA DE MINAS": { domain: "moradademinas.mg.loomy.srv.br", passwordPrefix: "rmt@mdeminas" },
+            "MORADA DAS TORRES SP": { domain: "moradadastorres.sp.loomy.srv.br", passwordPrefix: "rmt@loomy123#" },
+            "MUSIQUE": { domain: "musique.mg.loomy.srv.br", passwordPrefix: "rmt@loomy123#" },
+            "PLAZA NORTE": { domain: "plazanorte.mg.loomy.srv.br", passwordPrefix: "rmt@loomy#" },
+            "LISBOA": { domain: "provinciaslisboa.mg.loomy.srv.br", passwordPrefix: "rmt@loomy" },
+            "RESIDENCIAL SABIÁ": { domain: "residencialsabia.mg.loomy.srv.br", passwordPrefix: "rmt@loomy#2023" },
+            "RIVERA LIFE": { domain: "riveralife.ba.loomy.srv.br", passwordPrefix: "rmt@rivera" },
+            "RUBIS": { domain: "rubis.mg.loomy.srv.br", passwordPrefix: "rmt@loomy123#" },
+            "SAN FELIPPO": { domain: "sanfelippo.sp.loomy.srv.br", passwordPrefix: "rmt@loomy2023#" },
+            "SÃO FRANCISCO": { domain: "saofrancisco.mg.loomy.srv.br", passwordPrefix: "rmt@loomy2023#" },
+            "SOLAR DOS MONTES": { domain: "solardosmontes.mg.loomy.srv.br", passwordPrefix: "rmt@loomy#2023" },
+            "SOL DO ENGENHO": { domain: "soldoengenho.rj.loomy.srv.br", passwordPrefix: "rmt@engenho" },
+            "SPAZIO SALVADOR NORTE": { domain: "spaziosalvadornorte.ba.loomy.srv.br", passwordPrefix: "rmt@spaziosalvador" },
+            "SPAZIO SINGULAR": { domain: "spaziosingular.ba.loomy.srv.br", passwordPrefix: "rmt@loomy123#" },
+            "JARDIM TIRADENTES": { domain: "tiradentes.mg.loomy.srv.br", passwordPrefix: "rmt@loomy2023" },
+            "VIC PARK MONTREAL": { domain: "vicpark.mg.loomy.srv.br", passwordPrefix: "rmt@vic" },
+            "VILA DIAMANTE": { domain: "viladiamante.es.loomy.srv.br", passwordPrefix: "rmt@loomy#26!" },
+            "VILA REAL ESMERALDA": { domain: "vilarealesmeralda.mg.loomy.srv.br", passwordPrefix: "rmt@vilareal" },
+            "VILLAS VILLAGE": { domain: "villasvillage.ba.loomy.srv.br", passwordPrefix: "rmt@villasvillage" },
+            "RESERVA BARRA FUNDA": { domain: "reservabarrafunda.sp.loomy.srv.br", passwordPrefix: "rmt@reservabarrafunda" },
+            "LUZ DO CAMPO": { domain: "luzdocampo.sp.loomy.srv.br", passwordPrefix: "rmt@luzdocampo" },
+            "MORADA PREMIUM": { domain: "moradapremium.ba.loomy.srv.br", passwordPrefix: "rmt@moradapremium" },
+            "PARQUE DAS NAÇÕES": { domain: "parquedasnacoes.ba.loomy.srv.br", passwordPrefix: "rmt@parquedasnacoes" },
+            "PORTO DOURADO 3": { domain: "portodourado3.go.loomy.srv.br", passwordPrefix: "rmt@portodourado3" },
+            "VILLAGE EUROPA": { domain: "villageeuropa.mg.loomy.srv.br", passwordPrefix: "rmt@villageeuropa" },
+            "BOSQUE DAS ÁGUAS": { domain: "bosquedasaguas.mg.loomy.srv.br", passwordPrefix: "rmt@bosqueaguas" },
+            "BOSQUE DA RIBEIRA": { domain: "bosquedaribeira.mg.loomy.srv.br", passwordPrefix: "rmt@ribeira" },
+            "ESTRELA DE CRISTAL": { domain: "estreladecristal.loomy.srv.br", passwordPrefix: "rmt@cristal#" },
+            "GOLDEN PLAZA": { domain: "goldenplaza.sp.loomy.srv.br", passwordPrefix: "rmt@golden" },
+            "GREENVILLE": { domain: "greenville.mg.loomy.srv.br", passwordPrefix: "greenville@rmt" },
+            "LAGUNA": { domain: "laguna.ba.loomy.srv.br", passwordPrefix: "rmt@laguna" },
+            "RECANTO DOS ABRANTES": { domain: "recantodosabrantes.ba.loomy.srv.br", passwordPrefix: "rmt@abrantes" },
+            "XINGÚ": { domain: "residencialxingu.mg.loomy.srv.br", passwordPrefix: "rmt@xingu" },
+            "SERRA DOS PINHAIS": { domain: "serradospinhais.mg.loomy.srv.br", passwordPrefix: "Loomy@" },
+            "VIVER FAMA": { domain: "viverfama.go.loomy.srv.br", passwordPrefix: "rmt@viverfama" },
+            "PONTO DIAMANTE": { domain: "pontodiamante.mg.loomy.srv.br", passwordPrefix: "rmt@pontod" },
+            "PONTO VEREDAS": { domain: "pontoveredas.mg.loomy.srv.br", passwordPrefix: "rmt@pontoveredas" },
+            "FONTANA": { domain: "fontana.mg.loomy.srv.br", passwordPrefix: "rmt@biasca" },
+            "PORTO DOURADO 2": { domain: "portodourado2.go.loomy.srv.br", passwordPrefix: "rmt@portodourado" },
+            "CASA BRANCA": { domain: "casabranca.mg.loomy.srv.br", passwordPrefix: "rmt@casabranca" }
         };
-
-
-        // Função utilitária para exibir mensagens (substitui alert())
-        function showMessage(message, type = 'info') {
-            const msgBox = document.getElementById('message-box');
-            const msgText = document.getElementById('message-text');
-            const msgIcon = document.getElementById('message-icon');
-
-            msgText.textContent = message;
-            msgBox.className = 'flex items-center justify-center'; // Reseta classes para aplicar novas
-            msgBox.classList.add('show', type); // Adiciona classes de exibição e tipo (success, error, info)
-            msgIcon.className = 'fas'; // Reseta o ícone
-
-            // Define o ícone com base no tipo de mensagem
-            if (type === 'error') {
-                msgIcon.classList.add('fa-exclamation-circle');
-            } else if (type === 'success') {
-                msgIcon.classList.add('fa-check-circle');
-            } else {
-                msgIcon.classList.add('fa-info-circle');
-            }
-
-            // Oculta a mensagem após 3 segundos
-            setTimeout(() => {
-                msgBox.classList.remove('show');
-            }, 3000);
-        }
-
-        /**
-         * Fetches IP address data from the database API.
-         * This function should be configured to make an actual HTTP request to your NetBox API.
-         * @param {string} apiUrl - The database API URL (e.g., NetBox API).
-         * @param {string} apiToken - The API Token for authentication.
-         */
-        async function fetchDataFromDatabase(apiUrl, apiToken) {
-            const statusMessageDiv = document.getElementById('netbox-status-message');
-            statusMessageDiv.innerHTML = '<div class="text-center py-4"><i class="fas fa-spinner fa-spin text-blue-500 mr-2"></i> Carregando dados do banco de dados...</div>';
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Token ${apiToken}`,
-                        'Accept': 'application/json', // Solicita o formato JSON
-                    },
-                });
-
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`Erro HTTP! Status: ${response.status}, Resposta: ${errorText}`);
-                }
-
-                const data = await response.json();
-                
-                // A API do NetBox geralmente retorna um array 'results' para listas de objetos
-                // Ajuste 'data.results' se sua API retornar em outro formato
-                dataFromDatabase = data.results.map(item => ({
-                    address: item.address ? item.address.split('/')[0] : '', // Obtém apenas o IP sem a máscara /mask
-                    dns_name: item.dns_name || '',
-                    description: item.description || '' // 'description' é o campo que você usa para o nome do condomínio
-                }));
-                
-                populateCondominioDropdown();
-                generateDynamicMappings(dataFromDatabase);
-                statusMessageDiv.innerHTML = '<div class="text-center py-4 text-green-600"><i class="fas fa-check-circle mr-2"></i> Dados do banco de dados carregados com sucesso!</div>';
-                showMessage('Dados do banco de dados carregados com sucesso!', 'success');
-
-            } catch (error) {
-                console.error('Erro ao puxar dados do banco de dados:', error);
-                statusMessageDiv.innerHTML = `<div class="text-center py-4 text-red-500">Erro ao carregar dados do banco de dados. Verifique a URL, o Token e as permissões.</div>`;
-                showMessage('Erro ao carregar dados do banco de dados.', 'error');
-            }
-        }
-
-        /**
-         * Populates the condominium dropdown with unique descriptions from the database data.
-         */
-        function populateCondominioDropdown() {
-            const selectElement = document.getElementById('condominio1');
-            selectElement.innerHTML = '<option value="">Selecione um condomínio...</option>'; // Limpa opções existentes
-
-            const uniqueCondominios = new Set();
-            dataFromDatabase.forEach(item => {
-                if (item.description && item.description !== 'N/A') {
-                    uniqueCondominios.add(item.description);
-                }
-            });
-
-            // Ordena os condomínios alfabeticamente para melhor experiência do usuário
-            const sortedCondominios = Array.from(uniqueCondominios).sort();
-
-            sortedCondominios.forEach(condominio => {
-                const option = document.createElement('option');
-                option.value = condominio;
-                option.textContent = condominio;
-                selectElement.appendChild(option);
-            });
-
-            if (sortedCondominios.length === 0) {
-                selectElement.innerHTML = '<option value="">Nenhum condomínio encontrado. Carregue os dados do banco de dados.</option>';
-            }
-        }
-
-        /**
-         * Generates dynamic `dominios` and `pabx` mappings from fetched database data.
-         * Assumes 'description' is the condominium name, 'dns_name' is the domain,
-         * and 'address' is the PABX IP. Adjust these based on your database structure.
-         * @param {Array<Object>} data - The processed database IP data.
-         */
-        function generateDynamicMappings(data) {
-            dominios = {};
-            pabx = {};
-
-            data.forEach(item => {
-                if (item.description && item.description !== 'N/A') {
-                    dominios[item.description] = item.dns_name;
-                    pabx[item.description] = `https://${item.address}`; // Assumindo PABX acessível via HTTPS
-                }
-            });
-            dominios["N/A"] = "";
-            pabx["N/A"] = "";
-        }
-
-        // Função principal para gerar as credenciais
-        function generateCredentials() {
-            const condominio1 = document.getElementById('condominio1').value;
-            const bloco = document.getElementById('bloco').value;
-            const ap = document.getElementById('apartamento').value;
+        
+        // Mapeamento de senhas especiais que não usam Bloco, Apartamento e Ponto
+        const specialPasswordCondos = [
+            "SAN FELIPPO", "SÃO FRANCISCO", "RESIDENCIAL SABIÁ", "JARDIM TIRADENTES",
+            "LAGOA DAS ESMERALDAS", "SOLAR DOS MONTES", "LIBRA", "MORADA CARIOCA", "RUBIS",
+            "MATA ATLÂNTICA", "COSTA DO CACAU", "SPAZIO SINGULAR", "BOSQUE DAS MARGARIDAS",
+            "GRANCLUB", "GRAN VALEY", "JOINVILLE", "MUSIQUE", "MARAJÓ", "MORADA DAS TORRES SP",
+            "PONTO GARDÊNIA", "SOLAR DO VALE", "PLAZA NORTE", "ESTRELA DE CRISTAL", "VILA DIAMANTE",
+            "GOLDEN PLAZA", "SERRA DOS PINHAIS"
+        ];
+        
+        // Evento para o botão "GERAR DADOS"
+        document.getElementById('gerarDadosBtn').addEventListener('click', () => {
+            const bloco = document.getElementById('bloco').value.trim();
+            const apartamento = document.getElementById('apartamento').value.trim();
+            const condominio = document.getElementById('condominio').value;
             const ponto = document.querySelector('input[name="ponto"]:checked').value;
 
-            // Validação dos campos obrigatórios
-            if (!condominio1 || !bloco || !ap) {
-                showMessage('Por favor, preencha todos os campos obrigatórios.', 'error');
+            // Validação simples
+            if (!bloco || !apartamento || !condominio) {
+                document.getElementById('messageBox').textContent = "Por favor, preencha todos os campos.";
+                document.getElementById('messageBox').classList.remove('hidden', 'bg-green-100', 'text-green-700');
+                document.getElementById('messageBox').classList.add('bg-red-100', 'text-red-700');
+                document.getElementById('outputSection').classList.add('hidden');
                 return;
             }
 
-            // Gerar o nome de usuário (RAMAL)
-            const usuario = `${bloco}${ap}${ponto}`;
+            const condominioInfo = condominiumData[condominio];
+            if (!condominioInfo) {
+                document.getElementById('messageBox').textContent = "Condomínio não encontrado. Por favor, selecione um válido.";
+                document.getElementById('messageBox').classList.remove('hidden', 'bg-green-100', 'text-green-700');
+                document.getElementById('messageBox').classList.add('bg-red-100', 'text-red-700');
+                document.getElementById('outputSection').classList.add('hidden');
+                return;
+            }
 
-            // Obter o domínio do mapeamento dinâmico
-            const dominio1 = dominios[condominio1] || "Domínio não configurado";
-
-            // Obter a senha do ramal, usando a função apropriada do mapeamento
-            let senha1;
-            const senhaGenerator = senhasRamal[condominio1];
-            if (typeof senhaGenerator === 'function') {
-                senha1 = senhaGenerator(bloco, ap, ponto);
+            // Geração dos dados
+            const usuario = `${bloco}${apartamento}${ponto}`;
+            
+            let senha;
+            if (specialPasswordCondos.includes(condominio)) {
+                // Senhas especiais que não usam Bloco, Apartamento e Ponto
+                senha = condominioInfo.passwordPrefix;
+            } else if (condominio === "RESERVA BARRA FUNDA" && condominioInfo.passwordPrefix) {
+                // Lógica específica para RESERVA BARRA FUNDA
+                senha = `${condominioInfo.passwordPrefix}${bloco}${apartamento}0${ponto}`;
             } else {
-                // Fallback para senhas estáticas se não houver função específica
-                senha1 = `rmt@${condominio1.toLowerCase().replace(/[^a-z0-9]/g, '')}${bloco}${ap}${ponto}`;
+                senha = `${condominioInfo.passwordPrefix}${bloco}${apartamento}${ponto}`;
             }
 
-            // Obter o endereço PABX do mapeamento dinâmico
-            const pabx1 = pabx[condominio1] || "PABX não configurado";
+            const dominio = condominioInfo.domain;
 
-            // Atualizar os elementos de resultado na UI
-            document.getElementById('gerador-result').textContent =
-                `| Nome de Usuário: ${usuario}\n| Senha: ${senha1}\n| Domínio: ${dominio1}`;
+            // Exibição dos dados gerados
+            document.getElementById('usuarioOutput').value = usuario;
+            document.getElementById('senhaOutput').value = senha;
+            document.getElementById('dominioOutput').value = dominio;
+            document.getElementById('outputSection').classList.remove('hidden');
+            document.getElementById('messageBox').classList.add('hidden');
+        });
 
-            document.getElementById('pabx-result').textContent = pabx1;
-            document.getElementById('senha-result').textContent = senha1;
-        }
-
-        // Função para copiar texto para a área de transferência com feedback visual
-        function copyToClipboard(elementId, btnElement) {
-            const text = document.getElementById(elementId).textContent;
-            // Cria um elemento temporário para copiar o texto, compatível com iframes
-            const tempInput = document.createElement('textarea');
-            tempInput.value = text;
-            document.body.appendChild(tempInput);
-            tempInput.select(); // Seleciona o texto no campo temporário
-
-            try {
-                document.execCommand('copy'); // Tenta copiar o texto
-                // Exibe o tooltip de sucesso
-                const tooltiptext = btnElement.querySelector('.tooltiptext');
-                const originalText = tooltiptext.textContent;
-                tooltiptext.textContent = 'Copiado!'; // Altera o texto do tooltip
-
-                // Restaura o texto original do tooltip após 2 segundos
-                setTimeout(() => {
-                    tooltiptext.textContent = originalText;
-                }, 2000);
-            } catch (err) {
-                console.error('Erro ao copiar: ', err);
-                showMessage('Não foi possível copiar o texto. Por favor, tente novamente.', 'error');
-            } finally {
-                document.body.removeChild(tempInput); // Remove o elemento temporário
-            }
-        }
-
-        // Funcionalidade de Abas
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Remove a classe 'active' e os estilos Tailwind de todas as abas
-                document.querySelectorAll('.tab').forEach(t => {
-                    t.classList.remove('active');
-                    t.classList.remove('border-blue-500', 'text-blue-500');
-                    t.classList.add('border-transparent', 'text-gray-600');
-                });
-                // Oculta todo o conteúdo das abas
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                
-                // Adiciona a classe 'active' e os estilos Tailwind à aba clicada
-                tab.classList.add('active');
-                tab.classList.remove('border-transparent', 'text-gray-600');
-                tab.classList.add('border-blue-500', 'text-blue-500');
-
-                // Mostra o conteúdo da aba correspondente
-                document.getElementById(`${tab.dataset.tab}-tab`).classList.add('active');
+        // Eventos para os botões de copiar
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const targetId = event.target.dataset.target;
+                const targetInput = document.getElementById(targetId);
+                targetInput.select();
+                try {
+                    document.execCommand('copy');
+                    showCopyMessage();
+                } catch (err) {
+                    console.error('Falha ao copiar: ', err);
+                    // Fallback para caso não funcione
+                    alert("Não foi possível copiar o texto. Por favor, copie manualmente.");
+                }
             });
         });
 
-        // Event listener para o envio do formulário
-        document.getElementById('credentialForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Impede o envio padrão do formulário
-            generateCredentials(); // Chama a função para gerar as credenciais
-        });
-
-        // Adiciona funcionalidade de copiar aos botões de copiar
-        document.querySelectorAll('.copy-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Encontra o ID do elemento de conteúdo de resultado mais próximo
-                const targetId = btn.closest('.result-box').querySelector('.result-content').id;
-                copyToClipboard(targetId, btn); // Chama a função de copiar
-            });
-        });
-
-        // Event listener para o botão de puxar dados do banco de dados
-        document.getElementById('fetchNetboxDataBtn').addEventListener('click', () => {
-            const apiUrl = document.getElementById('netboxApiUrl').value;
-            const apiToken = document.getElementById('netboxApiToken').value;
-
-            if (!apiUrl || !apiToken) {
-                showMessage('Por favor, insira a URL da API e o Token do banco de dados.', 'error');
-                return;
-            }
-            fetchDataFromDatabase(apiUrl, apiToken);
-        });
-
-        // Inicialização: define a aba "Formulário" como ativa ao carregar a página e aplica animação
-        document.addEventListener('DOMContentLoaded', () => {
-            const formTab = document.querySelector('.tab[data-tab="form"]');
-            formTab.classList.add('active', 'border-blue-500', 'text-blue-500'); // Define como aba ativa inicial
-            document.getElementById('form-tab').classList.add('active');
-
-            // Aplica transição de opacidade ao container ao carregar
-            const container = document.querySelector('.container');
-            container.style.opacity = '0'; // Começa invisível
+        function showCopyMessage() {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = "Texto copiado para a área de transferência!";
+            messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-700');
+            messageBox.classList.add('bg-green-100', 'text-green-700');
             setTimeout(() => {
-                container.style.opacity = '1'; // Torna visível
-                container.style.transition = 'opacity 0.5s ease-out'; // Animação de 0.5s
-            }, 100); // Pequeno atraso para a animação ser perceptível
-
-            // A chamada inicial para carregar os dados tentará com os campos vazios
-            // O usuário deverá configurar a URL e o Token na aba "Configuração do Banco de Dados"
-            // e clicar em "Puxar Dados do Banco de Dados" para carregar.
-            // showMessage('Configure a URL e o Token da API do banco de dados na aba "Configuração do Banco de Dados".', 'info');
-        });
+                messageBox.classList.add('hidden');
+            }, 3000); // Esconde a mensagem após 3 segundos
+        }
     </script>
+
 </body>
 </html>
