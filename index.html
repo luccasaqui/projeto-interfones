@@ -21,12 +21,46 @@
     <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-200 w-full max-w-md mx-auto">
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">GERADOR DE DADOS DO INTERFONE INTELIGENTE</h1>
 
-        <!-- Formulário de Entrada -->
-        <div class="space-y-4">
+        <!-- Seção de Autenticação - Visível por padrão -->
+        <div id="authSection" class="space-y-4">
+            <h2 class="text-xl font-semibold text-center text-gray-700 mb-4">Validação de Dados</h2>
+
+            <div>
+                <label for="nomeCompleto" class="block text-sm font-medium text-gray-700">Nome Completo</label>
+                <input type="text" id="nomeCompleto" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Nome completo">
+            </div>
+
+            <div>
+                <label for="cpf" class="block text-sm font-medium text-gray-700">CPF</label>
+                <input type="text" id="cpf" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="000.000.000-00">
+            </div>
+
+            <div>
+                <label for="numero" class="block text-sm font-medium text-gray-700">Número</label>
+                <input type="text" id="numero" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="(DD) 99999-9999">
+            </div>
+
+            <button id="avancarBtn" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+                Avançar
+            </button>
+
+            <!-- Loading spinner -->
+            <div id="loadingSpinner" class="hidden text-center mt-4">
+                <svg class="animate-spin h-5 w-5 text-blue-600 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span class="ml-2 text-gray-700">Verificando dados...</span>
+            </div>
+
+            <div id="authMessageBox" class="mt-4 p-3 rounded-md text-sm text-center hidden"></div>
+        </div>
+
+        <!-- Seção do Gerador de Dados - Escondida por padrão -->
+        <div id="generatorSection" class="space-y-4 hidden">
             <div>
                 <label for="condominio" class="block text-sm font-medium text-gray-700">Condomínio</label>
                 <select id="condominio" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                    <!-- Condomínios combinados das duas listas fornecidas -->
                     <option value="">Selecione um condomínio...</option>
                     <option value="BENDORF">BENDORF</option>
                     <option value="BRISAS DA SERRA 1 [1-4]">BRISAS DA SERRA 1 [1-4]</option>
@@ -114,6 +148,19 @@
                         <span class="ml-2 text-gray-700">Segundo Ponto</span>
                     </label>
                 </div>
+            </div>
+
+            <!-- Nova seção para envio de e-mail -->
+            <div class="mt-4">
+                <label class="inline-flex items-center">
+                    <input type="checkbox" id="sendEmailCheckbox" class="form-checkbox text-blue-600">
+                    <span class="ml-2 text-gray-700">Enviar dados por e-mail?</span>
+                </label>
+            </div>
+            
+            <div id="emailInputContainer" class="mt-4 hidden">
+                <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
+                <input type="email" id="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="exemplo@exemplo.com">
             </div>
 
             <button id="gerarDadosBtn" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
@@ -237,28 +284,155 @@
             "GOLDEN PLAZA", "SERRA DOS PINHAIS"
         ];
         
-        // Evento para o botão "GERAR DADOS"
-        document.getElementById('gerarDadosBtn').addEventListener('click', () => {
-            const bloco = document.getElementById('bloco').value.trim();
-            const apartamento = document.getElementById('apartamento').value.trim();
-            const condominio = document.getElementById('condominio').value;
-            const ponto = document.querySelector('input[name="ponto"]:checked').value;
+        // Referências para os elementos do DOM
+        const authSection = document.getElementById('authSection');
+        const generatorSection = document.getElementById('generatorSection');
+        const outputSection = document.getElementById('outputSection');
+        const avancarBtn = document.getElementById('avancarBtn');
+        const gerarDadosBtn = document.getElementById('gerarDadosBtn');
+        const authMessageBox = document.getElementById('authMessageBox');
+        const messageBox = document.getElementById('messageBox');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const sendEmailCheckbox = document.getElementById('sendEmailCheckbox');
+        const emailInputContainer = document.getElementById('emailInputContainer');
+        const emailInput = document.getElementById('email');
+        const cpfInput = document.getElementById('cpf');
+        const numeroInput = document.getElementById('numero');
 
-            // Validação simples
-            if (!bloco || !apartamento || !condominio) {
-                document.getElementById('messageBox').textContent = "Por favor, preencha todos os campos.";
-                document.getElementById('messageBox').classList.remove('hidden', 'bg-green-100', 'text-green-700');
-                document.getElementById('messageBox').classList.add('bg-red-100', 'text-red-700');
-                document.getElementById('outputSection').classList.add('hidden');
+        // Função de máscara para CPF
+        cpfInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
+            value = value.slice(0, 11); // Limita a 11 dígitos
+            value = value.replace(/(\d{3})(\d)/, '$1.$2'); // Adiciona o primeiro ponto
+            value = value.replace(/(\d{3})(\d)/, '$1.$2'); // Adiciona o segundo ponto
+            value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Adiciona o traço
+            e.target.value = value;
+        });
+
+        // Função de máscara para Número de Telefone
+        numeroInput.addEventListener('input', (e) => {
+            let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não é dígito
+            value = value.slice(0, 11); // Limita a 11 dígitos (incluindo o 9 extra)
+            
+            if (value.length > 2 && value.length <= 7) {
+                value = value.replace(/^(\d{2})(\d)/g, '($1) $2'); // DDD + 4 dígitos
+            } else if (value.length > 7) {
+                value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3'); // DDD + 5 dígitos + 4 dígitos
+                value = value.replace(/^(\d{2})(\d{4})(\d{4}).*/, '($1) $2-$3'); // DDD + 4 dígitos + 4 dígitos (pode ser o padrão antigo)
+            } else if (value.length > 0) {
+                 value = value.replace(/^(\d{2})(\d)/g, '($1) $2');
+            }
+
+            e.target.value = value;
+        });
+
+        // Evento para o botão "Avançar"
+        avancarBtn.addEventListener('click', async () => {
+            const nomeCompleto = document.getElementById('nomeCompleto').value.trim();
+            const cpf = document.getElementById('cpf').value.trim();
+            const numero = document.getElementById('numero').value.trim();
+
+            // Validação simples dos campos de autenticação
+            if (!nomeCompleto || !cpf || !numero) {
+                showMessage(authMessageBox, "Por favor, preencha todos os campos de autenticação.", "error");
                 return;
             }
 
+            // Exibe o spinner de carregamento e desabilita o botão
+            loadingSpinner.classList.remove('hidden');
+            avancarBtn.disabled = true;
+
+            // Simula uma chamada de API para o IXC Soft (API fictícia)
+            // No futuro, a lógica para a chamada real da API do IXC Soft
+            // seria implementada aqui.
+            const apiResult = await mockIXCSoftApiCall(cpf);
+
+            // Esconde o spinner de carregamento e reabilita o botão
+            loadingSpinner.classList.add('hidden');
+            avancarBtn.disabled = false;
+
+            if (apiResult.success) {
+                // Se a validação for aprovada, esconde a seção de autenticação e exibe o gerador
+                authSection.classList.add('hidden');
+                generatorSection.classList.remove('hidden');
+            } else {
+                showMessage(authMessageBox, apiResult.message, "error");
+            }
+        });
+
+        // Função para simular a chamada de API do IXC Soft
+        function mockIXCSoftApiCall(cpf) {
+            // Atraso simulado para imitar uma chamada de rede
+            return new Promise(resolve => {
+                setTimeout(() => {
+                    // Para fins de teste, a validação sempre é aprovada.
+                    resolve({ success: true, message: "Autenticação bem-sucedida!" });
+                }, 1500); // 1.5 segundos de atraso
+            });
+        }
+
+        // Evento para mostrar/esconder o campo de e-mail e atualizar o texto do botão
+        sendEmailCheckbox.addEventListener('change', () => {
+            if (sendEmailCheckbox.checked) {
+                emailInputContainer.classList.remove('hidden');
+                updateGerarDadosBtn();
+            } else {
+                emailInputContainer.classList.add('hidden');
+                gerarDadosBtn.textContent = 'GERAR DADOS';
+            }
+        });
+
+        // Evento para validar o e-mail e atualizar o texto do botão
+        emailInput.addEventListener('input', updateGerarDadosBtn);
+
+        function updateGerarDadosBtn() {
+            if (sendEmailCheckbox.checked) {
+                const emailValid = validateEmail(emailInput.value);
+                if (emailValid) {
+                    gerarDadosBtn.textContent = 'ENVIAR DADOS';
+                    gerarDadosBtn.disabled = false;
+                } else {
+                    gerarDadosBtn.textContent = 'ENVIAR DADOS';
+                    gerarDadosBtn.disabled = true; // Desabilita o botão se o e-mail for inválido
+                }
+            } else {
+                gerarDadosBtn.textContent = 'GERAR DADOS';
+                gerarDadosBtn.disabled = false;
+            }
+        }
+
+        function validateEmail(email) {
+            // Expressão regular para validar o formato de e-mail
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        // Evento para o botão "GERAR DADOS" (lógica existente)
+        gerarDadosBtn.addEventListener('click', () => {
+            const condominio = document.getElementById('condominio').value;
+            const bloco = document.getElementById('bloco').value.trim();
+            const apartamento = document.getElementById('apartamento').value.trim();
+            const ponto = document.querySelector('input[name="ponto"]:checked').value;
+            const sendEmail = sendEmailCheckbox.checked;
+            const email = emailInput.value.trim();
+
+            // Validação
+            if (!bloco || !apartamento || !condominio) {
+                showMessage(messageBox, "Por favor, preencha todos os campos.", "error");
+                outputSection.classList.add('hidden');
+                return;
+            }
+
+            if (sendEmail && !validateEmail(email)) {
+                showMessage(messageBox, "Por favor, insira um e-mail válido.", "error");
+                outputSection.classList.add('hidden');
+                return;
+            }
+            
             const condominioInfo = condominiumData[condominio];
             if (!condominioInfo) {
-                document.getElementById('messageBox').textContent = "Condomínio não encontrado. Por favor, selecione um válido.";
-                document.getElementById('messageBox').classList.remove('hidden', 'bg-green-100', 'text-green-700');
-                document.getElementById('messageBox').classList.add('bg-red-100', 'text-red-700');
-                document.getElementById('outputSection').classList.add('hidden');
+                showMessage(messageBox, "Condomínio não encontrado. Por favor, selecione um válido.", "error");
+                outputSection.classList.add('hidden');
                 return;
             }
 
@@ -282,8 +456,15 @@
             document.getElementById('usuarioOutput').value = usuario;
             document.getElementById('senhaOutput').value = senha;
             document.getElementById('dominioOutput').value = dominio;
-            document.getElementById('outputSection').classList.remove('hidden');
-            document.getElementById('messageBox').classList.add('hidden');
+            outputSection.classList.remove('hidden');
+            hideMessage(messageBox);
+
+            // Ação de enviar e-mail (simulada)
+            if (sendEmail) {
+                // Aqui você implementaria a lógica real para enviar o e-mail
+                console.log(`Simulando envio de e-mail para ${email} com os dados gerados.`);
+                showMessage(messageBox, "Dados gerados e enviados para o e-mail!", "success");
+            }
         });
 
         // Eventos para os botões de copiar
@@ -294,7 +475,7 @@
                 targetInput.select();
                 try {
                     document.execCommand('copy');
-                    showCopyMessage();
+                    showMessage(messageBox, "Texto copiado para a área de transferência!", "success");
                 } catch (err) {
                     console.error('Falha ao copiar: ', err);
                     // Fallback para caso não funcione
@@ -303,14 +484,22 @@
             });
         });
 
-        function showCopyMessage() {
-            const messageBox = document.getElementById('messageBox');
-            messageBox.textContent = "Texto copiado para a área de transferência!";
-            messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-700');
-            messageBox.classList.add('bg-green-100', 'text-green-700');
+        function showMessage(element, text, type) {
+            element.textContent = text;
+            element.classList.remove('hidden', 'bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700');
+            if (type === "success") {
+                element.classList.add('bg-green-100', 'text-green-700');
+            } else if (type === "error") {
+                element.classList.add('bg-red-100', 'text-red-700');
+            }
+            element.classList.remove('hidden');
             setTimeout(() => {
-                messageBox.classList.add('hidden');
+                element.classList.add('hidden');
             }, 3000); // Esconde a mensagem após 3 segundos
+        }
+
+        function hideMessage(element) {
+            element.classList.add('hidden');
         }
     </script>
 
