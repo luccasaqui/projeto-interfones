@@ -16,6 +16,12 @@
             font-family: 'Inter', sans-serif;
             background-color: #f0f2f5; /* Cor de fundo suave */
         }
+        /* Para manter a formatação do texto com quebras de linha */
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: inherit; /* Herda a fonte do corpo */
+        }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
@@ -32,17 +38,14 @@
                     <!-- Opções de condomínios serão populadas via JS -->
                 </select>
             </div>
-
             <div>
                 <label for="bloco" class="block text-sm font-medium text-gray-700">Bloco</label>
                 <input type="text" id="bloco" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
-
             <div>
                 <label for="apartamento" class="block text-sm font-medium text-gray-700">Apartamento</label>
                 <input type="text" id="apartamento" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
             </div>
-
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Ponto</label>
                 <div class="flex space-x-4">
@@ -56,14 +59,27 @@
                     </label>
                 </div>
             </div>
-
             <button id="gerarDadosBtn" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
                 GERAR DADOS
             </button>
         </div>
+        
+        <!-- Seção do Atalho PABX (Agora separada e controlada pelo 'change' do select) -->
+        <div id="pabxSection" class="hidden pt-4">
+            <label class="block text-sm font-medium text-gray-700">ATALHO PABX</label>
+            <a id="pabxLink" href="#" target="_blank" class="w-full mt-1 flex items-center justify-center bg-gray-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-200">
+                <i data-feather="external-link" class="mr-2 h-4 w-4"></i>
+                Acessar o PABX do Condomínio
+            </a>
+        </div>
+
+        <!-- Seção de Mensagens -->
+        <div id="messageBox" class="mt-4 p-3 rounded-md text-sm text-center hidden"></div>
 
         <!-- Campos de Saída -->
-        <div id="outputSection" class="mt-8 space-y-4 hidden">
+        <div id="outputSection" class="mt-6 space-y-4 hidden">
+            <hr/>
+            <h2 class="text-xl font-bold text-center text-gray-800 pt-2">Dados Gerados</h2>
             <!-- Usuário -->
             <div>
                 <label class="block text-sm font-medium text-gray-700">USUÁRIO</label>
@@ -74,42 +90,39 @@
                     </button>
                 </div>
             </div>
-
             <!-- Senha -->
             <div>
                 <label class="block text-sm font-medium text-gray-700">SENHA</label>
-                 <div class="relative mt-1">
+                <div class="relative mt-1">
                     <input type="text" id="senhaOutput" readonly class="w-full px-3 py-2 pr-10 bg-gray-100 border border-gray-300 rounded-md shadow-sm text-gray-900 focus:outline-none sm:text-sm">
                     <button class="copy-btn absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-800 transition-colors duration-200" data-target="senhaOutput" aria-label="Copiar senha">
                         <i data-feather="copy" class="w-5 h-5"></i>
                     </button>
                 </div>
             </div>
-
             <!-- Domínio -->
             <div>
                 <label class="block text-sm font-medium text-gray-700">DOMÍNIO</label>
-                 <div class="relative mt-1">
+                <div class="relative mt-1">
                     <input type="text" id="dominioOutput" readonly class="w-full px-3 py-2 pr-10 bg-gray-100 border border-gray-300 rounded-md shadow-sm text-gray-900 focus:outline-none sm:text-sm">
                     <button class="copy-btn absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-800 transition-colors duration-200" data-target="dominioOutput" aria-label="Copiar domínio">
                         <i data-feather="copy" class="w-5 h-5"></i>
                     </button>
                 </div>
             </div>
-            
-            <!-- Acesso PABX -->
-            <div id="pabxSection" class="hidden pt-2">
-                 <label class="block text-sm font-medium text-gray-700">ATALHO</label>
-                <a id="pabxLink" href="#" target="_blank" class="w-full mt-1 flex items-center justify-center bg-gray-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-200">
-                    <i data-feather="external-link" class="mr-2"></i>
-                    Acessar o PABX
-                </a>
-            </div>
-            
-            <div id="messageBox" class="mt-4 p-3 bg-green-100 text-green-700 rounded-md text-sm text-center hidden">
-                Texto copiado para a área de transferência!
+        </div>
+
+        <!-- SEÇÃO DE INSTRUÇÕES COMPLETAS -->
+        <div id="instructionsSection" class="mt-6 hidden">
+            <div class="relative bg-gray-50 p-5 rounded-lg border border-gray-200">
+                <button id="copyInstructionsBtn" class="absolute top-3 right-3 flex items-center text-gray-500 hover:text-blue-600 transition-colors duration-200" aria-label="Copiar instruções">
+                    <i data-feather="copy" class="w-4 h-4"></i>
+                    <span class="ml-1 text-xs font-medium">Copiar</span>
+                </button>
+                <pre id="instructionsOutput" class="text-sm text-gray-800"></pre>
             </div>
         </div>
+
     </div>
 
     <script>
@@ -180,7 +193,7 @@
             "XINGÚ": { domain: "residencialxingu.mg.loomy.srv.br", passwordPrefix: "rmt@xingu", pabx: "https://172.17.57.3" }
         };
 
-        // Condomínios cuja senha é apenas o prefixo, sem concatenar bloco/apto/ponto
+        // Condomínios cuja senha é apenas o prefixo
         const specialPasswordCondos = [
             "SAN FELIPPO", "SÃO FRANCISCO", "RESIDENCIAL SABIÁ", "JARDIM TIRADENTES",
             "LAGOA DAS ESMERALDAS", "SOLAR DOS MONTES", "LIBRA", "MORADA CARIOCA", "RUBIS",
@@ -190,7 +203,7 @@
             "GOLDEN PLAZA"
         ];
 
-        // Popula a lista de condomínios e a ordena alfabeticamente
+        // --- INICIALIZAÇÃO ---
         window.addEventListener('DOMContentLoaded', () => {
             const select = document.getElementById('condominio');
             const condoNames = Object.keys(condominiumData).sort();
@@ -201,109 +214,110 @@
                 select.appendChild(option);
             });
             feather.replace(); // Inicializa os ícones
+
+            // Adiciona o listener para o select do condomínio
+            select.addEventListener('change', togglePabxLink);
         });
+        
+        // --- FUNÇÃO PARA CONTROLAR VISIBILIDADE DO ATALHO PABX ---
+        function togglePabxLink() {
+            const condominioSelect = document.getElementById('condominio');
+            const selectedCondoName = condominioSelect.value;
+            const pabxSection = document.getElementById('pabxSection');
+            const pabxLink = document.getElementById('pabxLink');
 
+            if (selectedCondoName && condominiumData[selectedCondoName] && condominiumData[selectedCondoName].pabx) {
+                const condominioInfo = condominiumData[selectedCondoName];
+                pabxLink.href = condominioInfo.pabx;
+                pabxSection.classList.remove('hidden');
+            } else {
+                pabxSection.classList.add('hidden');
+            }
+            feather.replace();
+        }
 
-        // Evento para o botão "GERAR DADOS"
+        // --- FUNÇÕES DE MENSAGEM ---
+        function showMessage(message, type = 'success') {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = message;
+            if (type === 'success') {
+                messageBox.className = 'mt-4 p-3 bg-green-100 text-green-800 border border-green-200 rounded-md text-sm text-center';
+            } else {
+                messageBox.className = 'mt-4 p-3 bg-red-100 text-red-800 border border-red-200 rounded-md text-sm text-center';
+            }
+            messageBox.classList.remove('hidden');
+            setTimeout(() => messageBox.classList.add('hidden'), 3000);
+        }
+
+        // --- LÓGICA DE GERAÇÃO E EXIBIÇÃO ---
         document.getElementById('gerarDadosBtn').addEventListener('click', () => {
             const bloco = document.getElementById('bloco').value.trim();
             const apartamento = document.getElementById('apartamento').value.trim();
             const condominio = document.getElementById('condominio').value;
             const ponto = document.querySelector('input[name="ponto"]:checked').value;
 
-            // Validação
-            if (!condominio) {
-                showErrorMessage("Por favor, selecione um condomínio.");
+            if (!condominio || !bloco || !apartamento) {
+                showMessage("Por favor, preencha todos os campos.", 'error');
+                document.getElementById('outputSection').classList.add('hidden');
+                document.getElementById('instructionsSection').classList.add('hidden');
                 return;
             }
-            if (!bloco || !apartamento) {
-                showErrorMessage("Por favor, preencha os campos Bloco e Apartamento.");
-                return;
-            }
-
+            
+            document.getElementById('messageBox').classList.add('hidden');
             const condominioInfo = condominiumData[condominio];
-            if (!condominioInfo) {
-                showErrorMessage("Condomínio não encontrado. Por favor, selecione um válido.");
-                return;
-            }
 
             // Geração dos dados
             const usuario = `${bloco}${apartamento}${ponto}`;
             let senha;
-
             if (specialPasswordCondos.includes(condominio)) {
-                // Senhas especiais que são apenas o prefixo
                 senha = condominioInfo.passwordPrefix;
             } else if (condominioInfo.specialPassword) {
-                 // Lógica específica para senhas que precisam de um '0' extra, como RESERVA BARRA FUNDA
                 senha = `${condominioInfo.passwordPrefix}${bloco}${apartamento}0${ponto}`;
             } else {
-                // Senha padrão
                 senha = `${condominioInfo.passwordPrefix}${bloco}${apartamento}${ponto}`;
             }
-
             const dominio = condominioInfo.domain || "Não disponível";
 
-            // Exibição dos dados gerados
+            // Exibição dos dados gerados nos inputs
             document.getElementById('usuarioOutput').value = usuario;
             document.getElementById('senhaOutput').value = senha;
             document.getElementById('dominioOutput').value = dominio;
-
-            // Exibe ou esconde a seção PABX
-            const pabxSection = document.getElementById('pabxSection');
-            const pabxLink = document.getElementById('pabxLink');
-            if (condominioInfo.pabx) {
-                pabxLink.href = condominioInfo.pabx;
-                pabxSection.classList.remove('hidden');
-            } else {
-                pabxSection.classList.add('hidden');
-            }
-            
             document.getElementById('outputSection').classList.remove('hidden');
-            document.getElementById('messageBox').classList.add('hidden');
-            feather.replace(); // Atualiza os ícones que se tornaram visíveis
+
+            // Geração e exibição do texto de instruções
+            const portaria = 94;
+            const interfoneFisico = `${bloco}${apartamento}`;
+            const interfoneInteligente = usuario;
+
+            const instructionsText = `USUÁRIO: ${usuario}\nSENHA: ${senha}\nDOMÍNIO: ${dominio}\n\nSIGA O PASSO A PASSO DO VÍDEO COM ATENÇÃO! ⚠\nhttps://www.youtube.com/watch?v=lZxGqBq7S5U\n\nBaixe o aplicativo.\n\nLINK INTERFONE INTELIGENTE - ANDROID:\nhttps://play.google.com/store/apps/details?id=com.voipgroup.loomyinterfone&hl=pt_BR\n\nLINK INTERFONE INTELIGENTE - IPHONE:\nhttps://apps.apple.com/br/app/loomy-interfone-inteligente/id1633125172\n\nComo usar?\nPara ligar para a portaria, digite: ${portaria}\nPara ligar para o seu interfone físico, digite: ${interfoneFisico}\nPara ligar no seu interfone inteligente, digite: ${interfoneInteligente}`;
+
+            document.getElementById('instructionsOutput').textContent = instructionsText;
+            document.getElementById('instructionsSection').classList.remove('hidden');
+            feather.replace();
         });
 
-        // Eventos para os botões de copiar
+        // --- FUNÇÕES DE COPIAR ---
+        function copyToClipboard(text, successMessage) {
+            navigator.clipboard.writeText(text).then(() => {
+                showMessage(successMessage, 'success');
+            }).catch(err => {
+                console.error('Falha ao copiar: ', err);
+                showMessage("Falha ao copiar. Tente manualmente.", 'error');
+            });
+        }
+
         document.querySelectorAll('.copy-btn').forEach(button => {
             button.addEventListener('click', (event) => {
                 const targetId = event.currentTarget.dataset.target;
                 const targetInput = document.getElementById(targetId);
-                
-                // Usa a API Clipboard para mais segurança e compatibilidade
-                navigator.clipboard.writeText(targetInput.value).then(() => {
-                    showCopyMessage();
-                }).catch(err => {
-                    console.error('Falha ao copiar: ', err);
-                    // Fallback para document.execCommand
-                    targetInput.select();
-                    try {
-                        document.execCommand('copy');
-                        showCopyMessage();
-                    } catch (e) {
-                        console.error('Falha no fallback de cópia: ', e);
-                        showErrorMessage("Falha ao copiar. Copie manualmente.");
-                    }
-                });
+                copyToClipboard(targetInput.value, `${targetInput.previousElementSibling.textContent} copiado!`);
             });
         });
 
-        function showCopyMessage() {
-            const messageBox = document.getElementById('messageBox');
-            messageBox.textContent = "Texto copiado para a área de transferência!";
-            messageBox.className = 'mt-4 p-3 bg-green-100 text-green-700 rounded-md text-sm text-center';
-            setTimeout(() => {
-                messageBox.classList.add('hidden');
-            }, 3000);
-        }
-
-        function showErrorMessage(message) {
-            const messageBox = document.getElementById('messageBox');
-            messageBox.textContent = message;
-            messageBox.className = 'mt-4 p-3 bg-red-100 text-red-700 rounded-md text-sm text-center';
-            document.getElementById('outputSection').classList.add('hidden');
-        }
+        document.getElementById('copyInstructionsBtn').addEventListener('click', () => {
+            const instructionsText = document.getElementById('instructionsOutput').textContent;
+            copyToClipboard(instructionsText, 'Instruções copiadas para a área de transferência!');
+        });
     </script>
-
 </body>
 </html>
