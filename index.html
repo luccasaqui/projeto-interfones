@@ -67,7 +67,7 @@
                 GERAR DADOS
             </button>
         </div>
-                
+
         <!-- Seção de Mensagens -->
         <div id="messageBox" class="mt-4 p-3 rounded-md text-sm text-center hidden"></div>
 
@@ -106,7 +106,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Seção do Atalho PABX (Agora aparece com os outros resultados) -->
         <div id="pabxSection" class="hidden pt-4">
             <label class="block text-sm font-medium text-gray-700">ATALHO PABX</label>
@@ -130,237 +130,229 @@
     </div>
 
     <script>
-        // --- LÓGICA DE DADOS ---
-        // Mapeamento consolidado dos dados dos condomínios.
-        // A lógica de senha foi centralizada aqui com a propriedade 'passwordType'.
-        // Tipos de Senha:
-        // 'default': prefixo + bloco + apartamento + ponto
-        // 'prefixOnly': apenas o prefixo
-        // 'specialZero': prefixo + bloco + apartamento + '0' + ponto
-        const condominiumData = {
-            "BENDORF": { domain: "bendorf.sc.loomy.srv.br", passwordPrefix: "rmt@bendorf", pabx: "https://192.168.18.3", passwordType: "default" },
-            "BOSQUE DA RIBEIRA": { domain: "bosquedaribeira.mg.loomy.srv.br", passwordPrefix: "rmt@ribeira", pabx: "https://172.17.59.3", passwordType: "default" },
-            "BOSQUE DAS ÁGUAS": { domain: "bosquedasaguas.mg.loomy.srv.br", passwordPrefix: "rmt@bosqueaguas", pabx: "https://172.17.62.3", passwordType: "default" },
-            "BOSQUE DAS MARGARIDAS": { domain: "margaridas.mg.loomy.srv.br", passwordPrefix: "rmt@loomy123#", pabx: "https://172.17.11.3", passwordType: "prefixOnly" },
-            "BRISAS DA SERRA 1 [1-4]": { domain: "brisasdaserra1.mg.loomy.srv.br", passwordPrefix: "rmt@brisas", pabx: "https://172.17.52.5", passwordType: "default" },
-            "BRISAS DA SERRA 2 [5-27]": { domain: "brisasdaserra2.mg.loomy.srv.br", passwordPrefix: "rmt@brisas02#", pabx: "https://172.17.52.3", passwordType: "default" },
-            "CANTO DO SABIÁ": { domain: "cantodosabia.mg.loomy.srv.br", passwordPrefix: "rmt@cantodosabia", pabx: "https://172.17.60.3", passwordType: "default" },
-            "CASA BRANCA": { domain: "casabranca.mg.loomy.srv.br", passwordPrefix: "rmt@casabranca", pabx: "https://172.17.8.3", passwordType: "default" },
-            "CHAPADA DOS LÍRIOS": { domain: "chapadadoslirios.mt.loomy.srv.br", passwordPrefix: "rmt@lirios", pabx: "https://172.17.40.3", passwordType: "default" },
-            "CHAPADA PANTANAL": { domain: "chapadapantanal.mt.loomy.srv.br", passwordPrefix: "rmt@loomy#", pabx: "https://172.17.39.3", passwordType: "default" },
-            "COSTA DO CACAU": { domain: "costadocacau.ba.loomy.srv.br", passwordPrefix: "rmt@loomy123#", pabx: "https://172.17.13.3", passwordType: "prefixOnly" },
-            "ECOVILAGGIO": { domain: "ecovillagio.go.loomy.srv.br", passwordPrefix: "rmt@ecovilla", pabx: "https://172.17.38.3", passwordType: "default" },
-            "ESTRELA DE CRISTAL": { domain: "estreladecristal.loomy.srv.br", passwordPrefix: "rmt@cristal#", pabx: "https://172.17.66.3", passwordType: "prefixOnly" },
-            "FONTANA": { domain: "fontana.mg.loomy.srv.br", passwordPrefix: "rmt@biasca", passwordType: "default" },
-            "GOLDEN PLAZA": { domain: "goldenplaza.sp.loomy.srv.br", passwordPrefix: "rmt@golden", pabx: "https://172.17.35.3", passwordType: "default" },
-            "GRANCLUB": { domain: "granclub.go.loomy.srv.br", passwordPrefix: "rmt@loomy123#", pabx: "https://192.168.12.3", passwordType: "prefixOnly" },
-            "GRAN SONATA": { domain: "gransonata.go.loomy.srv.br", passwordPrefix: "rmt@gransonata", pabx: "https://172.17.55.3", passwordType: "default" },
-            "GRAN VALEY": { domain: "granvalley.go.loomy.srv.br", passwordPrefix: "rmt@loomy123#", pabx: "https://172.17.26.3", passwordType: "prefixOnly" },
-            "GREENVILLE": { domain: "greenville.mg.loomy.srv.br", passwordPrefix: "greenville@rmt", pabx: "https://172.17.68.3", passwordType: "default" },
-            "JARDIM TIRADENTES": { domain: "tiradentes.mg.loomy.srv.br", passwordPrefix: "rmt@loomy2023", pabx: "https://172.17.19.3", passwordType: "prefixOnly" },
-            "JOINVILLE": { domain: "joinville.sp.loomy.srv.br", passwordPrefix: "rmt@loomy123#", pabx: "https://192.168.17.3", passwordType: "prefixOnly" },
-            "LAGOA DAS ESMERALDAS": { domain: "lagoadasesmeraldas.mg.loomy.srv.br", passwordPrefix: "rmt@loomy2023#", pabx: "https://172.17.25.3", passwordType: "prefixOnly" },
-            "LAGUNA": { domain: "laguna.ba.loomy.srv.br", passwordPrefix: "rmt@laguna", pabx: "https://172.17.70.3", passwordType: "default" },
-            "LIBRA": { domain: "libra.mg.loomy.srv.br", passwordPrefix: "rmt@loomy#2023", pabx: "https://172.17.32.3", passwordType: "prefixOnly" },
-            "LISBOA": { domain: "provinciaslisboa.mg.loomy.srv.br", passwordPrefix: "rmt@loomy", pabx: "https://172.17.22.3", passwordType: "default" },
-            "LUZ DO CAMPO": { domain: "luzdocampo.sp.loomy.srv.br", passwordPrefix: "rmt@luzdocampo", pabx: "https://172.17.44.3", passwordType: "default" },
-            "MAIS PARK": { domain: "maispark.mg.loomy.srv.br", passwordPrefix: "rmt@maispark", pabx: "https://172.17.53.3", passwordType: "default" },
-            "MARAJÓ": { domain: "marajo.mg.loomy.srv.br", passwordPrefix: "rmt@loomy123#", pabx: "https://172.17.29.3", passwordType: "prefixOnly" },
-            "MATA ATLÂNTICA": { domain: "mataatlantica.mg.loomy.srv.br", passwordPrefix: "rmt@loomy123#", pabx: "https://172.17.12.3", passwordType: "prefixOnly" },
-            "MILIONÁRIOS": { domain: "residencialmilionarios.mg.loomy.srv.br", passwordPrefix: "rmt@residencialmilionarios", pabx: "https://172.17.77.3/", passwordType: "default" },
-            "MORADA CARIOCA": { domain: "moradacarioca.sp.loomy.srv.br", passwordPrefix: "rmt@loomy#123", pabx: "https://172.17.23.3", passwordType: "prefixOnly" },
-            "MORADA DAS TORRES - CLUB": { domain: "moradadastorres.ba.loomy.srv.br", passwordPrefix: "rmt@moradaclub", pabx: "https://172.17.51.3", passwordType: "default" },
-            "MORADA DAS TORRES SP": { domain: "moradadastorres.sp.loomy.srv.br", passwordPrefix: "rmt@loomy123#", pabx: "https://192.168.20.3", passwordType: "prefixOnly" },
-            "MORADA DE MINAS": { domain: "moradademinas.mg.loomy.srv.br", passwordPrefix: "rmt@mdeminas", pabx: "https://172.17.48.3", passwordType: "default" },
-            "MORADA PREMIUM": { domain: "moradapremium.ba.loomy.srv.br", passwordPrefix: "rmt@moradapremium", pabx: "https://172.17.71.3/", passwordType: "default" },
-            "MUSIQUE": { domain: "musique.mg.loomy.srv.br", passwordPrefix: "rmt@loomy123#", pabx: "https://172.17.15.3", passwordType: "prefixOnly" },
-            "PARQUE DAS NAÇÕES": { domain: "parquedasnacoes.ba.loomy.srv.br", passwordPrefix: "rmt@parquedasnacoes", pabx: "https://172.17.72.3/", passwordType: "default" },
-            "PLAZA NORTE": { domain: "plazanorte.mg.loomy.srv.br", passwordPrefix: "rmt@loomy#", pabx: "https://172.17.18.3", passwordType: "prefixOnly" },
-            "PONTO DIAMANTE": { domain: "pontodiamante.mg.loomy.srv.br", passwordPrefix: "rmt@pontod", pabx: "https://172.17.58.3", passwordType: "default" },
-            "PONTO GARDÊNIA": { domain: "gardenia.mg.loomy.srv.br", passwordPrefix: "rmt@loomy2023", pabx: "https://172.17.31.3", passwordType: "prefixOnly" },
-            "PONTO VEREDAS": { domain: "pontoveredas.mg.loomy.srv.br", passwordPrefix: "rmt@pontoveredas", pabx: "https://172.17.61.3", passwordType: "default" },
-            "PORTO DOURADO 2": { domain: "portodourado2.go.loomy.srv.br", passwordPrefix: "rmt@portodourado", passwordType: "default" },
-            "PORTO DOURADO 3": { domain: "portodourado3.go.loomy.srv.br", passwordPrefix: "rmt@portodourado3", pabx: "https://172.17.17.3/", passwordType: "default" },
-            "RECANTO DOS ABRANTES": { domain: "recantodosabrantes.ba.loomy.srv.br", passwordPrefix: "rmt@abrantes", pabx: "https://187.44.177.206:8443", passwordType: "default" },
-            "RESERVA BARRA FUNDA": { domain: "reservabarrafunda.sp.loomy.srv.br", passwordPrefix: "rmt@reservabarrafunda", pabx: "https://172.17.43.3", passwordType: "specialZero" },
-            "RESIDENCIAL SABIÁ": { domain: "residencialsabia.mg.loomy.srv.br", passwordPrefix: "rmt@loomy#2023", pabx: "https://172.17.34.3", passwordType: "prefixOnly" },
-            "RIVERA LIFE": { domain: "riveralife.ba.loomy.srv.br", passwordPrefix: "rmt@rivera", pabx: "https://172.17.54.3", passwordType: "default" },
-            "RUBIS": { domain: "rubis.mg.loomy.srv.br", passwordPrefix: "rmt@loomy123#", pabx: "https://172.17.10.3", passwordType: "prefixOnly" },
-            "SAN FELIPPO": { domain: "sanfelippo.sp.loomy.srv.br", passwordPrefix: "rmt@loomy2023#", pabx: "https://172.17.30.3", passwordType: "prefixOnly" },
-            "SÃO FRANCISCO": { domain: "saofrancisco.mg.loomy.srv.br", passwordPrefix: "rmt@loomy2023#", pabx: "https://172.17.37.3", passwordType: "prefixOnly" },
-            "SERRA DOS PINHAIS": { domain: "serradospinhais.mg.loomy.srv.br", passwordPrefix: "Loomy@", pabx: "https://172.17.20.3", passwordType: "default" },
-            "SOLAR DA COLINA": { passwordPrefix: "rmt@solardacolina", pabx: "https://192.168.13.3", passwordType: "default" },
-            "SOLAR DO VALE": { passwordPrefix: "rmt@loomy#2023", pabx: "https://192.168.10.3", passwordType: "prefixOnly" },
-            "SOLAR DOS MONTES": { domain: "solardosmontes.mg.loomy.srv.br", passwordPrefix: "rmt@loomy#2023", pabx: "https://172.17.33.3", passwordType: "prefixOnly" },
-            "SOL DO ENGENHO": { domain: "soldoengenho.rj.loomy.srv.br", passwordPrefix: "rmt@engenho", pabx: "https://172.17.27.3", passwordType: "default" },
-            "SPAZIO SALVADOR NORTE": { domain: "spaziosalvadornorte.ba.loomy.srv.br", passwordPrefix: "rmt@spaziosalvador", pabx: "https://172.17.50.3", passwordType: "default" },
-            "SPAZIO SINGULAR": { domain: "spaziosingular.ba.loomy.srv.br", passwordPrefix: "rmt@loomy123#", pabx: "https://172.17.14.3", passwordType: "prefixOnly" },
-            "VIC PARK MONTREAL": { domain: "vicpark.mg.loomy.srv.br", passwordPrefix: "rmt@vic", pabx: "https://172.17.47.3", passwordType: "default" },
-            "VILA DIAMANTE": { domain: "viladiamante.es.loomy.srv.br", passwordPrefix: "rmt@loomy#26!", pabx: "https://172.17.16.3", passwordType: "prefixOnly" },
-            "VILA REAL ESMERALDA": { domain: "vilarealesmeralda.mg.loomy.srv.br", passwordPrefix: "rmt@vilareal", pabx: "https://172.17.56.3", passwordType: "default" },
-            "VILLAGE EUROPA": { domain: "villageeuropa.mg.loomy.srv.br", passwordPrefix: "rmt@villageeuropa", pabx: "https://172.17.8.3/", passwordType: "default" },
-            "VILLAS VILLAGE": { domain: "villasvillage.ba.loomy.srv.br", passwordPrefix: "rmt@villasvillage", pabx: "https://172.17.21.3", passwordType: "default" },
-            "VIVER FAMA": { domain: "viverfama.go.loomy.srv.br", passwordPrefix: "rmt@viverfama", pabx: "https://172.17.64.3", passwordType: "default" },
-            "XINGÚ": { domain: "residencialxingu.mg.loomy.srv.br", passwordPrefix: "rmt@xingu", pabx: "https://172.17.57.3", passwordType: "default" }
-        };
+    // ==============================================================================
+    // CONFIGURAÇÃO UNIFICADA DE CONDOMÍNIOS
+    // ==============================================================================
+    // Para adicionar um novo condomínio, basta adicionar uma nova linha nesta lista.
+    // Mantenha a formatação para facilitar a leitura.
+    //
+    // Lógicas de Senha (password_logic):
+    // - "standard":   prefixo + bloco + apartamento + ponto
+    // - "fixed":      apenas o prefixo
+    // - "special_zero": prefixo + bloco + apartamento + '0' + ponto
+    //
+    // Use `null` para campos não aplicáveis.
+    // ==============================================================================
+    const CONDOMINIOS_CONFIG = {
+        // NOME DO CONDOMÍNIO        { pabx: "IP DO PABX", domain: "DOMÍNIO", password_prefix: "PREFIXO DA SENHA", password_logic: "LOGICA" }
+        "BENDORF":                  { pabx: "https://192.168.18.3",   domain: "bendorf.sc.loomy.srv.br",                password_prefix: "rmt@bendorf",         password_logic: "standard"     },
+        "BOSQUE DA RIBEIRA":        { pabx: "https://172.17.59.3",    domain: "bosquedaribeira.mg.loomy.srv.br",        password_prefix: "rmt@ribeira",         password_logic: "standard"     },
+        "BOSQUE DAS ÁGUAS":         { pabx: "https://172.17.62.3",    domain: "bosquedasaguas.mg.loomy.srv.br",         password_prefix: "rmt@bosqueaguas",     password_logic: "standard"     },
+        "BOSQUE DAS MARGARIDAS":    { pabx: "https://172.17.11.3",    domain: "margaridas.mg.loomy.srv.br",             password_prefix: "rmt@loomy123#",       password_logic: "fixed"        },
+        "BRISAS DA SERRA 1 [1-4]":  { pabx: "https://172.17.52.5",    domain: "brisasdaserra1.mg.loomy.srv.br",         password_prefix: "rmt@brisas",          password_logic: "standard"     },
+        "BRISAS DA SERRA 2 [5-27]": { pabx: "https://172.17.52.3",    domain: "brisasdaserra2.mg.loomy.srv.br",         password_prefix: "rmt@brisas02#",       password_logic: "standard"     },
+        "CANTO DO SABIÁ":           { pabx: "https://172.17.60.3",    domain: "cantodosabia.mg.loomy.srv.br",           password_prefix: "rmt@cantodosabia",    password_logic: "standard"     },
+        "CASA BRANCA":              { pabx: "https://172.17.8.3",     domain: "casabranca.mg.loomy.srv.br",             password_prefix: "rmt@casabranca",      password_logic: "standard"     },
+        "CHAPADA DOS LÍRIOS":       { pabx: "https://172.17.40.3",    domain: "chapadadoslirios.mt.loomy.srv.br",       password_prefix: "rmt@lirios",          password_logic: "standard"     },
+        "CHAPADA PANTANAL":         { pabx: "https://172.17.39.3",    domain: "chapadapantanal.mt.loomy.srv.br",        password_prefix: "rmt@loomy#",          password_logic: "standard"     },
+        "COSTA DO CACAU":           { pabx: "https://172.17.13.3",    domain: "costadocacau.ba.loomy.srv.br",           password_prefix: "rmt@loomy123#",       password_logic: "fixed"        },
+        "ECOVILAGGIO":              { pabx: "https://172.17.38.3",    domain: "ecovillagio.go.loomy.srv.br",            password_prefix: "rmt@ecovilla",        password_logic: "standard"     },
+        "ESTRELA DE CRISTAL":       { pabx: "https://172.17.66.3",    domain: "estreladecristal.loomy.srv.br",          password_prefix: "rmt@cristal#",        password_logic: "fixed"        },
+        "FONTANA":                  { pabx: null,                     domain: "fontana.mg.loomy.srv.br",                password_prefix: "rmt@biasca",          password_logic: "standard"     },
+        "GOLDEN PLAZA":             { pabx: "https://172.17.35.3",    domain: "goldenplaza.sp.loomy.srv.br",            password_prefix: "rmt@golden",          password_logic: "standard"     },
+        "GRANCLUB":                 { pabx: "https://192.168.12.3",   domain: "granclub.go.loomy.srv.br",               password_prefix: "rmt@loomy123#",       password_logic: "fixed"        },
+        "GRAN SONATA":              { pabx: "https://172.17.55.3",    domain: "gransonata.go.loomy.srv.br",             password_prefix: "rmt@gransonata",      password_logic: "standard"     },
+        "GRAN VALEY":               { pabx: "https://172.17.26.3",    domain: "granvalley.go.loomy.srv.br",             password_prefix: "rmt@loomy123#",       password_logic: "fixed"        },
+        "GREENVILLE":               { pabx: "https://172.17.68.3",    domain: "greenville.mg.loomy.srv.br",             password_prefix: "greenville@rmt",      password_logic: "standard"     },
+        "JARDIM TIRADENTES":        { pabx: "https://172.17.19.3",    domain: "tiradentes.mg.loomy.srv.br",             password_prefix: "rmt@loomy2023",       password_logic: "fixed"        },
+        "JOINVILLE":                { pabx: "https://192.168.17.3",   domain: "joinville.sp.loomy.srv.br",              password_prefix: "rmt@loomy123#",       password_logic: "fixed"        },
+        "LAGOA DAS ESMERALDAS":     { pabx: "https://172.17.25.3",    domain: "lagoadasesmeraldas.mg.loomy.srv.br",     password_prefix: "rmt@loomy2023#",      password_logic: "fixed"        },
+        "LAGUNA":                   { pabx: "https://172.17.70.3",    domain: "laguna.ba.loomy.srv.br",                 password_prefix: "rmt@laguna",          password_logic: "standard"     },
+        "LIBRA":                    { pabx: "https://172.17.32.3",    domain: "libra.mg.loomy.srv.br",                  password_prefix: "rmt@loomy#2023",      password_logic: "fixed"        },
+        "LISBOA":                   { pabx: "https://172.17.22.3",    domain: "provinciaslisboa.mg.loomy.srv.br",       password_prefix: "rmt@loomy",           password_logic: "standard"     },
+        "LUZ DO CAMPO":             { pabx: "https://172.17.44.3",    domain: "luzdocampo.sp.loomy.srv.br",             password_prefix: "rmt@luzdocampo",      password_logic: "standard"     },
+        "MAIS PARK":                { pabx: "https://172.17.53.3",    domain: "maispark.mg.loomy.srv.br",               password_prefix: "rmt@maispark",        password_logic: "standard"     },
+        "MARAJÓ":                   { pabx: "https://172.17.29.3",    domain: "marajo.mg.loomy.srv.br",                 password_prefix: "rmt@loomy123#",       password_logic: "fixed"        },
+        "MATA ATLÂNTICA":           { pabx: "https://172.17.12.3",    domain: "mataatlantica.mg.loomy.srv.br",          password_prefix: "rmt@loomy123#",       password_logic: "fixed"        },
+        "MILIONÁRIOS":              { pabx: "https://172.17.77.3/",   domain: "residencialmilionarios.mg.loomy.srv.br", password_prefix: "rmt@residencialmilionarios", password_logic: "standard" },
+        "MORADA CARIOCA":           { pabx: "https://172.17.23.3",    domain: "moradacarioca.sp.loomy.srv.br",          password_prefix: "rmt@loomy#123",       password_logic: "fixed"        },
+        "MORADA DAS TORRES - CLUB": { pabx: "https://172.17.51.3",    domain: "moradadastorres.ba.loomy.srv.br",        password_prefix: "rmt@moradaclub",      password_logic: "standard"     },
+        "MORADA DAS TORRES SP":     { pabx: "https://192.168.20.3",   domain: "moradadastorres.sp.loomy.srv.br",        password_prefix: "rmt@loomy123#",       password_logic: "fixed"        },
+        "MORADA DE MINAS":          { pabx: "https://172.17.48.3",    domain: "moradademinas.mg.loomy.srv.br",          password_prefix: "rmt@mdeminas",        password_logic: "standard"     },
+        "MORADA PREMIUM":           { pabx: "https://172.17.71.3/",   domain: "moradapremium.ba.loomy.srv.br",          password_prefix: "rmt@moradapremium",   password_logic: "standard"     },
+        "MUSIQUE":                  { pabx: "https://172.17.15.3",    domain: "musique.mg.loomy.srv.br",                password_prefix: "rmt@loomy123#",       password_logic: "fixed"        },
+        "PARQUE DAS NAÇÕES":        { pabx: "https://172.17.72.3/",   domain: "parquedasnacoes.ba.loomy.srv.br",        password_prefix: "rmt@parquedasnacoes", password_logic: "standard"     },
+        "PLAZA NORTE":              { pabx: "https://172.17.18.3",    domain: "plazanorte.mg.loomy.srv.br",             password_prefix: "rmt@loomy#",          password_logic: "fixed"        },
+        "PONTO DIAMANTE":           { pabx: "https://172.17.58.3",    domain: "pontodiamante.mg.loomy.srv.br",          password_prefix: "rmt@pontod",          password_logic: "standard"     },
+        "PONTO GARDÊNIA":           { pabx: "https://172.17.31.3",    domain: "gardenia.mg.loomy.srv.br",               password_prefix: "rmt@loomy2023",       password_logic: "fixed"        },
+        "PONTO VEREDAS":            { pabx: "https://172.17.61.3",    domain: "pontoveredas.mg.loomy.srv.br",           password_prefix: "rmt@pontoveredas",    password_logic: "standard"     },
+        "PORTO DOURADO 2":          { pabx: null,                     domain: "portodourado2.go.loomy.srv.br",          password_prefix: "rmt@portodourado",    password_logic: "standard"     },
+        "PORTO DOURADO 3":          { pabx: "https://172.17.17.3/",   domain: "portodourado3.go.loomy.srv.br",          password_prefix: "rmt@portodourado3",   password_logic: "standard"     },
+        "RECANTO DOS ABRANTES":     { pabx: "https://187.44.177.206:8443", domain: "recantodosabrantes.ba.loomy.srv.br", password_prefix: "rmt@abrantes",      password_logic: "standard"     },
+        "RESERVA BARRA FUNDA":      { pabx: "https://172.17.43.3",    domain: "reservabarrafunda.sp.loomy.srv.br",      password_prefix: "rmt@reservabarrafunda", password_logic: "special_zero" },
+        "RESIDENCIAL SABIÁ":        { pabx: "https://172.17.34.3",    domain: "residencialsabia.mg.loomy.srv.br",       password_prefix: "rmt@loomy#2023",      password_logic: "fixed"        },
+        "RIVERA LIFE":              { pabx: "https://172.17.54.3",    domain: "riveralife.ba.loomy.srv.br",             password_prefix: "rmt@rivera",          password_logic: "standard"     },
+        "RUBIS":                    { pabx: "https://172.17.10.3",    domain: "rubis.mg.loomy.srv.br",                  password_prefix: "rmt@loomy123#",       password_logic: "fixed"        },
+        "SAN FELIPPO":              { pabx: "https://172.17.30.3",    domain: "sanfelippo.sp.loomy.srv.br",             password_prefix: "rmt@loomy2023#",      password_logic: "fixed"        },
+        "SÃO FRANCISCO":            { pabx: "https://172.17.37.3",    domain: "saofrancisco.mg.loomy.srv.br",           password_prefix: "rmt@loomy2023#",      password_logic: "fixed"        },
+        "SERRA DOS PINHAIS":        { pabx: "https://172.17.20.3",    domain: "serradospinhais.mg.loomy.srv.br",        password_prefix: "Loomy@",              password_logic: "standard"     },
+        "SOLAR DA COLINA":          { pabx: "https://192.168.13.3",   domain: null,                                     password_prefix: "rmt@solardacolina",   password_logic: "standard"     },
+        "SOLAR DO VALE":            { pabx: "https://192.168.10.3",   domain: null,                                     password_prefix: "rmt@loomy#2023",      password_logic: "fixed"        },
+        "SOLAR DOS MONTES":         { pabx: "https://172.17.33.3",    domain: "solardosmontes.mg.loomy.srv.br",         password_prefix: "rmt@loomy#2023",      password_logic: "fixed"        },
+        "SOL DO ENGENHO":           { pabx: "https://172.17.27.3",    domain: "soldoengenho.rj.loomy.srv.br",           password_prefix: "rmt@engenho",         password_logic: "standard"     },
+        "SPAZIO SALVADOR NORTE":    { pabx: "https://172.17.50.3",    domain: "spaziosalvadornorte.ba.loomy.srv.br",    password_prefix: "rmt@spaziosalvador",  password_logic: "standard"     },
+        "SPAZIO SINGULAR":          { pabx: "https://172.17.14.3",    domain: "spaziosingular.ba.loomy.srv.br",         password_prefix: "rmt@loomy123#",       password_logic: "fixed"        },
+        "VIC PARK MONTREAL":        { pabx: "https://172.17.47.3",    domain: "vicpark.mg.loomy.srv.br",                password_prefix: "rmt@vic",             password_logic: "standard"     },
+        "VILA DIAMANTE":            { pabx: "https://172.17.16.3",    domain: "viladiamante.es.loomy.srv.br",           password_prefix: "rmt@loomy#26!",       password_logic: "fixed"        },
+        "VILA REAL ESMERALDA":      { pabx: "https://172.17.56.3",    domain: "vilarealesmeralda.mg.loomy.srv.br",      password_prefix: "rmt@vilareal",        password_logic: "standard"     },
+        "VILLAGE EUROPA":           { pabx: "https://172.17.8.3/",    domain: "villageeuropa.mg.loomy.srv.br",          password_prefix: "rmt@villageeuropa",   password_logic: "standard"     },
+        "VILLAS VILLAGE":           { pabx: "https://172.17.21.3",    domain: "villasvillage.ba.loomy.srv.br",          password_prefix: "rmt@villasvillage",   password_logic: "standard"     },
+        "VIVER FAMA":               { pabx: "https://172.17.64.3",    domain: "viverfama.go.loomy.srv.br",              password_prefix: "rmt@viverfama",       password_logic: "standard"     },
+        "XINGÚ":                    { pabx: "https://172.17.57.3",    domain: "residencialxingu.mg.loomy.srv.br",       password_prefix: "rmt@xingu",           password_logic: "standard"     },
+        // --- ADICIONE NOVOS CONDOMÍNIOS AQUI ---
+    };
 
-        // --- INICIALIZAÇÃO ---
-        window.addEventListener('DOMContentLoaded', () => {
-            const select = document.getElementById('condominio');
-            const condoNames = Object.keys(condominiumData).sort();
-            condoNames.forEach(name => {
-                const option = document.createElement('option');
-                option.value = name;
-                option.textContent = name;
-                select.appendChild(option);
-            });
-            feather.replace(); // Inicializa os ícones
+    // --- LÓGICA PRINCIPAL DA APLICAÇÃO ---
+    window.addEventListener('DOMContentLoaded', () => {
+        populateCondoSelect();
+        feather.replace();
+        addEventListeners();
+    });
 
-            // Adiciona listeners de eventos
-            document.getElementById('gerarDadosBtn').addEventListener('click', generateData);
-            document.getElementById('headerTitle').addEventListener('click', resetUI);
-            
-            // Listeners para os botões de copiar
-            document.querySelectorAll('.copy-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const targetId = event.currentTarget.dataset.target;
-                    const targetInput = document.getElementById(targetId);
-                    copyToClipboard(targetInput.value, `${targetInput.previousElementSibling.textContent} copiado!`);
-                });
-            });
-            document.getElementById('copyInstructionsBtn').addEventListener('click', () => {
-                const instructionsText = document.getElementById('instructionsOutput').textContent;
-                copyToClipboard(instructionsText, 'Instruções copiadas para a área de transferência!');
+    function addEventListeners() {
+        document.getElementById('gerarDadosBtn').addEventListener('click', generateData);
+        document.getElementById('headerTitle').addEventListener('click', resetUI);
+
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const targetId = event.currentTarget.dataset.target;
+                const targetInput = document.getElementById(targetId);
+                copyToClipboard(targetInput.value, `${targetInput.previousElementSibling.textContent} copiado!`);
             });
         });
 
-        // --- FUNÇÕES DE CONTROLE DA UI ---
+        document.getElementById('copyInstructionsBtn').addEventListener('click', () => {
+            const instructionsText = document.getElementById('instructionsOutput').textContent;
+            copyToClipboard(instructionsText, 'Instruções copiadas para a área de transferência!');
+        });
+    }
 
-        function resetUI() {
-            // Limpa os campos do formulário
-            document.getElementById('condominio').value = '';
-            document.getElementById('bloco').value = '';
-            document.getElementById('apartamento').value = '';
-            document.querySelector('input[name="ponto"][value="1"]').checked = true;
+    function populateCondoSelect() {
+        const select = document.getElementById('condominio');
+        const condoNames = Object.keys(CONDOMINIOS_CONFIG).sort();
+        condoNames.forEach(name => {
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = name;
+            select.appendChild(option);
+        });
+    }
 
-            // Esconde as seções de resultado
-            document.getElementById('outputSection').classList.add('hidden');
-            document.getElementById('instructionsSection').classList.add('hidden');
-            document.getElementById('pabxSection').classList.add('hidden');
-            document.getElementById('messageBox').classList.add('hidden');
+    function resetUI() {
+        document.getElementById('condominio').value = '';
+        document.getElementById('bloco').value = '';
+        document.getElementById('apartamento').value = '';
+        document.querySelector('input[name="ponto"][value="1"]').checked = true;
+
+        document.getElementById('outputSection').classList.add('hidden');
+        document.getElementById('instructionsSection').classList.add('hidden');
+        document.getElementById('pabxSection').classList.add('hidden');
+        document.getElementById('messageBox').classList.add('hidden');
+    }
+
+    function showMessage(message, type = 'success') {
+        const messageBox = document.getElementById('messageBox');
+        messageBox.textContent = message;
+        messageBox.className = 'mt-4 p-3 rounded-md text-sm text-center'; // Reset class
+        if (type === 'success') {
+            messageBox.classList.add('bg-green-100', 'text-green-800', 'border', 'border-green-200');
+        } else {
+            messageBox.classList.add('bg-red-100', 'text-red-800', 'border', 'border-red-200');
         }
+        messageBox.classList.remove('hidden');
+        setTimeout(() => messageBox.classList.add('hidden'), 3000);
+    }
 
-        function showMessage(message, type = 'success') {
-            const messageBox = document.getElementById('messageBox');
-            messageBox.textContent = message;
-            messageBox.className = 'mt-4 p-3 rounded-md text-sm text-center'; // Reset class
-            if (type === 'success') {
-                messageBox.classList.add('bg-green-100', 'text-green-800', 'border', 'border-green-200');
+    function copyToClipboard(text, successMessage) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.opacity = "0";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) {
+                showMessage(successMessage, 'success');
             } else {
-                messageBox.classList.add('bg-red-100', 'text-red-800', 'border', 'border-red-200');
+                throw new Error('Copy command was not successful');
             }
-            messageBox.classList.remove('hidden');
-            setTimeout(() => messageBox.classList.add('hidden'), 3000);
+        } catch (err) {
+            console.error('Falha ao copiar: ', err);
+            showMessage("Falha ao copiar. Tente manualmente.", 'error');
+        }
+        document.body.removeChild(textArea);
+    }
+
+    function generateData() {
+        const bloco = document.getElementById('bloco').value.trim();
+        const apartamento = document.getElementById('apartamento').value.trim();
+        const condominioName = document.getElementById('condominio').value;
+        const ponto = document.querySelector('input[name="ponto"]:checked').value;
+
+        document.getElementById('outputSection').classList.add('hidden');
+        document.getElementById('instructionsSection').classList.add('hidden');
+        document.getElementById('pabxSection').classList.add('hidden');
+
+        if (!condominioName || !bloco || !apartamento) {
+            showMessage("Por favor, preencha todos os campos.", 'error');
+            return;
         }
 
-        // --- FUNÇÃO DE COPIAR (CORRIGIDA) ---
-        function copyToClipboard(text, successMessage) {
-            // Cria um elemento textarea temporário
-            const textArea = document.createElement("textarea");
-            textArea.value = text;
+        document.getElementById('messageBox').classList.add('hidden');
+        const config = CONDOMINIOS_CONFIG[condominioName];
 
-            // Evita que a tela "pule" ao adicionar o elemento
-            textArea.style.position = "fixed";
-            textArea.style.top = "0";
-            textArea.style.left = "0";
-            textArea.style.opacity = "0";
+        let senha;
+        const { password_prefix, password_logic } = config;
 
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-
-            try {
-                // Usa o método document.execCommand que é mais compatível
-                const successful = document.execCommand('copy');
-                if (successful) {
-                    showMessage(successMessage, 'success');
-                } else {
-                    throw new Error('Copy command was not successful');
-                }
-            } catch (err) {
-                console.error('Falha ao copiar: ', err);
-                showMessage("Falha ao copiar. Tente manualmente.", 'error');
-            }
-
-            // Remove o elemento temporário
-            document.body.removeChild(textArea);
+        switch (password_logic) {
+            case 'fixed':
+                senha = password_prefix;
+                break;
+            case 'special_zero':
+                senha = `${password_prefix}${bloco}${apartamento}0${ponto}`;
+                break;
+            case 'standard':
+            default:
+                senha = `${password_prefix}${bloco}${apartamento}${ponto}`;
+                break;
         }
 
-        // --- LÓGICA DE GERAÇÃO DE DADOS ---
-        function generateData() {
-            const bloco = document.getElementById('bloco').value.trim();
-            const apartamento = document.getElementById('apartamento').value.trim();
-            const condominio = document.getElementById('condominio').value;
-            const ponto = document.querySelector('input[name="ponto"]:checked').value;
+        const usuario = `${bloco}${apartamento}${ponto}`;
+        const dominio = config.domain || "Não disponível";
 
-            // Esconde seções de saída antes de validar, para limpar resultados antigos
-            document.getElementById('outputSection').classList.add('hidden');
-            document.getElementById('instructionsSection').classList.add('hidden');
-            document.getElementById('pabxSection').classList.add('hidden');
+        document.getElementById('usuarioOutput').value = usuario;
+        document.getElementById('senhaOutput').value = senha;
+        document.getElementById('dominioOutput').value = dominio;
+        document.getElementById('outputSection').classList.remove('hidden');
 
-            if (!condominio || !bloco || !apartamento) {
-                showMessage("Por favor, preencha todos os campos.", 'error');
-                return;
-            }
-
-            document.getElementById('messageBox').classList.add('hidden');
-            const condominioInfo = condominiumData[condominio];
-
-            // --- LÓGICA DE SENHA REVISADA ---
-            let senha;
-            const { passwordPrefix, passwordType } = condominioInfo;
-
-            switch (passwordType) {
-                case 'prefixOnly':
-                    senha = passwordPrefix;
-                    break;
-                case 'specialZero':
-                    senha = `${passwordPrefix}${bloco}${apartamento}0${ponto}`;
-                    break;
-                case 'default':
-                default:
-                    senha = `${passwordPrefix}${bloco}${apartamento}${ponto}`;
-                    break;
-            }
-
-            const usuario = `${bloco}${apartamento}${ponto}`;
-            const dominio = condominioInfo.domain || "Não disponível";
-
-            // Exibição dos dados gerados
-            document.getElementById('usuarioOutput').value = usuario;
-            document.getElementById('senhaOutput').value = senha;
-            document.getElementById('dominioOutput').value = dominio;
-            document.getElementById('outputSection').classList.remove('hidden');
-
-            // Lógica para exibir o botão PABX
-            const pabxSection = document.getElementById('pabxSection');
-            const pabxLink = document.getElementById('pabxLink');
-            if (condominioInfo?.pabx) {
-                pabxLink.href = condominioInfo.pabx;
-                pabxSection.classList.remove('hidden');
-            } else {
-                pabxSection.classList.add('hidden');
-            }
-
-            // Geração e exibição das instruções
-            const portaria = 94;
-            const interfoneFisico = `${bloco}${apartamento}`;
-            const instructionsText = `USUÁRIO: ${usuario}\nSENHA: ${senha}\nDOMÍNIO: ${dominio}\n\nSIGA O PASSO A PASSO DO VÍDEO COM ATENÇÃO! ⚠\nhttps://www.youtube.com/watch?v=lZxGqBq7S5U\n\nBaixe o aplicativo.\n\nLINK INTERFONE INTELIGENTE - ANDROID:\nhttps://play.google.com/store/apps/details?id=com.voipgroup.loomyinterfone&hl=pt_BR\n\nLINK INTERFONE INTELIGENTE - IPHONE:\nhttps://apps.apple.com/br/app/loomy-interfone-inteligente/id1633125172\n\nComo usar?\nPara ligar para a portaria, digite: ${portaria}\nPara ligar para o seu interfone físico, digite: ${interfoneFisico}\nPara ligar no seu interfone inteligente, digite: ${usuario}`;
-
-            document.getElementById('instructionsOutput').textContent = instructionsText;
-            document.getElementById('instructionsSection').classList.remove('hidden');
-            feather.replace();
+        const pabxSection = document.getElementById('pabxSection');
+        const pabxLink = document.getElementById('pabxLink');
+        if (config.pabx) {
+            pabxLink.href = config.pabx;
+            pabxSection.classList.remove('hidden');
         }
+
+        const interfoneFisico = `${bloco}${apartamento}`;
+        const instructionsText = `USUÁRIO: ${usuario}\nSENHA: ${senha}\nDOMÍNIO: ${dominio}\n\nSIGA O PASSO A PASSO DO VÍDEO COM ATENÇÃO! ⚠\nhttps://www.youtube.com/watch?v=lZxGqBq7S5U\n\nBaixe o aplicativo.\n\nLINK INTERFONE INTELIGENTE - ANDROID:\nhttps://play.google.com/store/apps/details?id=com.voipgroup.loomyinterfone&hl=pt_BR\n\nLINK INTERFONE INTELIGENTE - IPHONE:\nhttps://apps.apple.com/br/app/loomy-interfone-inteligente/id1633125172\n\nComo usar?\nPara ligar para a portaria, digite: 94\nPara ligar para o seu interfone físico, digite: ${interfoneFisico}\nPara ligar no seu interfone inteligente, digite: ${usuario}`;
+
+        document.getElementById('instructionsOutput').textContent = instructionsText;
+        document.getElementById('instructionsSection').classList.remove('hidden');
+        feather.replace();
+    }
     </script>
 </body>
 </html>
