@@ -43,12 +43,18 @@
                 </select>
             </div>
             <div>
-                <label for="bloco" class="block text-sm font-medium text-gray-700">Bloco</label>
-                <input type="text" id="bloco" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Ex: 01">
+                <label for="nomeCompleto" class="block text-sm font-medium text-gray-700">Nome completo</label>
+                <input type="text" id="nomeCompleto" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Ex: João Silva">
             </div>
-            <div>
-                <label for="apartamento" class="block text-sm font-medium text-gray-700">Apartamento</label>
-                <input type="text" id="apartamento" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Ex: 101">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label for="bloco" class="block text-sm font-medium text-gray-700">Bloco</label>
+                    <input type="text" id="bloco" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Ex: 01">
+                </div>
+                <div>
+                    <label for="apartamento" class="block text-sm font-medium text-gray-700">Apartamento</label>
+                    <input type="text" id="apartamento" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Ex: 101">
+                </div>
             </div>
             <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2">Ponto</label>
@@ -63,7 +69,7 @@
                     </label>
                 </div>
             </div>
-            <button id="gerarDadosBtn" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
+            <button id="gerarDadosBtn" class="w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200 font-bold">
                 GERAR DADOS
             </button>
         </div>
@@ -81,32 +87,43 @@
         <div id="outputSection" class="mt-6 space-y-4 hidden">
             <hr/>
             <h2 class="text-xl font-bold text-center text-gray-800 pt-2">Dados Gerados</h2>
+            
             <!-- Usuário -->
             <div>
-                <label class="block text-sm font-medium text-gray-700">USUÁRIO</label>
+                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider">USUÁRIO</label>
                 <div class="relative mt-1">
-                    <input type="text" id="usuarioOutput" readonly class="w-full px-3 py-2 pr-10 bg-gray-100 border border-gray-300 rounded-md shadow-sm text-gray-900 focus:outline-none sm:text-sm">
-                    <button class="copy-btn absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-800 transition-colors duration-200" data-target="usuarioOutput" aria-label="Copiar usuário">
+                    <input type="text" id="usuarioOutput" readonly class="w-full px-3 py-2 pr-10 bg-gray-100 border border-gray-300 rounded-md shadow-sm text-gray-900 font-mono text-sm">
+                    <button class="copy-btn absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-800 transition-colors duration-200" data-target="usuarioOutput">
                         <i data-feather="copy" class="w-5 h-5"></i>
                     </button>
                 </div>
             </div>
             <!-- Senha -->
             <div>
-                <label class="block text-sm font-medium text-gray-700">SENHA</label>
+                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider">SENHA</label>
                 <div class="relative mt-1">
-                    <input type="text" id="senhaOutput" readonly class="w-full px-3 py-2 pr-10 bg-gray-100 border border-gray-300 rounded-md shadow-sm text-gray-900 focus:outline-none sm:text-sm">
-                    <button class="copy-btn absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-800 transition-colors duration-200" data-target="senhaOutput" aria-label="Copiar senha">
+                    <input type="text" id="senhaOutput" readonly class="w-full px-3 py-2 pr-10 bg-gray-100 border border-gray-300 rounded-md shadow-sm text-gray-900 font-mono text-sm">
+                    <button class="copy-btn absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-800 transition-colors duration-200" data-target="senhaOutput">
                         <i data-feather="copy" class="w-5 h-5"></i>
                     </button>
                 </div>
             </div>
             <!-- Domínio -->
             <div>
-                <label class="block text-sm font-medium text-gray-700">DOMÍNIO</label>
+                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider">DOMÍNIO</label>
                 <div class="relative mt-1">
-                    <input type="text" id="dominioOutput" readonly class="w-full px-3 py-2 pr-10 bg-gray-100 border border-gray-300 rounded-md shadow-sm text-gray-900 focus:outline-none sm:text-sm">
-                    <button class="copy-btn absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-800 transition-colors duration-200" data-target="dominioOutput" aria-label="Copiar domínio">
+                    <input type="text" id="dominioOutput" readonly class="w-full px-3 py-2 pr-10 bg-gray-100 border border-gray-300 rounded-md shadow-sm text-gray-900 font-mono text-sm">
+                    <button class="copy-btn absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-800 transition-colors duration-200" data-target="dominioOutput">
+                        <i data-feather="copy" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- Nome de Exibição -->
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider">NOME DE EXIBIÇÃO</label>
+                <div class="relative mt-1">
+                    <input type="text" id="nomeExibicaoOutput" readonly class="w-full px-3 py-2 pr-10 bg-gray-100 border border-gray-300 rounded-md shadow-sm text-gray-900 font-mono text-sm">
+                    <button class="copy-btn absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-800 transition-colors duration-200" data-target="nomeExibicaoOutput">
                         <i data-feather="copy" class="w-5 h-5"></i>
                     </button>
                 </div>
@@ -115,8 +132,8 @@
         
         <!-- Seção do Atalho PABX -->
         <div id="pabxSection" class="hidden pt-4">
-            <label class="block text-sm font-medium text-gray-700">ATALHO PABX</label>
-            <a id="pabxLink" href="#" target="_blank" class="w-full mt-1 flex items-center justify-center bg-gray-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-200">
+            <label class="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">ATALHO PABX</label>
+            <a id="pabxLink" href="#" target="_blank" class="w-full flex items-center justify-center bg-gray-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-gray-700 transition-colors duration-200">
                 <i data-feather="external-link" class="mr-2 h-4 w-4"></i>
                 Acessar o PABX do condomínio
             </a>
@@ -125,91 +142,85 @@
         <!-- SEÇÃO DE INSTRUÇÕES COMPLETAS -->
         <div id="instructionsSection" class="mt-6 hidden">
             <div class="relative bg-gray-50 p-5 rounded-lg border border-gray-200">
-                <button id="copyInstructionsBtn" class="absolute top-3 right-3 flex items-center text-gray-500 hover:text-blue-600 transition-colors duration-200" aria-label="Copiar instruções">
+                <button id="copyInstructionsBtn" class="absolute top-3 right-3 flex items-center text-gray-500 hover:text-blue-600 transition-colors duration-200">
                     <i data-feather="copy" class="w-4 h-4"></i>
-                    <span class="ml-1 text-xs font-medium">Copiar</span>
+                    <span class="ml-1 text-xs font-medium uppercase">Copiar Tudo</span>
                 </button>
                 <pre id="instructionsOutput" class="text-sm text-gray-800"></pre>
             </div>
         </div>
     </div>
+
     <script>
     // ==============================================================================
     // CONFIGURAÇÃO UNIFICADA DE CONDOMÍNIOS
-    // Lógicas de Senha (password_logic):
-    // - "standard":     prefixo + bloco + apartamento + ponto
-    // - "fixed":        apenas o prefixo
     // ==============================================================================
     const CONDOMINIOS_CONFIG = {
-        // NOME DO CONDOMÍNIO         { pabx: "IP DO PABX", domain: "DOMÍNIO", password_prefix: "PREFIXO DA SENHA", password_logic: "LOGICA" }
-        // NOVOS CONDOMÍNIOS ADICIONADOS/ATUALIZADOS
         "AQUARELA CITY":            { pabx: "https://172.17.74.3/",   domain: "aquarelacity.mg.loomy.srv.br",           password_prefix: "rmt@aquarelacity",    password_logic: "standard"      },
         "BOSQUE DO INDAIA":         { pabx: "https://172.17.82.3/",   domain: "bosquedoindaia.loomy.srv.br",            password_prefix: "rmt@bosquedoindaia",  password_logic: "standard"      },
         "FONTE ROYAL":              { pabx: "https://172.17.79.3/",   domain: "fonteroyal.ba.loomy.srv.br",             password_prefix: "rmt@fonteroyal",      password_logic: "standard"      },
         "GRAN PLAZA":               { pabx: "https://172.17.80.3/",   domain: "granplaza.mg.loomy.srv.br",              password_prefix: "rmt@granplaza",       password_logic: "standard"      },
         "PORTO MARANATA":           { pabx: "https://172.17.81.3/",   domain: "portomaranata.go.loomy.srv.br",          password_prefix: "rmt@portomaranata",   password_logic: "standard"      },
-        "TERRA NOVA":               { pabx: "https://172.17.83.3/",   domain: "terranova.loomy.srv.br",                 password_prefix: "rmt@terranova2025",   password_logic: "fixed"         },
-        
-        // CONDOMÍNIOS EXISTENTES (REVISADOS/CORRIGIDOS)
+        "TERRA NOVA":               { pabx: "https://172.17.83.3/",   domain: "terranova.loomy.srv.br",                 password_prefix: "rmt@terranova2025",   password_logic: "fixed"          },
         "BENDORF":                  { pabx: "https://192.168.18.3",   domain: "bendorf.sc.loomy.srv.br",                password_prefix: "rmt@bendorf",         password_logic: "standard"      },
         "BOSQUE DA RIBEIRA":        { pabx: "https://172.17.59.3",    domain: "bosquedaribeira.mg.loomy.srv.br",        password_prefix: "rmt@ribeira",         password_logic: "standard"      },
         "BOSQUE DAS ÁGUAS":         { pabx: "https://172.17.62.3",    domain: "bosquedasaguas.mg.loomy.srv.br",         password_prefix: "rmt@bosqueaguas",     password_logic: "standard"      },
-        "BOSQUE DAS MARGARIDAS":    { pabx: "https://172.17.11.3",    domain: "margaridas.mg.loomy.srv.br",             password_prefix: "rmt@loomy123#",       password_logic: "fixed"         },
+        "BOSQUE DAS MARGARIDAS":    { pabx: "https://172.17.11.3",    domain: "margaridas.mg.loomy.srv.br",             password_prefix: "rmt@loomy123#",       password_logic: "fixed"          },
         "BRISAS DA SERRA 1 [1-4]":  { pabx: "https://172.17.52.5",    domain: "brisasdaserra1.mg.loomy.srv.br",         password_prefix: "rmt@brisas",          password_logic: "standard"      },
         "BRISAS DA SERRA 2 [5-27]": { pabx: "https://172.17.52.3",    domain: "brisasdaserra2.mg.loomy.srv.br",         password_prefix: "rmt@brisas02#",       password_logic: "standard"      },
         "CANTO DO SABIÁ":           { pabx: "https://172.17.60.3",    domain: "cantodosabia.mg.loomy.srv.br",           password_prefix: "rmt@cantodosabia",    password_logic: "standard"      },
         "CASA BRANCA":              { pabx: "https://172.17.73.3/",   domain: "casabranca.ba.loomy.srv.br",             password_prefix: "rmt@casabranca",      password_logic: "standard"      },
         "CHAPADA DOS LÍRIOS":       { pabx: "https://172.17.40.3",    domain: "chapadadoslirios.mt.loomy.srv.br",       password_prefix: "rmt@lirios",          password_logic: "standard"      },
         "CHAPADA PANTANAL":         { pabx: "https://172.17.39.3",    domain: "chapadapantanal.mt.loomy.srv.br",        password_prefix: "rmt@loomy#",          password_logic: "standard"      },
-        "COSTA DO CACAU":           { pabx: "https://172.17.13.3",    domain: "costadocacau.ba.loomy.srv.br",           password_prefix: "rmt@loomy123#",       password_logic: "fixed"         },
+        "COSTA DO CACAU":           { pabx: "https://172.17.13.3",    domain: "costadocacau.ba.loomy.srv.br",           password_prefix: "rmt@loomy123#",       password_logic: "fixed"          },
         "ECOVILAGGIO":              { pabx: "https://172.17.38.3",    domain: "ecovillagio.go.loomy.srv.br",            password_prefix: "rmt@ecovilla",        password_logic: "standard"      },
         "ESTRELA DE CRISTAL":       { pabx: "https://172.17.66.3",    domain: "estreladecristal.loomy.srv.br",          password_prefix: "rmt@cristal#",        password_logic: "standard"      },
         "FONTANA":                  { pabx: "https://172.17.7.3/",    domain: "fontana.mg.loomy.srv.br",                password_prefix: "rmt@biasca",          password_logic: "standard"      },
         "GOLDEN PLAZA":             { pabx: "https://172.17.35.3",    domain: "goldenplaza.sp.loomy.srv.br",            password_prefix: "rmt@golden",          password_logic: "standard"      },
-        "GRANCLUB":                 { pabx: "https://192.168.12.3",   domain: "granclub.go.loomy.srv.br",               password_prefix: "rmt@loomy123#",       password_logic: "fixed"         },
+        "GRANCLUB":                 { pabx: "https://192.168.12.3",   domain: "granclub.go.loomy.srv.br",               password_prefix: "rmt@loomy123#",       password_logic: "fixed"          },
         "GRAN SONATA":              { pabx: "https://172.17.55.3",    domain: "gransonata.go.loomy.srv.br",             password_prefix: "rmt@gransonata",      password_logic: "standard"      },
-        "GRAN VALEY":               { pabx: "https://172.17.26.3",    domain: "granvalley.go.loomy.srv.br",             password_prefix: "rmt@loomy123#",       password_logic: "fixed"         },
+        "GRAN VALEY":               { pabx: "https://172.17.26.3",    domain: "granvalley.go.loomy.srv.br",             password_prefix: "rmt@loomy123#",       password_logic: "fixed"          },
         "GREENVILLE":               { pabx: "https://172.17.68.3",    domain: "greenville.mg.loomy.srv.br",             password_prefix: "greenville@rmt",      password_logic: "standard"      },
-        "JARDIM TIRADENTES":        { pabx: "https://172.17.19.3",    domain: "tiradentes.mg.loomy.srv.br",             password_prefix: "rmt@loomy2023",       password_logic: "fixed"         },
-        "JOINVILLE":                { pabx: "https://192.168.17.3",   domain: "joinville.sp.loomy.srv.br",              password_prefix: "rmt@loomy123#",       password_logic: "fixed"         },
-        "LAGOA DAS ESMERALDAS":     { pabx: "https://172.17.25.3",    domain: "lagoadasesmeraldas.mg.loomy.srv.br",     password_prefix: "rmt@loomy2023#",      password_logic: "fixed"         },
+        "JARDIM TIRADENTES":        { pabx: "https://172.17.19.3",    domain: "tiradentes.mg.loomy.srv.br",             password_prefix: "rmt@loomy2023",       password_logic: "fixed"          },
+        "JOINVILLE":                { pabx: "https://192.168.17.3",   domain: "joinville.sp.loomy.srv.br",              password_prefix: "rmt@loomy123#",       password_logic: "fixed"          },
+        "LAGOA DAS ESMERALDAS":     { pabx: "https://172.17.25.3",    domain: "lagoadasesmeraldas.mg.loomy.srv.br",     password_prefix: "rmt@loomy2023#",      password_logic: "fixed"          },
         "LAGUNA":                   { pabx: "https://172.17.70.3",    domain: "laguna.ba.loomy.srv.br",                 password_prefix: "rmt@laguna",          password_logic: "standard"      },
-        "LIBRA":                    { pabx: "https://172.17.32.3",    domain: "libra.mg.loomy.srv.br",                  password_prefix: "rmt@loomy#2023",      password_logic: "fixed"         },
+        "LIBRA":                    { pabx: "https://172.17.32.3",    domain: "libra.mg.loomy.srv.br",                  password_prefix: "rmt@loomy#2023",      password_logic: "fixed"          },
         "LISBOA":                   { pabx: "https://172.17.22.3",    domain: "provinciaslisboa.mg.loomy.srv.br",       password_prefix: "rmt@loomy",           password_logic: "standard"      },
         "LUZ DO CAMPO":             { pabx: "https://172.17.44.3",    domain: "luzdocampo.sp.loomy.srv.br",             password_prefix: "rmt@luzdocampo",      password_logic: "standard"      },
         "MAIS PARK":                { pabx: "https://172.17.53.3",    domain: "maispark.mg.loomy.srv.br",               password_prefix: "rmt@maispark",        password_logic: "standard"      },
-        "MARAJÓ":                   { pabx: "https://172.17.29.3",    domain: "marajo.mg.loomy.srv.br",                 password_prefix: "rmt@loomy123#",       password_logic: "fixed"         },
-        "MATA ATLÂNTICA":           { pabx: "https://172.17.12.3",    domain: "mataatlantica.mg.loomy.srv.br",          password_prefix: "rmt@loomy123#",       password_logic: "fixed"         },
+        "MARAJÓ":                   { pabx: "https://172.17.29.3",    domain: "marajo.mg.loomy.srv.br",                 password_prefix: "rmt@loomy123#",       password_logic: "fixed"          },
+        "MATA ATLÂNTICA":           { pabx: "https://172.17.12.3",    domain: "mataatlantica.mg.loomy.srv.br",         password_prefix: "rmt@loomy123#",       password_logic: "fixed"          },
         "MILIONÁRIOS":              { pabx: "https://172.17.77.3/",   domain: "residencialmilionarios.mg.loomy.srv.br", password_prefix: "rmt@residencialmilionarios", password_logic: "standard" },
-        "MORADA CARIOCA":           { pabx: "https://172.17.23.3",    domain: "moradacarioca.sp.loomy.srv.br",          password_prefix: "rmt@loomy#123",       password_logic: "fixed"         },
+        "MORADA CARIOCA":           { pabx: "https://172.17.23.3",    domain: "moradacarioca.sp.loomy.srv.br",          password_prefix: "rmt@loomy#123",       password_logic: "fixed"          },
         "MORADA DAS TORRES - CLUB": { pabx: "https://172.17.51.3",    domain: "moradadastorres.ba.loomy.srv.br",        password_prefix: "rmt@moradaclub",      password_logic: "standard"      },
-        "MORADA DAS TORRES SP":     { pabx: "https://192.168.20.3",   domain: "moradadastorres.sp.loomy.srv.br",        password_prefix: "rmt@loomy123#",       password_logic: "fixed"         },
+        "MORADA DAS TORRES SP":     { pabx: "https://192.168.20.3",   domain: "moradadastorres.sp.loomy.srv.br",        password_prefix: "rmt@loomy123#",       password_logic: "fixed"          },
         "MORADA DE MINAS":          { pabx: "https://172.17.48.3",    domain: "moradademinas.mg.loomy.srv.br",          password_prefix: "rmt@mdeminas",        password_logic: "standard"      },
         "MORADA PREMIUM":           { pabx: "https://172.17.71.3/",   domain: "moradapremium.ba.loomy.srv.br",          password_prefix: "rmt@moradapremium",   password_logic: "standard"      },
-        "MUSIQUE":                  { pabx: "https://172.17.15.3",    domain: "musique.mg.loomy.srv.br",                password_prefix: "rmt@loomy123#",       password_logic: "fixed"         },
-        "PARQUE DAS NAÇÕES":        { pabx: "https://172.17.72.3/",   domain: "parquedasnacoes.ba.loomy.srv.br",        password_prefix: "rmt@parquedasnacoes", password_logic: "standard"      },
+        "MUSIQUE":                  { pabx: "https://172.17.15.3",    domain: "musique.mg.loomy.srv.br",                password_prefix: "rmt@loomy123#",       password_logic: "fixed"          },
+        "PARQUE DAS NAÇÕES":        { pabx: "https://172.17.72.3/",   domain: "parquedasnacoes.ba.loomy.srv.br",       password_prefix: "rmt@parquedasnacoes", password_logic: "standard"      },
         "PLAZA NORTE":              { pabx: "https://172.17.18.3",    domain: "plazanorte.mg.loomy.srv.br",             password_prefix: "rmt@loomy#",          password_logic: "standard"      },
         "PONTO DIAMANTE":           { pabx: "https://172.17.58.3",    domain: "pontodiamante.mg.loomy.srv.br",          password_prefix: "rmt@pontod",          password_logic: "standard"      },
-        "PONTO GARDÊNIA":           { pabx: "https://172.17.31.3",    domain: "gardenia.mg.loomy.srv.br",               password_prefix: "rmt@loomy2023",       password_logic: "fixed"         },
+        "PONTO GARDÊNIA":           { pabx: "https://172.17.31.3",    domain: "gardenia.mg.loomy.srv.br",               password_prefix: "rmt@loomy2023",       password_logic: "fixed"          },
         "PONTO VEREDAS":            { pabx: "https://172.17.61.3",    domain: "pontoveredas.mg.loomy.srv.br",           password_prefix: "rmt@pontoveredas",    password_logic: "standard"      },
         "PORTO DOURADO 2":          { pabx: "https://172.17.46.3/",   domain: "portodourado2.go.loomy.srv.br",          password_prefix: "rmt@portodourado",    password_logic: "standard"      },
         "PORTO DOURADO 3":          { pabx: "https://172.17.17.3/",   domain: "portodourado3.go.loomy.srv.br",          password_prefix: "rmt@portodourado3",   password_logic: "standard"      },
         "RECANTO DOS ABRANTES":     { pabx: "https://187.44.177.206:8443", domain: "recantodosabrantes.ba.loomy.srv.br", password_prefix: "rmt@abrantes",      password_logic: "standard"      },
         "RESERVA BARRA FUNDA":      { pabx: "https://172.17.43.3",    domain: "reservabarrafunda.sp.loomy.srv.br",      password_prefix: "rmt@reservabarrafunda", password_logic: "standard"      },
-        "RESIDENCIAL SABIÁ":        { pabx: "https://172.17.34.3",    domain: "residencialsabia.mg.loomy.srv.br",       password_prefix: "rmt@loomy#2023",      password_logic: "fixed"         },
+        "RESIDENCIAL SABIÁ":        { pabx: "https://172.17.34.3",    domain: "residencialsabia.mg.loomy.srv.br",       password_prefix: "rmt@loomy#2023",      password_logic: "fixed"          },
         "RIVERA LIFE":              { pabx: "https://172.17.54.3",    domain: "riveralife.ba.loomy.srv.br",             password_prefix: "rmt@rivera",          password_logic: "standard"      },
-        "RUBIS":                    { pabx: "https://172.17.10.3",    domain: "rubis.mg.loomy.srv.br",                  password_prefix: "rmt@loomy123#",       password_logic: "fixed"         },
-        "SAN FELIPPO":              { pabx: "https://172.17.30.3",    domain: "sanfelippo.sp.loomy.srv.br",             password_prefix: "rmt@loomy2023#",      password_logic: "fixed"         },
-        "SÃO FRANCISCO":            { pabx: "https://172.17.37.3",    domain: "saofrancisco.mg.loomy.srv.br",           password_prefix: "rmt@loomy2023#",      password_logic: "fixed"         },
-        "SERRA DOS PINHAIS":        { pabx: "https://172.17.20.3",    domain: "serradospinhais.mg.loomy.srv.br",        password_prefix: "Loomy@",              password_logic: "standard"      },
-        "SOLAR DA COLINA":          { pabx: "https://192.168.13.3",   domain: null,                                     password_prefix: "rmt@solardacolina",   password_logic: "standard"      },
-        "SOLAR DO VALE":            { pabx: "https://192.168.10.3",   domain: null,                                     password_prefix: "rmt@loomy#2023",      password_logic: "fixed"         },
-        "SOLAR DOS MONTES":         { pabx: "https://172.17.33.3",    domain: "solardosmontes.mg.loomy.srv.br",         password_prefix: "rmt@loomy#2023",      password_logic: "fixed"         },
+        "RUBIS":                    { pabx: "https://172.17.10.3",    domain: "rubis.mg.loomy.srv.br",                  password_prefix: "rmt@loomy123#",       password_logic: "fixed"          },
+        "SAN FELIPPO":              { pabx: "https://172.17.30.3",    domain: "sanfelippo.sp.loomy.srv.br",             password_prefix: "rmt@loomy2023#",      password_logic: "fixed"          },
+        "SÃO FRANCISCO":            { pabx: "https://172.17.37.3",    domain: "saofrancisco.mg.loomy.srv.br",           password_prefix: "rmt@loomy2023#",      password_logic: "fixed"          },
+        "SERRA DOS PINHAIS":        { pabx: "https://172.17.20.3",    domain: "serradospinhais.mg.loomy.srv.br",        password_prefix: "Loomy@",               password_logic: "standard"      },
+        "SOLAR DA COLINA":          { pabx: "https://192.168.13.3",   domain: "solardacolina.loomy.srv.br",             password_prefix: "rmt@solardacolina",   password_logic: "standard"      },
+        "SOLAR DO VALE":            { pabx: "https://192.168.10.3",   domain: "solardovale.loomy.srv.br",               password_prefix: "rmt@loomy#2023",      password_logic: "fixed"          },
+        "SOLAR DOS MONTES":         { pabx: "https://172.17.33.3",    domain: "solardosmontes.mg.loomy.srv.br",         password_prefix: "rmt@loomy#2023",      password_logic: "fixed"          },
         "SOL DO ENGENHO":           { pabx: "https://172.17.27.3",    domain: "soldoengenho.rj.loomy.srv.br",           password_prefix: "rmt@engenho",         password_logic: "standard"      },
         "SPAZIO SALVADOR NORTE":    { pabx: "https://172.17.50.3",    domain: "spaziosalvadornorte.ba.loomy.srv.br",    password_prefix: "rmt@spaziosalvador",  password_logic: "standard"      },
-        "SPAZIO SINGULAR":          { pabx: "https://172.17.14.3",    domain: "spaziosingular.ba.loomy.srv.br",         password_prefix: "rmt@loomy123#",       password_logic: "fixed"         },
+        "SPAZIO SINGULAR":          { pabx: "https://172.17.14.3",    domain: "spaziosingular.ba.loomy.srv.br",         password_prefix: "rmt@loomy123#",       password_logic: "fixed"          },
         "VIC PARK MONTREAL":        { pabx: "https://172.17.47.3",    domain: "vicpark.mg.loomy.srv.br",                password_prefix: "rmt@vic",             password_logic: "standard"      },
-        "VILA DIAMANTE":            { pabx: "https://172.17.16.3",    domain: "viladiamante.es.loomy.srv.br",           password_prefix: "rmt@loomy#26!",       password_logic: "fixed"         },
+        "VILA DIAMANTE":            { pabx: "https://172.17.16.3",    domain: "viladiamante.es.loomy.srv.br",           password_prefix: "rmt@loomy#26!",       password_logic: "fixed"          },
         "VILA REAL ESMERALDA":      { pabx: "https://172.17.56.3",    domain: "vilarealesmeralda.mg.loomy.srv.br",      password_prefix: "rmt@vilareal",        password_logic: "standard"      },
         "VILLAGE EUROPA":           { pabx: "https://172.17.8.3/",    domain: "villageeuropa.mg.loomy.srv.br",          password_prefix: "rmt@villageeuropa",   password_logic: "standard"      },
         "VILLAGE TORINO":           { pabx: "https://172.17.75.3/",   domain: "villagertorino.mg.loomy.srv.br",         password_prefix: "rmt@villagetorino",   password_logic: "standard"      },
@@ -233,13 +244,14 @@
             button.addEventListener('click', (event) => {
                 const targetId = event.currentTarget.dataset.target;
                 const targetInput = document.getElementById(targetId);
-                copyToClipboard(targetInput.value, `${targetInput.previousElementSibling.textContent.replace(':', '')} copiado!`);
+                const label = targetInput.closest('div').previousElementSibling.textContent;
+                copyToClipboard(targetInput.value, `${label} copiado!`);
             });
         });
     
         document.getElementById('copyInstructionsBtn').addEventListener('click', () => {
             const instructionsText = document.getElementById('instructionsOutput').textContent;
-            copyToClipboard(instructionsText, 'Instruções copiadas para a área de transferência!');
+            copyToClipboard(instructionsText, 'Todos os dados copiados com sucesso!');
         });
     }
     
@@ -256,6 +268,7 @@
     
     function resetUI() {
         document.getElementById('condominio').value = '';
+        document.getElementById('nomeCompleto').value = '';
         document.getElementById('bloco').value = '';
         document.getElementById('apartamento').value = '';
         document.querySelector('input[name="ponto"][value="1"]').checked = true;
@@ -270,7 +283,7 @@
     function showMessage(message, type = 'success') {
         const messageBox = document.getElementById('messageBox');
         messageBox.textContent = message;
-        messageBox.className = 'mt-4 p-3 rounded-md text-sm text-center'; // Reset class
+        messageBox.className = 'mt-4 p-3 rounded-md text-sm text-center'; 
         if (type === 'success') {
             messageBox.classList.add('bg-green-100', 'text-green-800', 'border', 'border-green-200');
         } else {
@@ -290,27 +303,21 @@
         const textArea = document.createElement("textarea");
         textArea.value = text;
         textArea.style.position = "fixed";
-        textArea.style.top = "0";
-        textArea.style.left = "0";
         textArea.style.opacity = "0";
         document.body.appendChild(textArea);
         textArea.focus();
         textArea.select();
         try {
-            const successful = document.execCommand('copy');
-            if (successful) {
-                showMessage(successMessage, 'success');
-            } else {
-                throw new Error('Copy command was not successful');
-            }
+            document.execCommand('copy');
+            showMessage(successMessage, 'success');
         } catch (err) {
-            console.error('Falha ao copiar: ', err);
-            showMessage("Falha ao copiar. Tente manualmente.", 'error');
+            showMessage("Erro ao copiar.", 'error');
         }
         document.body.removeChild(textArea);
     }
     
     function generateData() {
+        const nomeCompleto = document.getElementById('nomeCompleto').value.trim();
         const bloco = document.getElementById('bloco').value.trim();
         const apartamento = document.getElementById('apartamento').value.trim();
         const condominioName = document.getElementById('condominio').value;
@@ -321,18 +328,14 @@
         document.getElementById('instructionsSection').classList.add('hidden');
         document.getElementById('pabxSection').classList.add('hidden');
         document.getElementById('warningBox').classList.add('hidden');
-        document.getElementById('messageBox').classList.add('hidden');
     
-        if (!condominioName || !bloco || !apartamento) {
+        if (!condominioName || !nomeCompleto || !bloco || !apartamento) {
             showMessage("Por favor, preencha todos os campos.", 'error');
             return;
         }
     
         const config = CONDOMINIOS_CONFIG[condominioName];
-        if (!config) {
-            showMessage("Configuração do condomínio não encontrada.", 'error');
-            return;
-        }
+        if (!config) return;
     
         let senha;
         const { password_prefix, password_logic } = config;
@@ -342,45 +345,60 @@
             case 'fixed':
                 senha = password_prefix;
                 break;
-            case 'standard':
             default:
-                // standard: prefixo + bloco + apartamento + ponto
                 senha = `${password_prefix}${bloco}${apartamento}${ponto}`;
                 break;
         }
     
-        // Geração do USUÁRIO (Ramal) - NÃO HÁ DUPLICAÇÃO.
         const usuario = `${bloco}${apartamento}${ponto}`;
         const dominio = config.domain || "Não disponível";
     
-        // Geração dos Dados
+        // Preenchimento dos Campos de Saída
         document.getElementById('usuarioOutput').value = usuario;
         document.getElementById('senhaOutput').value = senha;
         document.getElementById('dominioOutput').value = dominio;
+        document.getElementById('nomeExibicaoOutput').value = nomeCompleto;
         document.getElementById('outputSection').classList.remove('hidden');
     
-        // Exibição do PABX
-        const pabxSection = document.getElementById('pabxSection');
-        const pabxLink = document.getElementById('pabxLink');
+        // Exibição do Link PABX
         if (config.pabx && config.pabx !== 'null') {
-            pabxLink.href = config.pabx;
-            pabxSection.classList.remove('hidden');
+            document.getElementById('pabxLink').href = config.pabx;
+            document.getElementById('pabxSection').classList.remove('hidden');
         }
     
-        // Alertas Especiais (MANDATÓRIO)
+        // Alertas Especiais
         if (condominioName === "CANTO DO SABIÁ") {
             showWarningMessage("VALIDAR O LADO DO BLOCO (A OU B)");
-        } else if (condominioName === "RESERVA BARRA FUNDA" || condominioName === "FONTE ROYAL" || condominioName === "BOSQUE DO INDAIA") {
+        } else if (["RESERVA BARRA FUNDA", "FONTE ROYAL", "BOSQUE DO INDAIA"].includes(condominioName)) {
             showWarningMessage("OS RAMAIS DO INTERFONE INTELIGENTE TERMINAM COM 01/02");
         }
         
-        // Geração das Instruções Completas
+        // Formatação das Instruções Finais conforme solicitado
         const interfoneFisico = `${bloco}${apartamento}`;
-        const instructionsText = `USUÁRIO: ${usuario}\nSENHA: ${senha}\nDOMÍNIO: ${dominio}\n\nSIGA O PASSO A PASSO DO VÍDEO COM ATENÇÃO! ⚠\nhttps://www.youtube.com/watch?v=lZxGqBq7S5U\n\nBaixe o aplicativo.\n\nLINK INTERFONE INTELIGENTE - ANDROID:\nhttps://play.google.com/store/apps/details?id=com.voipgroup.loomyinterfone&hl=pt_BR\n\nLINK INTERFONE INTELIGENTE - IPHONE:\nhttps://apps.apple.com/br/app/loomy-interfone-inteligente/id1633125172\n\nComo usar?\nPara ligar para a portaria, digite: 94\nPara ligar para o seu interfone físico, digite: ${interfoneFisico}\nPara ligar no seu interfone inteligente, digite: ${usuario}`;
+        const instructionsText = `USUÁRIO: ${usuario}
+SENHA: ${senha}
+DOMÍNIO: ${dominio}
+NOME DE EXIBIÇÃO: ${nomeCompleto}
+
+SIGA O PASSO A PASSO DO VÍDEO COM ATENÇÃO! ⚠
+https://www.youtube.com/watch?v=lZxGqBq7S5U
+
+Baixe o aplicativo.
+
+LINK INTERFONE INTELIGENTE - ANDROID:
+https://play.google.com/store/apps/details?id=com.voipgroup.loomyinterfone&hl=pt_BR
+
+LINK INTERFONE INTELIGENTE - IPHONE:
+https://apps.apple.com/br/app/loomy-interfone-inteligente/id1633125172
+
+Como usar?
+Para ligar para a portaria, digite: 94
+Para ligar para o seu interfone físico, digite: ${interfoneFisico}
+Para ligar no seu interfone inteligente, digite: ${usuario}`;
     
         document.getElementById('instructionsOutput').textContent = instructionsText;
         document.getElementById('instructionsSection').classList.remove('hidden');
-        feather.replace(); // Recarrega os ícones após manipulação do DOM
+        feather.replace();
     }
     </script>
 </body>
